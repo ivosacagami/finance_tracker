@@ -1,0 +1,2483 @@
+<title>42 Semanas até Produção</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+:root{
+  --paper:#F7F8F6; --surface:#FFFFFF; --surface-2:#EDF0EB; --rule:#DCE1D9; --rule-soft:#E8EBE5;
+  --ink:#151C18; --ink-2:#39443D; --muted:#6A756D;
+  --accent:#186B4B; --accent-soft:#E2EFE8; --accent-line:#B9D8C8;
+  --warn:#8F5D07; --warn-soft:#F7ECD8; --warn-line:#E4CFA4;
+  --crit:#9E2A1E; --crit-soft:#F7E4E1; --crit-line:#E7C2BB;
+  --info:#1D5578; --info-soft:#E0EAF1; --info-line:#BDD3E1;
+  --shadow:0 1px 2px rgba(21,28,24,.05), 0 8px 24px -16px rgba(21,28,24,.28);
+  --f-display:"Bricolage Grotesque","Segoe UI",Helvetica,Arial,sans-serif;
+  --f-body:"Source Serif 4",Georgia,"Times New Roman",serif;
+  --f-mono:"JetBrains Mono",ui-monospace,"Cascadia Mono",Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#0E1311; --surface:#141A17; --surface-2:#1B221E; --rule:#2B342E; --rule-soft:#222A25;
+    --ink:#E7ECE7; --ink-2:#C3CDC6; --muted:#8C978F;
+    --accent:#5FCB97; --accent-soft:#162E24; --accent-line:#2A5140;
+    --warn:#DFA94E; --warn-soft:#2C2416; --warn-line:#4E401F;
+    --crit:#EE8272; --crit-soft:#301A17; --crit-line:#573029;
+    --info:#82B8DB; --info-soft:#132530; --info-line:#28455A;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 28px -18px rgba(0,0,0,.8);
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#0E1311; --surface:#141A17; --surface-2:#1B221E; --rule:#2B342E; --rule-soft:#222A25;
+  --ink:#E7ECE7; --ink-2:#C3CDC6; --muted:#8C978F;
+  --accent:#5FCB97; --accent-soft:#162E24; --accent-line:#2A5140;
+  --warn:#DFA94E; --warn-soft:#2C2416; --warn-line:#4E401F;
+  --crit:#EE8272; --crit-soft:#301A17; --crit-line:#573029;
+  --info:#82B8DB; --info-soft:#132530; --info-line:#28455A;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 28px -18px rgba(0,0,0,.8);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:1.5rem}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+body{background:var(--paper);color:var(--ink);font-family:var(--f-body);font-size:17px;line-height:1.62;-webkit-font-smoothing:antialiased}
+
+.shell{display:grid;grid-template-columns:272px minmax(0,1fr);gap:0;max-width:1400px;margin:0 auto}
+.nav{border-right:1px solid var(--rule);padding:2rem 1.25rem 4rem;position:sticky;top:0;height:100vh;overflow-y:auto;background:var(--paper)}
+.nav-brand{font-family:var(--f-display);font-weight:800;font-size:1.05rem;line-height:1.2;letter-spacing:-.01em;margin:0 0 .25rem}
+.nav-sub{font-family:var(--f-mono);font-size:.66rem;text-transform:uppercase;letter-spacing:.09em;color:var(--muted);margin:0 0 1.75rem}
+.nav h3{font-family:var(--f-mono);font-size:.62rem;text-transform:uppercase;letter-spacing:.11em;color:var(--muted);font-weight:600;margin:1.5rem 0 .5rem;padding-bottom:.35rem;border-bottom:1px solid var(--rule-soft)}
+.nav ol{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:.1rem}
+.nav a{display:block;padding:.24rem .4rem .24rem 0;color:var(--ink-2);text-decoration:none;font-size:.845rem;line-height:1.35;border-radius:3px}
+.nav a:hover{color:var(--accent)}
+.nav a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.nav a .n{font-family:var(--f-mono);font-size:.7rem;color:var(--muted);margin-right:.45rem}
+
+main{padding:3.5rem 3rem 8rem;min-width:0}
+p,ul,ol{max-width:68ch}
+p{margin:0 0 1.05rem}
+h1{font-family:var(--f-display);font-weight:800;font-size:clamp(2.1rem,4.4vw,3.05rem);line-height:1.04;letter-spacing:-.028em;margin:.4rem 0 1rem;text-wrap:balance}
+h2{font-family:var(--f-display);font-weight:700;font-size:1.72rem;line-height:1.15;letter-spacing:-.02em;margin:0 0 .9rem;text-wrap:balance}
+h3{font-family:var(--f-display);font-weight:700;font-size:1.14rem;line-height:1.25;letter-spacing:-.012em;margin:2rem 0 .6rem;text-wrap:balance}
+h4{font-family:var(--f-mono);font-weight:600;font-size:.74rem;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin:1.6rem 0 .5rem}
+a{color:var(--accent)}
+strong{font-weight:600;color:var(--ink)}
+code{font-family:var(--f-mono);font-size:.85em;background:var(--surface-2);padding:.08em .34em;border-radius:3px;color:var(--ink)}
+ul,ol{padding-left:1.15rem;margin:0 0 1.05rem}
+li{margin:.24rem 0}
+li::marker{color:var(--muted)}
+hr{border:0;border-top:1px solid var(--rule);margin:3.5rem 0}
+
+.lede{font-size:1.16rem;line-height:1.55;color:var(--ink-2);max-width:60ch}
+.masthead{border-bottom:2px solid var(--ink);padding-bottom:2.25rem;margin-bottom:2.5rem}
+.eyebrow{font-family:var(--f-mono);font-size:.68rem;text-transform:uppercase;letter-spacing:.14em;color:var(--accent);font-weight:600;margin:0 0 .1rem}
+.meta-row{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1.5rem}
+.tag{font-family:var(--f-mono);font-size:.68rem;letter-spacing:.03em;color:var(--ink-2);background:var(--surface);border:1px solid var(--rule);padding:.24rem .55rem;border-radius:2px}
+
+section{scroll-margin-top:1.5rem;margin-bottom:3.75rem}
+.sec-head{margin-bottom:1.25rem}
+.sec-num{font-family:var(--f-mono);font-size:.7rem;letter-spacing:.1em;color:var(--muted);display:block;margin-bottom:.3rem}
+
+.note{border-left:3px solid var(--rule);background:var(--surface);padding:.85rem 1.1rem;margin:1.4rem 0;max-width:68ch;border-radius:0 3px 3px 0}
+.note p:last-child{margin-bottom:0}
+.note p{max-width:none}
+.note ul{max-width:none;margin-bottom:0}
+.note .lbl{font-family:var(--f-mono);font-size:.64rem;text-transform:uppercase;letter-spacing:.11em;font-weight:600;display:block;margin-bottom:.3rem}
+.note.why{border-color:var(--accent-line);background:var(--accent-soft)} .note.why .lbl{color:var(--accent)}
+.note.trap{border-color:var(--warn-line);background:var(--warn-soft)} .note.trap .lbl{color:var(--warn)}
+.note.risk{border-color:var(--crit-line);background:var(--crit-soft)} .note.risk .lbl{color:var(--crit)}
+.note.dec{border-color:var(--info-line);background:var(--info-soft)} .note.dec .lbl{color:var(--info)}
+
+.scroll{overflow-x:auto;margin:1.4rem 0;border:1px solid var(--rule);border-radius:3px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:.87rem;font-variant-numeric:tabular-nums}
+th{font-family:var(--f-mono);font-size:.66rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:600;text-align:left;padding:.7rem .85rem;border-bottom:1px solid var(--rule);white-space:nowrap;background:var(--surface-2)}
+td{padding:.62rem .85rem;border-bottom:1px solid var(--rule-soft);vertical-align:top;line-height:1.45}
+tr:last-child td{border-bottom:0}
+td code{background:transparent;padding:0}
+.num{text-align:right;font-family:var(--f-mono);font-size:.82rem;white-space:nowrap}
+
+.diag{font-family:var(--f-mono);font-size:.76rem;line-height:1.35;background:var(--surface);border:1px solid var(--rule);border-radius:3px;padding:1.4rem 1.2rem;margin:1.4rem 0;display:flex;flex-direction:column;align-items:center;gap:0;overflow-x:auto}
+.dnode{border:1px solid var(--rule);background:var(--surface-2);padding:.45rem .8rem;border-radius:2px;text-align:center;min-width:150px;color:var(--ink)}
+.dnode.hi{border-color:var(--accent-line);background:var(--accent-soft);color:var(--accent);font-weight:600}
+.dnode.ml{border-color:var(--info-line);background:var(--info-soft);color:var(--info)}
+.dnode.sm{min-width:0;font-size:.72rem;padding:.3rem .6rem}
+.dedge{width:1px;height:22px;background:var(--rule);position:relative;flex:none}
+.dedge::after{content:"";position:absolute;bottom:0;left:-3px;border-left:3.5px solid transparent;border-right:3.5px solid transparent;border-top:5px solid var(--rule)}
+.drow{display:flex;gap:.9rem;align-items:center;flex-wrap:nowrap}
+.dcap{font-family:var(--f-mono);font-size:.64rem;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:.9rem;align-self:flex-start}
+.dlabel{color:var(--muted);font-size:.68rem;padding:.15rem 0}
+
+.week{border:1px solid var(--rule);border-radius:3px;background:var(--surface);padding:1.1rem 1.2rem;margin:.9rem 0;box-shadow:var(--shadow)}
+.week-head{display:flex;align-items:baseline;gap:.8rem;flex-wrap:wrap;margin-bottom:.8rem;padding-bottom:.6rem;border-bottom:1px solid var(--rule-soft)}
+.week-id{font-family:var(--f-mono);font-size:.7rem;font-weight:600;letter-spacing:.06em;color:var(--accent);background:var(--accent-soft);border:1px solid var(--accent-line);padding:.16rem .5rem;border-radius:2px;white-space:nowrap}
+.week-title{font-family:var(--f-display);font-weight:700;font-size:1.02rem;letter-spacing:-.012em;margin:0}
+.week dl{display:grid;grid-template-columns:96px minmax(0,1fr);gap:.32rem .95rem;margin:0;font-size:.9rem}
+.week dt{font-family:var(--f-mono);font-size:.62rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:600;padding-top:.28rem}
+.week dd{margin:0;color:var(--ink-2)}
+.week dd strong{color:var(--ink)}
+
+.phase{border-top:2px solid var(--ink);padding-top:1.1rem;margin-top:3rem;margin-bottom:1.4rem}
+.phase-top{display:flex;align-items:baseline;gap:.9rem;flex-wrap:wrap}
+.phase-n{font-family:var(--f-mono);font-size:1.6rem;font-weight:600;color:var(--accent);letter-spacing:-.02em;line-height:1}
+.chip{font-family:var(--f-mono);font-size:.64rem;text-transform:uppercase;letter-spacing:.08em;border:1px solid var(--rule);padding:.2rem .5rem;border-radius:2px;color:var(--muted);white-space:nowrap}
+.chip.on{border-color:var(--accent-line);color:var(--accent);background:var(--accent-soft)}
+
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(255px,1fr));gap:1rem;margin:1.4rem 0}
+.panel{border:1px solid var(--rule);border-radius:3px;background:var(--surface);padding:1rem 1.1rem}
+.panel h5{font-family:var(--f-mono);font-size:.66rem;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);font-weight:600;margin:0 0 .5rem}
+.panel p{font-size:.9rem;margin:0 0 .5rem;max-width:none}
+.panel p:last-child{margin:0}
+.panel ul{font-size:.9rem;max-width:none;margin-bottom:0}
+
+pre.code{font-family:var(--f-mono);font-size:.78rem;line-height:1.55;background:var(--surface);border:1px solid var(--rule);border-left:3px solid var(--accent-line);border-radius:0 3px 3px 0;padding:.9rem 1.1rem;overflow-x:auto;margin:1.2rem 0;color:var(--ink-2)}
+pre.code b{color:var(--ink);font-weight:600}
+pre.code i{color:var(--muted);font-style:normal}
+
+.q{border-left:2px solid var(--accent-line);padding-left:.9rem;margin:.75rem 0;max-width:68ch}
+.q p{margin:0 0 .25rem;font-size:.95rem}
+.q .a{font-size:.86rem;color:var(--muted);margin:0}
+
+.kv{display:grid;grid-template-columns:auto 1fr;gap:.3rem 1rem;font-size:.9rem;margin:1rem 0;max-width:68ch}
+.kv dt{font-family:var(--f-mono);font-size:.7rem;color:var(--muted);padding-top:.2rem;white-space:nowrap}
+.kv dd{margin:0}
+
+.verdict{display:inline-block;font-family:var(--f-mono);font-size:.62rem;text-transform:uppercase;letter-spacing:.08em;padding:.14rem .45rem;border-radius:2px;font-weight:600}
+.v-keep{background:var(--accent-soft);color:var(--accent)}
+.v-cut{background:var(--crit-soft);color:var(--crit)}
+.v-late{background:var(--warn-soft);color:var(--warn)}
+
+@media (max-width:1000px){
+  .shell{grid-template-columns:1fr}
+  .nav{position:static;height:auto;border-right:0;border-bottom:1px solid var(--rule);padding:1.5rem 1.5rem 2rem}
+  .nav ol{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:.05rem 1rem}
+  main{padding:2.25rem 1.5rem 5rem}
+}
+@media (max-width:560px){
+  body{font-size:16px}
+  .week dl{grid-template-columns:1fr;gap:.05rem}
+  .week dt{padding-top:.5rem}
+}
+</style>
+<div class="shell">
+<nav class="nav">
+  <p class="nav-brand">Expense Tracker</p>
+  <p class="nav-sub">Plano técnico &amp; trilha</p>
+
+  <h3>Arquitetura</h3>
+  <ol>
+    <li><a href="#s1"><span class="n">01</span>Análise crítica</a></li>
+    <li><a href="#s2"><span class="n">02</span>Arquitetura recomendada</a></li>
+    <li><a href="#s3"><span class="n">03</span>Visão do produto</a></li>
+  </ol>
+
+  <h3>Aprendizado</h3>
+  <ol>
+    <li><a href="#s4"><span class="n">04</span>Objetivos de aprendizagem</a></li>
+    <li><a href="#s5"><span class="n">05</span>Pré-requisitos</a></li>
+    <li><a href="#s6"><span class="n">06</span>Fase 0 — Fundamentos</a></li>
+  </ol>
+
+  <h3>Fases de construção</h3>
+  <ol>
+    <li><a href="#s7"><span class="n">07</span>Fase 1 — MVP</a></li>
+    <li><a href="#s8"><span class="n">08</span>Fase 2 — V1 multiusuário</a></li>
+    <li><a href="#s9"><span class="n">09</span>Fase 3 — Qualidade e 1º deploy</a></li>
+    <li><a href="#s10"><span class="n">10</span>Fase 4 — Mobile</a></li>
+    <li><a href="#s11"><span class="n">11</span>Fase 5 — Data Science</a></li>
+    <li><a href="#s12"><span class="n">12</span>Fase 6 — Machine Learning</a></li>
+    <li><a href="#s13"><span class="n">13</span>Fase 7 — Integração ML</a></li>
+    <li><a href="#s14"><span class="n">14</span>Fase 8 — Cloud e CI/CD</a></li>
+    <li><a href="#s15"><span class="n">15</span>Fase 9 — Produção</a></li>
+  </ol>
+
+  <h3>Transversais</h3>
+  <ol>
+    <li><a href="#s16"><span class="n">16</span>Escalabilidade</a></li>
+    <li><a href="#s17"><span class="n">17</span>Segurança</a></li>
+    <li><a href="#s18"><span class="n">18</span>Testes</a></li>
+    <li><a href="#s19"><span class="n">19</span>CI/CD</a></li>
+    <li><a href="#s20"><span class="n">20</span>Observabilidade</a></li>
+  </ol>
+
+  <h3>Execução</h3>
+  <ol>
+    <li><a href="#s21"><span class="n">21</span>Roadmap semanal</a></li>
+    <li><a href="#s22"><span class="n">22</span>Mini-projetos</a></li>
+    <li><a href="#s23"><span class="n">23</span>Checkpoints</a></li>
+    <li><a href="#s24"><span class="n">24</span>Anti-dependência de IA</a></li>
+    <li><a href="#s25"><span class="n">25</span>Estratégia de GitHub</a></li>
+  </ol>
+
+  <h3>Referência</h3>
+  <ol>
+    <li><a href="#s26"><span class="n">26</span>Matriz de competências</a></li>
+    <li><a href="#s27"><span class="n">27</span>O que NÃO estudar agora</a></li>
+    <li><a href="#s28"><span class="n">28</span>Arquitetura evolutiva</a></li>
+    <li><a href="#s29"><span class="n">29</span>Critérios de conclusão</a></li>
+    <li><a href="#s30"><span class="n">30</span>Estado final esperado</a></li>
+  </ol>
+</nav>
+
+<main>
+<header class="masthead">
+  <p class="eyebrow">Plano de estudos e desenvolvimento</p>
+  <h1>42 semanas até produção</h1>
+  <p class="lede">Do zero a um app financeiro multiusuário no ar: web, mobile, API, PostgreSQL, machine learning e infraestrutura — introduzidos um de cada vez, sempre depois do problema que os justifica.</p>
+  <div class="meta-row">
+    <span class="tag">42 semanas · ~10 meses</span>
+    <span class="tag">10–15 h/semana</span>
+    <span class="tag">≈ 500 h de trabalho</span>
+    <span class="tag">Custo alvo: US$ 0–12/mês</span>
+    <span class="tag">Prioridade: aprendizado</span>
+  </div>
+</header>
+
+<section id="s1">
+  <div class="sec-head">
+    <span class="sec-num">SEÇÃO 01</span>
+    <h2>Análise crítica da arquitetura inicial</h2>
+  </div>
+
+  <p>A arquitetura que você desenhou não está errada como <em>destino</em>. Ela está errada como <em>ponto de partida</em>, e tem quatro buracos que só aparecem quando o sistema encontra usuários reais. Vou separar o que aproveitar do que cortar.</p>
+
+  <h3>O que já está certo</h3>
+  <ul>
+    <li><strong>Uma única API servindo web e mobile.</strong> É a decisão mais importante do diagrama e está correta. Duas APIs seria duplicar regra de negócio e dobrar a superfície de bug.</li>
+    <li><strong>PostgreSQL relacional.</strong> Dado financeiro é intrinsecamente relacional e exige transações. Nenhum banco de documentos ganharia aqui.</li>
+    <li><strong>TypeScript ponta a ponta no lado JS.</strong> Você vai errar menos e vai aprender a pensar em contratos de dados.</li>
+    <li><strong>Python separado para ML.</strong> Está certo manter o ecossistema científico onde ele é forte, em vez de tentar treinar modelo em JavaScript.</li>
+  </ul>
+
+  <h3>Os dez problemas</h3>
+
+  <h4>P1 · Lambda como primeira integração de ML</h4>
+  <p>Um pacote com <code>scikit-learn</code>, <code>numpy</code> e <code>scipy</code> passa de 250 MB descompactados — o limite de camada zip do Lambda. Você seria empurrado para imagem de container no ECR, e junto vêm ECR, IAM, roles, API Gateway, e cold starts de 3–8 s no primeiro request. Nada disso ensina machine learning. É trabalho de infraestrutura disfarçado de ML, no exato momento em que você deveria estar aprendendo o que é uma matriz de confusão.</p>
+
+  <h4>P2 · O diagrama não diz quem chama o ML, nem quando</h4>
+  <p>Essa é a omissão mais séria. Se a categorização acontecer <em>dentro</em> do <code>POST /transactions</code>, você acabou de colocar um serviço externo no caminho crítico da operação mais frequente do app: a latência dele entra na sua, e se ele cair, o usuário não consegue mais cadastrar despesa. Um serviço de sugestão nunca pode derrubar um serviço de registro.</p>
+  <div class="note dec">
+    <span class="lbl">Decisão</span>
+    <p>ML é <strong>sugestão, nunca dependência</strong>. Timeout de 400 ms, e falha silenciosa: se o modelo não responder, a transação é salva com <code>categoryId = null</code> e a UI mostra "Categorizar". Isso será um exercício explícito na Fase 7.</p>
+  </div>
+
+  <h4>P3 · Camadas inteiras ausentes</h4>
+  <p>Não há autenticação, autorização, TLS, migrations, secrets, rate limiting, backup nem log no desenho. Um diagrama de app multiusuário sem camada de autorização é o diagrama de um vazamento de dados. Não é detalhe de implementação — é a parte que define se o sistema pode existir.</p>
+
+  <h4>P4 · Lambda + Prisma + RDS esgota conexões</h4>
+  <p>Cada execução concorrente de Lambda é um processo Node isolado, com seu próprio pool do Prisma. Cinquenta execuções simultâneas com pool de 10 pedem 500 conexões; um RDS <code>t4g.micro</code> aceita cerca de 80. O banco começa a recusar conexão sob carga — e a carga que causa isso é ridiculamente baixa. A correção é RDS Proxy ou PgBouncer, ou seja, mais uma peça para operar.</p>
+
+  <h4>P5 · O custo real da AWS "padrão"</h4>
+  <p>Se você seguir o caminho canônico (VPC privada, RDS, Lambda acessando o banco), o NAT Gateway custa cerca de <strong>US$ 32/mês só para existir</strong>, antes de qualquer tráfego, e não tem free tier. Somado ao RDS, é uma conta de US$ 45–60/mês para um projeto com três usuários. É o erro de orçamento mais comum em projeto de portfólio.</p>
+
+  <h4>P6 · Notebook não é pipeline</h4>
+  <p>O diagrama trata "Python Notebooks / Dados reais" como fonte do modelo em produção. Notebook é ferramenta de exploração: tem estado oculto, ordem de execução não determinística e não é testável. O artefato de produção precisa vir de um script de treino versionado, reprodutível, que salva modelo + métricas + versão.</p>
+
+  <h4>P7 · Não está definido de quem é o dado que treina o modelo</h4>
+  <p>Modelo global treinado com transações de todos os usuários é a opção óbvia — e é exatamente onde mora o risco. Descrição de transação carrega nome de estabelecimento, e às vezes nome de pessoa. Sem uma decisão explícita, você constrói um vazamento entre usuários por dentro do modelo. Isso precisa ser resolvido no desenho, não depois.</p>
+
+  <h4>P8 · Mobile foi desenhado como um cliente qualquer</h4>
+  <p>Cookie <code>httpOnly</code> — a melhor defesa contra XSS na web — não é confortável em React Native. Se você escolher a estratégia de sessão pensando só no navegador, vai refazê-la na Fase 4. A decisão de autenticação precisa contemplar os dois clientes desde a V1.</p>
+
+  <h4>P9 · Dinheiro em ponto flutuante</h4>
+  <p>Não está no diagrama, mas é o bug número um de aplicação financeira. <code>0.1 + 0.2 === 0.30000000000000004</code> em JavaScript. Um dashboard que soma 3 000 transações em <code>Float</code> mostra um saldo errado, de forma intermitente e difícil de reproduzir.</p>
+
+  <h4>P10 · A ordem das fases posterga o deploy para o mês 8</h4>
+  <p>Deploy no fim é a receita do <em>big bang deploy</em>: você acumula oito meses de suposições que só serão testadas de uma vez, quando descobre que o build quebra, que variável de ambiente não é o que você achava e que o banco gerenciado exige SSL. <strong>Esta é a única mudança que faço na sua divisão de fases:</strong> o primeiro deploy real sobe na Fase 3 (semana 20), com o app ainda simples. A Fase 7 então deixa de ser "aprender a fazer deploy" e passa a ser "transformar deploy em rotina automatizada e observável" — que é a coisa difícil de verdade.</p>
+
+  <h3>Veredito por tecnologia</h3>
+  <div class="scroll">
+  <table>
+    <thead><tr><th>Tecnologia</th><th>Veredito</th><th>Justificativa</th><th>Quando entra</th></tr></thead>
+    <tbody>
+      <tr><td>React + TypeScript</td><td><span class="verdict v-keep">mantém</span></td><td>Necessário ao produto e ao mercado.</td><td>Semana 8</td></tr>
+      <tr><td>Node + Express + TS</td><td><span class="verdict v-keep">mantém</span></td><td>Menor curva para entender HTTP sem mágica de framework.</td><td>Semana 4</td></tr>
+      <tr><td>PostgreSQL</td><td><span class="verdict v-keep">mantém</span></td><td>Transações e integridade referencial são requisito, não luxo.</td><td>Semana 6</td></tr>
+      <tr><td>Prisma</td><td><span class="verdict v-keep">mantém</span></td><td>Migrations e tipos gerados. Mas só <em>depois</em> de escrever SQL na mão.</td><td>Semana 7</td></tr>
+      <tr><td>React Native + Expo</td><td><span class="verdict v-keep">mantém</span></td><td>Alto valor de portfólio, custo baixo com a API já estável.</td><td>Semana 21</td></tr>
+      <tr><td>Pandas / NumPy / sklearn</td><td><span class="verdict v-keep">mantém</span></td><td>Núcleo da trilha de dados.</td><td>Semana 25</td></tr>
+      <tr><td>Docker</td><td><span class="verdict v-keep">mantém</span></td><td>Resolve o Postgres local e o deploy do serviço Python.</td><td>Semana 17</td></tr>
+      <tr><td>GitHub Actions</td><td><span class="verdict v-keep">mantém</span></td><td>CI barato e suficiente. Não precisa de nada além.</td><td>Semana 34</td></tr>
+      <tr><td>AWS Lambda (ML)</td><td><span class="verdict v-cut">corta</span></td><td>Cold start, limite de pacote e IAM sem ganho de aprendizado de ML.</td><td>—</td></tr>
+      <tr><td>AWS API Gateway</td><td><span class="verdict v-cut">corta</span></td><td>Resolve um problema que você não tem: sua API já é um servidor HTTP.</td><td>—</td></tr>
+      <tr><td>AWS RDS</td><td><span class="verdict v-cut">corta</span></td><td>Neon entrega o mesmo Postgres, com branch de banco, por US$ 0.</td><td>—</td></tr>
+      <tr><td>AWS S3</td><td><span class="verdict v-late">opcional</span></td><td>Só se você adicionar upload de comprovante ou exportação de CSV.</td><td>Semana 36+</td></tr>
+      <tr><td>AWS IAM / CloudWatch</td><td><span class="verdict v-cut">corta</span></td><td>Existem porque a AWS existe. Sem AWS, o problema desaparece.</td><td>—</td></tr>
+      <tr><td>Serviço Python (FastAPI)</td><td><span class="verdict v-keep">adiciona</span></td><td>Substitui o Lambda: mesma separação, um décimo da complexidade.</td><td>Semana 32</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="note trap">
+    <span class="lbl">Sobre cortar a AWS</span>
+    <p>Isso não é "fugir da AWS". É recusar aprender AWS <em>e</em> ML <em>e</em> backend ao mesmo tempo. Na semana 36 há um módulo opcional de AWS com objetivo explícito e delimitado — S3 para artefatos de modelo e exportações — onde você aprende IAM, política de bucket e URL pré-assinada resolvendo um problema real e pequeno. Isso é infinitamente mais defensável numa entrevista do que "usei Lambda porque estava no tutorial".</p>
+  </div>
+</section>
+
+<section id="s2">
+  <div class="sec-head">
+    <span class="sec-num">SEÇÃO 02</span>
+    <h2>Arquitetura recomendada</h2>
+  </div>
+
+  <p>Um <strong>monólito modular</strong> em Node, um banco PostgreSQL gerenciado, e um <strong>serviço Python separado</strong> que só entra em cena quando existir um modelo treinado. Três processos no total, no estado final.</p>
+
+  <div class="diag">
+    <span class="dcap">Estado final — semana 42</span>
+    <div class="drow">
+      <div class="dnode sm">Web · React SPA</div>
+      <div class="dnode sm">Mobile · Expo</div>
+    </div>
+    <div class="dedge"></div>
+    <div class="dnode sm">HTTPS · TLS gerenciado pela plataforma</div>
+    <div class="dedge"></div>
+    <div class="dnode hi">API · Node + Express + TS<br><span class="dlabel">auth · rate limit · validação · regra de negócio</span></div>
+    <div class="dedge"></div>
+    <div class="drow">
+      <div class="dnode">PostgreSQL gerenciado<br><span class="dlabel">pooler + backup diário</span></div>
+      <div class="dnode ml">ml-service · FastAPI<br><span class="dlabel">rede interna · timeout 400 ms</span></div>
+    </div>
+    <div class="dedge"></div>
+    <div class="dnode sm">Logs estruturados · /health · uptime check · Sentry</div>
+  </div>
+
+  <h3>As nove decisões que definem o sistema</h3>
+
+  <h4>D1 · Monólito modular, não camadas por tipo de arquivo</h4>
+  <p>Organize por domínio, não por função técnica. <code>src/modules/transactions/</code> contém rota, handler, validação e query da mesma feature. A pasta <code>controllers/</code> com 40 arquivos ao lado de <code>services/</code> com 40 arquivos obriga você a abrir seis arquivos para entender uma requisição.</p>
+  <pre class="code"><i>src/</i>
+  <b>modules/</b>
+    auth/        <i>register, login, refresh, logout</i>
+    users/
+    categories/
+    transactions/
+    dashboard/
+  <b>shared/</b>
+    db.ts        <i>instância única do Prisma</i>
+    env.ts       <i>validação de env na inicialização</i>
+    errors.ts    <i>AppError + handler central</i>
+    auth.ts      <i>middleware requireUser</i>
+  <b>app.ts</b>     <i>monta middlewares e rotas</i>
+  <b>server.ts</b>  <i>só sobe o listener — permite testar app.ts sem porta</i></pre>
+  <p>Camada de <em>service</em> só quando uma regra tiver dois consumidores. Camada de <em>repository</em> só se um dia você trocar o Prisma — o que provavelmente nunca vai acontecer. Padrão adotado sem problema para resolver é código morto com aparência de qualidade.</p>
+
+  <h4>D2 · Dinheiro em centavos inteiros</h4>
+  <p><code>amountCents Int</code>. R$ 1 234,56 é <code>123456</code>. Formatação só na borda da UI, com <code>Intl.NumberFormat('pt-BR')</code>. Um <code>Int</code> de 32 bits guarda até R$ 21 milhões — folgado. A alternativa é <code>Decimal(14,2)</code> do Postgres, que também é correta, mas o Prisma devolve um objeto <code>Decimal</code> que você precisa serializar com cuidado em toda resposta JSON. Centavos inteiros são mais simples e igualmente exatos.</p>
+
+  <h4>D3 · Data da transação é <code>DATE</code>, não <code>timestamp</code></h4>
+  <p>"Almoço em 3 de setembro" não tem hora nem fuso. Se você guardar como timestamp UTC, um usuário em UTC−3 lançando 23:00 do dia 3 verá a despesa cair no dia 4 e o total do mês vai fechar errado. Use <code>occurredOn DATE</code> para a semântica financeira e <code>createdAt TIMESTAMPTZ</code> para auditoria. São coisas diferentes.</p>
+
+  <h4>D4 · Ownership por linha, verificado em toda query</h4>
+  <p>Toda tabela raiz tem <code>userId</code> com chave estrangeira. E existe uma regra sem exceção: <strong>nunca buscar por id sozinho</strong>.</p>
+  <pre class="code"><i>// vazamento — devolve a transação de qualquer pessoa</i>
+prisma.transaction.findUnique({ where: { id } })
+
+<i>// correto — o id só resolve dentro do escopo do dono</i>
+prisma.transaction.findFirst({ where: { <b>id, userId: req.user.id</b> } })
+
+<i>// correto em update/delete: o userId entra no WHERE, não só no SELECT</i>
+prisma.transaction.updateMany({ where: { <b>id, userId</b> }, data })
+  <i>// count === 0 significa "não existe OU não é seu" → responda 404, nunca 403</i></pre>
+  <div class="note risk">
+    <span class="lbl">Por que 404 e não 403</span>
+    <p>403 confirma que o recurso existe e pertence a outra pessoa. Isso permite enumerar ids e descobrir quantas transações a base tem. 404 não vaza nada. É o mesmo motivo pelo qual login errado responde "e-mail ou senha inválidos" em vez de "senha incorreta".</p>
+  </div>
+
+  <h4>D5 · Autenticação: access token curto + refresh token rotativo</h4>
+  <div class="scroll">
+  <table>
+    <thead><tr><th>Peça</th><th>Formato</th><th>Onde vive</th><th>Validade</th></tr></thead>
+    <tbody>
+      <tr><td>Access token</td><td>JWT assinado (HS256)</td><td>Web: memória do JS · Mobile: memória</td><td>15 min</td></tr>
+      <tr><td>Refresh token</td><td>Aleatório 32 bytes, <em>hash</em> no banco</td><td>Web: cookie <code>httpOnly</code> · Mobile: <code>SecureStore</code></td><td>30 dias, rotativo</td></tr>
+      <tr><td>Senha</td><td>bcrypt custo 12</td><td>Só o hash, no banco</td><td>—</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p>O access token é <em>stateless</em>: qualquer instância da API o valida sem consultar o banco — é isso que permite rodar duas instâncias atrás de um balanceador sem sessão compartilhada. O refresh é <em>stateful</em> de propósito: está no banco, então logout e revogação funcionam de verdade. Rotativo significa que cada uso queima o token e emite outro; se um token antigo reaparecer, é sinal de roubo e você invalida a família inteira.</p>
+  <p><strong>Por que não sessão em cookie pura:</strong> funcionaria muito bem só para web e é mais simples. Perde para o híbrido porque o mobile na Fase 4 teria que usar outro caminho, e você acabaria com dois sistemas de autenticação. <strong>Por que não JWT sem refresh:</strong> ou o token dura tanto que o logout é ficção, ou dura pouco e o usuário é deslogado a cada 15 minutos.</p>
+
+  <h4>D6 · Um repositório, com pnpm workspaces</h4>
+  <p>Monorepo. O motivo não é ideológico: você tem um pacote <code>packages/shared</code> com os tipos da API e os esquemas Zod, e web, mobile e API importam dele. Mudou o contrato do endpoint, o TypeScript acusa nos três clientes no mesmo commit. Em repositórios separados isso vira publicação de pacote npm — burocracia real para uma pessoa.</p>
+  <pre class="code">expense-tracker/
+  apps/api/        <i>Node + Express + Prisma</i>
+  apps/web/        <i>React + Vite</i>
+  apps/mobile/     <i>Expo</i>
+  services/ml/     <i>Python + FastAPI + treino</i>
+  packages/shared/ <i>tipos e schemas Zod compartilhados</i>
+  docs/adr/        <i>registros de decisão arquitetural</i>
+  docker-compose.yml</pre>
+
+  <h4>D7 · ML como serviço HTTP interno, chamado de forma tolerante a falha</h4>
+  <p>Comparação completa das cinco opções está na <a href="#s13">Seção 13</a>. Resumo: <code>ml-service</code> em FastAPI, container próprio, mesma plataforma de hospedagem, acessível só pela rede interna, protegido por um segredo compartilhado no header. Node chama com timeout de 400 ms e trata falha como "sem sugestão".</p>
+
+  <h4>D8 · Categorização é híbrida — regra primeiro, modelo depois</h4>
+  <p>Esta é a decisão de engenharia mais honesta do projeto, e a que rende a melhor conversa em entrevista.</p>
+  <ol>
+    <li><strong>Correção do usuário</strong> — se ele já categorizou "IFOOD *RESTAURANTE" como Alimentação, isso vira uma regra pessoal dele. Precisão de 100%, custo zero.</li>
+    <li><strong>Dicionário de comerciantes conhecidos</strong> — descrição normalizada, casada contra uma tabela. Cobre a maior parte do volume real.</li>
+    <li><strong>Modelo</strong> — TF-IDF de n-gramas de caracteres + regressão logística. Entra apenas no que os dois primeiros não resolveram, e devolve categoria <em>e</em> probabilidade.</li>
+    <li><strong>Abstenção</strong> — probabilidade abaixo de 0,60, não sugere nada. Sugestão errada com ar de certeza é pior do que nenhuma sugestão.</li>
+  </ol>
+  <p>Você vai medir os três caminhos separadamente e descobrir que o ML resolve a minoria dos casos. Saber disso — e ter os números para provar — é o que separa alguém que entende ML de alguém que importou <code>sklearn</code>.</p>
+
+  <h4>D9 · Hospedagem: plataforma gerenciada, não IaaS</h4>
+  <div class="scroll">
+  <table>
+    <thead><tr><th>Peça</th><th>Onde</th><th>Custo/mês</th><th>Por quê</th></tr></thead>
+    <tbody>
+      <tr><td>PostgreSQL</td><td>Neon</td><td class="num">US$ 0</td><td>Free tier real, pooler embutido, <em>branch</em> de banco para testar migration</td></tr>
+      <tr><td>API Node</td><td>Render / Fly.io</td><td class="num">US$ 0–7</td><td>Deploy por <code>git push</code>, TLS automático, variáveis de ambiente com interface</td></tr>
+      <tr><td>ml-service</td><td>Render (Docker)</td><td class="num">US$ 0–7</td><td>Mesma plataforma da API → rede interna, sem exposição pública</td></tr>
+      <tr><td>Web</td><td>Vercel / Cloudflare Pages</td><td class="num">US$ 0</td><td>CDN global, preview por pull request</td></tr>
+      <tr><td>Mobile</td><td>Expo EAS</td><td class="num">US$ 0</td><td>Build na nuvem sem Xcode nem Android Studio</td></tr>
+      <tr><td>Erros</td><td>Sentry</td><td class="num">US$ 0</td><td>5 000 eventos/mês no free tier</td></tr>
+      <tr><td>Domínio</td><td>registro.br / Cloudflare</td><td class="num">~R$ 40/ano</td><td>Um domínio próprio muda a percepção do portfólio</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="note trap">
+    <span class="lbl">Armadilha do free tier</span>
+    <p>Serviços gratuitos hibernam após ~15 min sem tráfego, e o primeiro request depois disso leva 30–50 s. Para uma demonstração de portfólio isso é fatal — o recrutador fecha a aba. Antes de divulgar o link, ou pague os US$ 7 do plano pago, ou configure um <em>uptime check</em> a cada 10 minutos que também serve de monitoramento. Trate isso como parte do plano, não como surpresa.</p>
+  </div>
+</section>
+
+<section id="s3">
+  <div class="sec-head">
+    <span class="sec-num">SEÇÃO 03</span>
+    <h2>Visão geral do produto</h2>
+  </div>
+
+  <p>O produto é um <strong>registro financeiro pessoal com categorização assistida</strong>. A frase importa: o valor está em lançar rápido e enxergar para onde o dinheiro foi, não em ter muitas funcionalidades.</p>
+
+  <div class="grid2">
+    <div class="panel">
+      <h5>Está no escopo</h5>
+      <ul>
+        <li>Conta, login, perfil, troca de senha</li>
+        <li>Receitas e despesas, com CRUD completo</li>
+        <li>Categorias do usuário, com semente inicial</li>
+        <li>Filtro por período, categoria, tipo e busca textual</li>
+        <li>Listagem paginada por cursor</li>
+        <li>Dashboard: saldo, entradas, saídas, gasto por categoria, série mensal</li>
+        <li>Sugestão automática de categoria</li>
+        <li>Previsão de fechamento do mês</li>
+        <li>Exportação em CSV</li>
+      </ul>
+    </div>
+    <div class="panel">
+      <h5>Fora do escopo — e por quê</h5>
+      <ul>
+        <li><strong>Open Finance / integração bancária</strong> — exige homologação regulatória; inviável para projeto pessoal</li>
+        <li><strong>Multimoeda</strong> — dobra a complexidade do modelo de dados sem ensinar nada novo</li>
+        <li><strong>Contas compartilhadas</strong> — transformaria ownership por linha em modelo de permissões; ótimo como "próximo passo" no README</li>
+        <li><strong>OCR de nota fiscal</strong> — projeto inteiro por si só</li>
+        <li><strong>Pagamentos / assinatura</strong> — nenhum aprendizado que os outros módulos já não cubram</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>Modelo de dados nuclear</h3>
+  <pre class="code"><b>User</b>          id · email(unique) · passwordHash · name · createdAt
+<b>RefreshToken</b>  id · userId → User · tokenHash(unique) · expiresAt · revokedAt · familyId
+<b>Category</b>      id · <b>userId → User</b> · name · kind(INCOME|EXPENSE) · color
+                <i>@@unique([userId, name])  ← o nome é único por usuário, não global</i>
+<b>Transaction</b>   id · <b>userId → User</b> · categoryId → Category? · amountCents Int
+                type(INCOME|EXPENSE) · description · <b>occurredOn Date</b>
+                createdAt · updatedAt · idempotencyKey?
+                <i>@@index([userId, occurredOn(sort: Desc)])</i>
+                <i>@@unique([userId, idempotencyKey])</i>
+
+<i>— a partir da Fase 6 —</i>
+<b>MerchantRule</b>  id · userId → User · pattern · categoryId → Category
+<b>Suggestion</b>    id · transactionId · predictedCategoryId · confidence
+                modelVersion · acceptedAt?   <i>← alimenta o próximo treino</i></pre>
+  <p>Repare que <code>Category</code> pertence ao usuário. É tentador fazer categorias globais para simplificar, mas aí um usuário não pode renomear "Lazer" para "Diversão" sem afetar todo mundo. Categoria própria por usuário, criada a partir de um conjunto padrão no cadastro, é a modelagem correta — e ela força você a lidar com ownership em duas tabelas em vez de uma, o que é bom para o aprendizado.</p>
+
+  <h3>Os três fluxos que definem o sistema</h3>
+  <div class="grid2">
+    <div class="panel">
+      <h5>Fluxo A · Login</h5>
+      <p><code>POST /auth/login</code> → valida corpo com Zod → busca usuário por e-mail → <code>bcrypt.compare</code> → gera access JWT (15 min) → gera refresh, grava o hash → devolve access no corpo e refresh no cookie <code>httpOnly</code> → front guarda o access em memória e agenda renovação.</p>
+    </div>
+    <div class="panel">
+      <h5>Fluxo B · Criar transação</h5>
+      <p><code>POST /transactions</code> → <code>requireUser</code> valida o JWT e injeta <code>req.user</code> → Zod valida corpo → verifica que a <code>categoryId</code> pertence ao usuário → grava com <code>userId</code> do token, <strong>nunca</strong> do corpo → dispara sugestão de categoria sem bloquear a resposta → 201.</p>
+    </div>
+    <div class="panel">
+      <h5>Fluxo C · Dashboard</h5>
+      <p><code>GET /dashboard?from&amp;to</code> → uma query com <code>GROUP BY category_id</code> e <code>SUM(amount_cents)</code> filtrada por <code>user_id</code> → nunca puxar todas as transações para somar em JavaScript. Agregação é trabalho do banco; ele tem índice e você não.</p>
+    </div>
+  </div>
+</section>
+<section id="s4">
+  <div class="sec-head">
+    <span class="sec-num">SEÇÃO 04</span>
+    <h2>Objetivos de aprendizagem</h2>
+  </div>
+
+  <p>Um objetivo de aprendizagem só vale se puder ser verificado. Por isso cada item abaixo está escrito como uma <strong>afirmação que você deve conseguir demonstrar sem consultar nada</strong> — no quadro branco, para outra pessoa. Se não conseguir, a fase não terminou, mesmo que o código funcione.</p>
+
+  <div class="scroll">
+  <table>
+    <thead><tr><th>Domínio</th><th>Você deve conseguir…</th><th>Verificado em</th></tr></thead>
+    <tbody>
+      <tr><td>HTTP e APIs</td><td>Desenhar o caminho completo de um login, do clique ao <code>200</code>, nomeando cada peça e o que ela faz</td><td>Checkpoint 1</td></tr>
+      <tr><td>Backend</td><td>Explicar o que um middleware é, por que a ordem deles importa, e o que quebra se você inverter dois</td><td>Checkpoint 2</td></tr>
+      <tr><td>SQL</td><td>Escrever à mão o <code>GROUP BY</code> do dashboard e explicar por que ele é mais rápido que somar em JS</td><td>Checkpoint 3</td></tr>
+      <tr><td>Autorização</td><td>Mostrar duas linhas de código que causam vazamento entre usuários, e a correção de cada uma</td><td>Checkpoint 4</td></tr>
+      <tr><td>Concorrência</td><td>Descrever um <em>lost update</em> com dois clientes simultâneos e três formas de evitá-lo</td><td>Checkpoint 6</td></tr>
+      <tr><td>React</td><td>Explicar por que um <code>useEffect</code> sem array de dependências pode chamar a API infinitamente</td><td>Checkpoint 5</td></tr>
+      <tr><td>Índices</td><td>Ler um <code>EXPLAIN ANALYZE</code> e apontar onde houve <em>seq scan</em> em vez de <em>index scan</em></td><td>Checkpoint 9</td></tr>
+      <tr><td>Docker</td><td>Explicar a diferença entre imagem, container e volume usando o Postgres do projeto</td><td>Checkpoint 7</td></tr>
+      <tr><td>Mobile</td><td>Justificar por que o refresh token vai para o <code>SecureStore</code> e não para o <code>AsyncStorage</code></td><td>Checkpoint 8</td></tr>
+      <tr><td>Data Science</td><td>Explicar o que você descobriu no EDA que mudou uma decisão de produto</td><td>Checkpoint 10</td></tr>
+      <tr><td>ML</td><td>Explicar por que acurácia é uma métrica ruim aqui, e qual você usou no lugar</td><td>Checkpoint 11</td></tr>
+      <tr><td>ML aplicado</td><td>Descrever um vazamento de dados (<em>data leakage</em>) que você poderia ter cometido nesse dataset</td><td>Checkpoint 11</td></tr>
+      <tr><td>Deploy</td><td>Listar tudo que muda entre o <code>.env</code> local e o de produção, e por quê</td><td>Checkpoint 12</td></tr>
+      <tr><td>CI/CD</td><td>Explicar o que sua pipeline impede de chegar em produção</td><td>Checkpoint 13</td></tr>
+      <tr><td>Escala</td><td>Estimar quantos usuários simultâneos sua arquitetura aguenta e qual é o próximo gargalo</td><td>Checkpoint 14</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="note why">
+    <span class="lbl">Regra do caderno de decisões</span>
+    <p>Mantenha <code>docs/adr/</code> no repositório. Toda vez que escolher entre duas opções, escreva um arquivo curto: <strong>contexto, opções consideradas, decisão, consequências</strong>. Dez minutos por decisão. No fim do projeto você terá 20 arquivos que respondem sozinhos a metade das perguntas de uma entrevista técnica — e, mais importante, escrever força você a perceber quando não sabe justificar a própria escolha.</p>
+  </div>
+</section>
+
+<section id="s5">
+  <div class="sec-head">
+    <span class="sec-num">SEÇÃO 05</span>
+    <h2>Pré-requisitos</h2>
+  </div>
+
+  <h3>O que você precisa já ter</h3>
+  <ul>
+    <li>Lógica de programação: variáveis, condicionais, laços, funções, listas e dicionários. Você já tem, via Python.</li>
+    <li>Disposição para ficar travado. A maior parte do aprendizado real acontece nos 40 minutos entre o erro e a solução. Encurtar esse intervalo com IA é encurtar o aprendizado — veja a <a href="#s24">Seção 24</a>.</li>
+    <li>10 a 15 horas por semana com alguma regularidade. Três blocos de 4 h rendem muito mais que catorze blocos de 1 h.</li>
+  </ul>
+
+  <h3>Ambiente — instale na semana 1, não depois</h3>
+  <div class="scroll">
+  <table>
+    <thead><tr><th>Ferramenta</th><th>Versão</th><th>Observação para Windows</th></tr></thead>
+    <tbody>
+      <tr><td>Node.js LTS</td><td>22.x</td><td>Instale via <code>fnm</code> ou <code>nvm-windows</code>, não pelo instalador .msi — você vai querer trocar de versão</td></tr>
+      <tr><td>pnpm</td><td>9+</td><td><code>corepack enable</code> já resolve</td></tr>
+      <tr><td>Git</td><td>2.4x</td><td>Configure <code>core.autocrlf=input</code> para não sujar diffs com CRLF</td></tr>
+      <tr><td>VS Code</td><td>atual</td><td>Extensões: ESLint, Prettier, Prisma, Error Lens, REST Client</td></tr>
+      <tr><td>Docker Desktop</td><td>atual</td><td>Requer WSL2. Instale já, mesmo sem usar até a semana 6</td></tr>
+      <tr><td>Python</td><td>3.12</td><td>Marque "Add to PATH". Use <code>uv</code> ou <code>venv</code> — nunca instale pacote global</td></tr>
+      <tr><td>Conta GitHub</td><td>—</td><td>Configure chave SSH agora e nunca mais digite senha</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="note trap">
+    <span class="lbl">Windows · três pegadinhas</span>
+    <ul>
+      <li><strong>Antivírus e <code>node_modules</code>:</strong> adicione a pasta do projeto às exclusões do Windows Defender. Isso reduz o tempo de <code>pnpm install</code> pela metade.</li>
+      <li><strong>Fim de linha:</strong> um <code>.gitattributes</code> com <code>* text=auto eol=lf</code> evita commits em que "o arquivo inteiro mudou".</li>
+      <li><strong>Porta 5432:</strong> se você já tiver um Postgres instalado no Windows, ele vai conflitar com o do Docker. Mapeie o container para <code>5433</code> e economize uma tarde.</li>
+    </ul>
+  </div>
+</section>
+
+<section id="s6">
+  <div class="sec-head">
+    <span class="sec-num">SEÇÃO 06</span>
+    <h2>Fase 0 — Fundamentos</h2>
+  </div>
+  <div class="phase">
+    <div class="phase-top">
+      <span class="phase-n">00</span>
+      <span class="chip on">Semanas 1–3</span>
+      <span class="chip">~36 h</span>
+      <span class="chip">Sem app ainda</span>
+    </div>
+  </div>
+
+  <p>Três semanas, e nem um minuto a mais. O objetivo da Fase 0 não é dominar nada — é eliminar a fricção que faria você travar por motivo errado nas primeiras semanas de construção. Tudo aqui é <em>apenas o suficiente</em>.</p>
+
+  <div class="scroll">
+  <table>
+    <thead><tr><th>Assunto</th><th>Profundidade necessária</th><th>Exercício</th><th>Onde é usado</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><strong>Terminal</strong></td>
+        <td>Navegar, criar/mover/apagar, ler saída de erro, encadear comandos. Nada de scripting.</td>
+        <td>Criar a estrutura de pastas do monorepo só pelo terminal.</td>
+        <td>Todos os dias, até a semana 42.</td>
+      </tr>
+      <tr>
+        <td><strong>Git</strong></td>
+        <td><code>add · commit · push · branch · checkout · merge · log · diff</code>. Entender o que é <em>staging area</em>. Resolver um conflito.</td>
+        <td>Criar conflito de propósito em duas branches e resolver na mão.</td>
+        <td>Branch por feature a partir da semana 4.</td>
+      </tr>
+      <tr>
+        <td><strong>HTTP</strong></td>
+        <td>Requisição/resposta, métodos, status, headers, corpo. O que é <em>stateless</em>. Ler a aba Network do navegador.</td>
+        <td>Abrir a Network num site conhecido e narrar em voz alta o que cada requisição faz.</td>
+        <td>É o alicerce de tudo. Semana 4 em diante.</td>
+      </tr>
+      <tr>
+        <td><strong>JSON</strong></td>
+        <td>Sintaxe, tipos, aninhamento. Que JSON é <em>texto</em>, e por isso não existe data em JSON.</td>
+        <td>Escrever à mão o JSON de uma transação e de uma lista paginada.</td>
+        <td>Todo corpo de requisição e resposta.</td>
+      </tr>
+      <tr>
+        <td><strong>REST</strong></td>
+        <td>Recurso, coleção, URL como substantivo, método como verbo. Quando <code>200 · 201 · 204 · 400 · 401 · 403 · 404 · 409 · 422 · 500</code>.</td>
+        <td>Projetar no papel os 12 endpoints do MVP, com método, caminho, corpo e status de sucesso e erro.</td>
+        <td>Contrato da API, semana 4.</td>
+      </tr>
+      <tr>
+        <td><strong>JS moderno</strong></td>
+        <td><code>const/let</code>, arrow, template string, desestruturação, spread, <code>map/filter/reduce</code>, módulos, <code>async/await</code>, <em>event loop</em> em nível conceitual.</td>
+        <td>Reescrever em JS três funções que você já fez em Python.</td>
+        <td>Linguagem do backend e do front.</td>
+      </tr>
+      <tr>
+        <td><strong>TypeScript</strong></td>
+        <td>Tipos primitivos, <code>interface</code>/<code>type</code>, união, opcional, genérico só como consumidor. <strong>Nada de decorators, nada de tipos condicionais.</strong></td>
+        <td>Tipar as funções JS do exercício anterior. Provocar três erros de compilação de propósito e entender cada mensagem.</td>
+        <td>API e web, o projeto inteiro.</td>
+      </tr>
+      <tr>
+        <td><strong>Modelo relacional</strong></td>
+        <td>Tabela, linha, coluna, tipo, chave primária, chave estrangeira, <code>NOT NULL</code>, <code>UNIQUE</code>. 1:N e N:N.</td>
+        <td>Modelar no papel: usuário, categoria, transação. Marcar as chaves e justificar cada <code>NOT NULL</code>.</td>
+        <td>Schema, semana 6.</td>
+      </tr>
+      <tr>
+        <td><strong>SQL</strong></td>
+        <td><code>SELECT · WHERE · ORDER BY · LIMIT · INSERT · UPDATE · DELETE · JOIN · GROUP BY</code> com agregações.</td>
+        <td>Trinta consultas sobre uma base de exemplo, escritas à mão, sem ORM.</td>
+        <td>Semana 6, e para entender o que o Prisma gera.</td>
+      </tr>
+      <tr>
+        <td><strong>Cliente/servidor</strong></td>
+        <td>Quem executa o quê, onde. Por que o segredo do JWT nunca pode estar no front. O que é uma origem e por que existe CORS.</td>
+        <td>Desenhar de memória o caminho de um clique até o banco e voltar.</td>
+        <td>Toda decisão de arquitetura.</td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h3>Por que <em>esta</em> lista, e não outra</h3>
+  <p>Não há CSS avançado, algoritmos, estruturas de dados, padrões de projeto ou POO nesta fase. Não porque não importem, mas porque nenhum deles é o motivo pelo qual alguém trava na semana 5. O que trava é: não saber o que significa <code>401</code>, não entender por que <code>await</code> devolve o valor e não a Promise, e não saber o que é uma chave estrangeira.</p>
+
+  <div class="note dec">
+    <span class="lbl">Critério para sair da Fase 0</span>
+    <p>Você consegue, sem consultar: criar um repositório, fazer três commits em uma branch e mergear; explicar a diferença entre <code>401</code> e <code>403</code>; escrever um <code>SELECT</code> com <code>JOIN</code> e <code>GROUP BY</code>; e explicar por que <code>async/await</code> existe. Se sim, comece a Fase 1 <strong>hoje</strong> — não estenda a Fase 0 por conforto.</p>
+  </div>
+</section>
+<section id="s7">
+  <div class="sec-head">
+    <span class="sec-num">SEÇÃO 07</span>
+    <h2>Fase 1 — MVP local</h2>
+  </div>
+  <div class="phase">
+    <div class="phase-top">
+      <span class="phase-n">01</span>
+      <span class="chip on">Semanas 4–9</span>
+      <span class="chip">~72 h</span>
+      <span class="chip">Roda em <code>localhost</code></span>
+    </div>
+  </div>
+
+  <p>O objetivo desta fase é <strong>uma volta completa</strong> — clique no navegador, requisição HTTP, handler no Node, linha no Postgres, resposta, tela atualizada. Você vai construir isso de forma deliberadamente ingênua, porque cada ingenuidade aqui vira uma aula na Fase 2.</p>
+
+  <h3>A ordem importa</h3>
+  <div class="diag">
+    <span class="dcap">Ordem de construção do MVP</span>
+    <div class="dnode sm">1 · API com dados em array na memória</div>
+    <div class="dedge"></div>
+    <div class="dnode sm">2 · Postgres no Docker, SQL escrito à mão</div>
+    <div class="dedge"></div>
+    <div class="dnode sm">3 · Prisma substitui o SQL manual</div>
+    <div class="dedge"></div>
+    <div class="dnode sm">4 · React consome a API</div>
+    <div class="dedge"></div>
+    <div class="dnode hi">5 · Login ingênuo · uma volta completa fechada</div>
+  </div>
+  <p><strong>Começar com array na memória não é perda de tempo</strong>: separa "aprender Express" de "aprender banco". Quando o array sumir a cada reinício do servidor, você terá sentido na pele por que persistência existe — e a lição gruda. Escrever SQL à mão antes do Prisma tem o mesmo propósito: você precisa saber o que o ORM está escondendo antes de deixá-lo esconder.</p>
+
+  <h3>Conceitos novos, na ordem em que aparecem</h3>
+  <div class="grid2">
+    <div class="panel">
+      <h5>Backend</h5>
+      <ul>
+        <li><code>npm init</code>, <code>package.json</code>, dependência vs. devDependency</li>
+        <li><code>tsconfig.json</code> e o que <code>strict: true</code> muda</li>
+        <li>Roteamento, <code>req</code>/<code>res</code>, <code>express.json()</code></li>
+        <li>Middleware e por que a ordem é sequencial</li>
+        <li>Status codes escolhidos de propósito</li>
+        <li><code>.env</code> e por que ele nunca vai para o Git</li>
+      </ul>
+    </div>
+    <div class="panel">
+      <h5>Banco</h5>
+      <ul>
+        <li>Container do Postgres, volume, persistência entre reinícios</li>
+        <li><code>CREATE TABLE</code> com PK, FK e <code>NOT NULL</code></li>
+        <li>Consultas com <code>JOIN</code> e <code>GROUP BY</code> escritas à mão</li>
+        <li>Prisma: <code>schema.prisma</code>, <code>migrate dev</code>, cliente tipado</li>
+        <li>O que uma migration é e por que ela é versionada</li>
+      </ul>
+    </div>
+    <div class="panel">
+      <h5>Frontend</h5>
+      <ul>
+        <li>Vite, componente, props, <code>useState</code></li>
+        <li><code>fetch</code>, <code>useEffect</code> e array de dependências</li>
+        <li>Estados de carregando / erro / vazio como cidadãos de primeira classe</li>
+        <li>Formulário controlado</li>
+        <li>CORS — o erro vai acontecer, e você vai entender por quê</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="note trap">
+    <span class="lbl">O que vai dar errado — e é para dar</span>
+    <ul>
+      <li><strong>CORS bloqueando o front.</strong> Não instale <code>cors</code> às cegas: leia o erro, entenda o que é origem, e configure <code>origin</code> explicitamente em vez de <code>*</code>.</li>
+      <li><strong><code>useEffect</code> em laço infinito.</strong> Vai acontecer. É o rito de passagem do React.</li>
+      <li><strong>Senha em texto puro.</strong> No MVP você vai fazer isso de propósito. Na semana 10, a primeira coisa da Fase 2 é consertar — e você nunca mais esquece por quê.</li>
+      <li><strong>Dinheiro em <code>Float</code>.</strong> <em>Não faça.</em> Esta é a única ingenuidade que não vale a pena cometer: migrar dados monetários depois dá muito mais trabalho do que acertar agora.</li>
+    </ul>
+  </div>
+
+  <div class="note dec">
+    <span class="lbl">MVP concluído quando</span>
+    <p>Cadastro, login e logout funcionam; criar, listar, editar e excluir transação funcionam; a categoria aparece na listagem via <code>JOIN</code>; o dashboard mostra saldo, entradas e saídas; os dados sobrevivem a reiniciar o servidor e o container; o front trata carregando e erro; e existe um <code>README</code> que explica como rodar o projeto do zero em outra máquina.</p>
+  </div>
+</section>
+
+<section id="s8">
+  <div class="sec-head">
+    <span class="sec-num">SEÇÃO 08</span>
+    <h2>Fase 2 — V1 web multiusuário</h2>
+  </div>
+  <div class="phase">
+    <div class="phase-top">
+      <span class="phase-n">02</span>
+      <span class="chip on">Semanas 10–16</span>
+      <span class="chip">~84 h</span>
+      <span class="chip">A fase mais importante</span>
+    </div>
+  </div>
+
+  <p>Se você só puder fazer uma fase bem feita, faça esta. É aqui que o projeto deixa de ser exercício e vira software. Multiusuário não é uma funcionalidade que se adiciona — é uma propriedade que todo código precisa respeitar.</p>
+
+  <h3>2.1 · Autenticação de verdade</h3>
+  <p>Substitui o login ingênuo. Antes de escrever qualquer linha, entenda os ataques:</p>
+  <div class="scroll">
+  <table>
+    <thead><tr><th>Ataque</th><th>O que acontece</th><th>Defesa nesta fase</th></tr></thead>
+    <tbody>
+      <tr><td>Vazamento do banco</td><td>Atacante lê as senhas e testa em outros sites</td><td>bcrypt custo 12 — hash lento e com sal por linha</td></tr>
+      <tr><td>Rainbow table</td><td>Hash pré-computado casa com senhas comuns</td><td>O sal do bcrypt torna a tabela inútil</td></tr>
+      <tr><td>Roubo de token via XSS</td><td>Script injetado lê o <code>localStorage</code></td><td>Access em memória, refresh em cookie <code>httpOnly</code></td></tr>
+      <tr><td>Reuso de token roubado</td><td>Atacante usa o refresh depois da vítima</td><td>Rotação: token usado duas vezes revoga a família</td></tr>
+      <tr><td>Força bruta no login</td><td>Milhares de tentativas por minuto</td><td>Rate limit por IP e por e-mail</td></tr>
+      <tr><td>Enumeração de usuário</td><td>Descobrir quais e-mails existem pela mensagem de erro</td><td>Resposta idêntica para e-mail inexistente e senha errada</td></tr>
+      <tr><td>Timing attack</td><td>Resposta mais rápida denuncia e-mail inexistente</td><td>Comparar contra um hash falso quando o usuário não existe</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h3>2.2 · Isolamento de dados — o coração da fase</h3>
+  <p>Três camadas, cada uma cobrindo a falha da anterior:</p>
+  <pre class="code"><b>Camada 1 · Identidade</b>
+  requireUser lê o JWT do header, valida assinatura e expiração,
+  injeta req.user = { id }. <i>A partir daqui, req.user.id é a única</i>
+  <i>fonte de verdade sobre quem está falando.</i>
+
+<b>Camada 2 · Escopo em toda query</b>
+  userId entra no WHERE de TODO acesso — inclusive update e delete.
+  <i>O corpo da requisição nunca pode carregar userId. Se carregar, ignore.</i>
+
+<b>Camada 3 · Testes de autorização</b>
+  Para cada endpoint, um teste que cria dois usuários, faz A tentar
+  acessar o recurso de B, e exige 404. <i>Isso vira a rede de segurança</i>
+  <i>que sobrevive a toda refatoração futura.</i></pre>
+  <div class="note risk">
+    <span class="lbl">Exercício obrigatório · o vazamento provocado</span>
+    <p>Escreva de propósito um endpoint <code>GET /transactions/:id</code> que busca só pelo id. Crie dois usuários, pegue o id de uma transação do usuário B logado como A, e acesse. Veja o dado da outra pessoa aparecer na sua tela. <strong>Tire um print.</strong> Depois corrija e escreva o teste que impede a volta. Esse print e essa história valem mais numa entrevista do que qualquer certificado — e o susto de ver acontecendo faz você conferir o <code>WHERE</code> pelo resto da carreira.</p>
+  </div>
+
+  <h3>2.3 · Validação e erros</h3>
+  <p>Zod na fronteira: todo corpo, query e parâmetro passa por um schema antes de tocar a regra de negócio. Uma classe <code>AppError</code> com <code>status</code> e <code>code</code>, um único <em>error handler</em> no fim da cadeia, e um formato de erro estável:</p>
+  <pre class="code">{ "error": { "code": "VALIDATION_ERROR", "message": "Dados inválidos",
+             "fields": { "amountCents": "deve ser maior que zero" } } }</pre>
+  <p>Nunca vaze <em>stack trace</em> para o cliente em produção — ela entrega estrutura de pastas, versões de biblioteca e às vezes trechos de query. Log completo no servidor, mensagem genérica na resposta.</p>
+
+  <h3>2.4 · Listagem que aguenta volume</h3>
+  <p>Paginação por <strong>cursor</strong>, não por <code>OFFSET</code>. Motivo: <code>OFFSET 10000</code> obriga o Postgres a percorrer e descartar 10 000 linhas, e se alguém inserir uma transação entre duas páginas, um item pula ou repete. Cursor sobre <code>(occurredOn, id)</code> é estável e usa o índice direto.</p>
+  <pre class="code">GET /transactions?limit=20&amp;cursor=2026-08-14_c1f9&amp;category=3&amp;type=EXPENSE&amp;q=uber
+
+<i>-- traduz para --</i>
+WHERE user_id = $1
+  AND (occurred_on, id) &lt; ($2, $3)   <i>← o cursor decodificado</i>
+  AND category_id = $4
+ORDER BY occurred_on DESC, id DESC
+LIMIT 21;                             <i>← 21 para saber se há próxima página</i></pre>
+
+  <h3>2.5 · Frontend de aplicação, não de exercício</h3>
+  <ul>
+    <li><strong>React Router</strong> com rotas protegidas: sem sessão, redireciona para <code>/login</code> guardando o destino.</li>
+    <li><strong>TanStack Query</strong> para dados do servidor. Vale a pena aqui porque resolve cache, revalidação, estados de carregamento e <em>race condition</em> entre requisições — problemas que você já sentiu na Fase 1 escrevendo <code>useEffect</code> na mão. É um bom exemplo de biblioteca introduzida <em>depois</em> da dor.</li>
+    <li><strong>Um único cliente HTTP</strong> que anexa o access token e, ao receber <code>401</code>, tenta o refresh uma vez e repete a requisição. Cuidado com o laço infinito: se o refresh falhar, desloga.</li>
+    <li><strong>Recharts</strong> para gráficos: barra por categoria e linha de evolução mensal.</li>
+    <li><strong>Estado vazio de verdade.</strong> Usuário recém-cadastrado vê uma tela vazia. Ela precisa dizer o que fazer, não ficar em branco.</li>
+  </ul>
+
+  <div class="note dec">
+    <span class="lbl">V1 concluída quando</span>
+    <p>Dois usuários reais conseguem usar o app ao mesmo tempo sem enxergar nada um do outro; todo endpoint tem teste de autorização passando; toda entrada é validada; erros têm formato consistente; a listagem pagina, filtra e busca; o dashboard tem dois gráficos; e as rotas protegidas se comportam corretamente ao expirar a sessão.</p>
+  </div>
+</section>
+
+<section id="s9">
+  <div class="sec-head">
+    <span class="sec-num">SEÇÃO 09</span>
+    <h2>Fase 3 — Qualidade, concorrência e primeiro deploy</h2>
+  </div>
+  <div class="phase">
+    <div class="phase-top">
+      <span class="phase-n">03</span>
+      <span class="chip on">Semanas 17–20</span>
+      <span class="chip">~48 h</span>
+      <span class="chip">O app fica online</span>
+    </div>
+  </div>
+
+  <p>Esta fase foi antecipada em relação ao seu plano original. O motivo está na <a href="#s1">Seção 1, P10</a>: colocar no ar cedo, com o sistema ainda simples, é o que torna deploy uma rotina em vez de um evento.</p>
+
+  <h3>3.1 · Docker — introduzido pelo problema que resolve</h3>
+  <p>Você já usa o Postgres em container desde a semana 6. Agora o <code>docker-compose.yml</code> passa a subir banco + API + web com um comando, e o <code>Dockerfile</code> multi-estágio da API vira o artefato de deploy. Conceitos: imagem vs. container vs. volume, camadas e cache de build, rede entre containers (por que a API chama <code>db:5432</code> e não <code>localhost</code>), e por que <code>node_modules</code> nunca é copiado de dentro do host.</p>
+
+  <h3>3.2 · Concorrência — a trilha que quase todo curso pula</h3>
+  <p>Seu backend é <em>single-threaded</em> mas <em>não</em> sequencial: o event loop intercala centenas de requisições enquanto cada uma espera o banco. Isso significa que duas requisições do mesmo usuário podem estar no meio da mesma operação ao mesmo tempo.</p>
+
+  <h4>Cenário A · Duplo clique no botão salvar</h4>
+  <p>O usuário clica duas vezes. Duas requisições idênticas chegam com 40 ms de diferença. Resultado: duas transações iguais no banco. A UI desabilitar o botão ajuda, mas não resolve — a rede pode reenviar, e o mobile pode repetir ao reconectar.</p>
+  <pre class="code"><b>Solução · chave de idempotência</b>
+O cliente gera um UUID e envia em <i>Idempotency-Key</i>.
+O banco tem @@unique([userId, idempotencyKey]).
+A segunda inserção viola a constraint (erro P2002 no Prisma) →
+a API responde 200 com a transação já criada, em vez de 500.
+
+<i>Por que no banco e não numa checagem antes do insert:</i>
+<i>"SELECT, se não existe INSERT" tem uma janela entre as duas</i>
+<i>operações onde a outra requisição cabe. A constraint UNIQUE é</i>
+<i>verificada pelo Postgres de forma atômica. Não há janela.</i></pre>
+
+  <h4>Cenário B · Lost update (o clássico)</h4>
+  <p>Imagine um campo <code>spent_cents</code> num orçamento mensal. Duas transações são criadas ao mesmo tempo:</p>
+  <pre class="code"><b>Errado — ler, calcular em JS, gravar</b>
+  Req A: SELECT spent_cents  → 10000
+  Req B: SELECT spent_cents  → 10000     <i>← lê o mesmo valor</i>
+  Req A: UPDATE SET spent_cents = 10000 + 2500  → 12500
+  Req B: UPDATE SET spent_cents = 10000 + 3000  → 13000
+  <i>Resultado: 13000. O gasto de 2500 desapareceu.</i>
+
+<b>Certo — deixar o banco calcular</b>
+  UPDATE budgets SET spent_cents = <b>spent_cents +</b> $1 WHERE id = $2;
+  <i>O Postgres serializa os dois UPDATE na mesma linha. Resultado: 15500.</i>
+
+<b>Certo — quando a lógica é complexa demais para um UPDATE</b>
+  BEGIN;
+    SELECT * FROM budgets WHERE id = $1 <b>FOR UPDATE</b>;  <i>← trava a linha</i>
+    ... calcula em JS ...
+    UPDATE budgets SET ... WHERE id = $1;
+  COMMIT;
+  <i>A segunda requisição espera o COMMIT. Correto, porém mais lento.</i>
+
+<b>Certo — bloqueio otimista, para edição concorrente de formulário</b>
+  UPDATE transactions SET ..., version = version + 1
+   WHERE id = $1 AND user_id = $2 AND <b>version = $3</b>;
+  <i>0 linhas afetadas = alguém editou antes de você → responda 409</i>
+  <i>e mostre "este registro mudou, recarregue".</i></pre>
+
+  <h4>Cenário C · Pool de conexões</h4>
+  <p>O Prisma abre um pool (padrão: <code>núcleos × 2 + 1</code>). Se 50 requisições chegam e o pool tem 9 conexões, 41 esperam na fila. Isso é <em>correto</em> — é assim que o pool protege o banco de ser derrubado. O que dá errado é: pool grande demais (o Postgres é quem sofre), transação longa segurando conexão (nunca chame HTTP externo dentro de uma transação de banco), e serviço serverless multiplicando pools.</p>
+
+  <h4>Cenário D · Níveis de isolamento</h4>
+  <p>O padrão do Postgres é <code>READ COMMITTED</code>: dentro da sua transação, você só enxerga o que já foi confirmado — mas duas leituras seguidas podem devolver valores diferentes se outra transação confirmou no meio. Para o dashboard isso é irrelevante. Para uma operação que lê e depois decide, importa muito. Saber que <code>REPEATABLE READ</code> e <code>SERIALIZABLE</code> existem, e que o preço deles é erro de serialização que você precisa tratar com retentativa, é o suficiente neste projeto.</p>
+
+  <div class="note why">
+    <span class="lbl">Exercício de concorrência</span>
+    <p>Escreva um script que dispare 200 requisições simultâneas de criação de transação com a <em>mesma</em> chave de idempotência e 200 com chaves diferentes. Verifique: o banco deve ter exatamente 201 linhas novas. Depois rode <code>autocannon</code> por 30 s e observe a latência p95 subir conforme o pool satura. <strong>Anote os números</strong> — eles voltam na Seção 16.</p>
+  </div>
+
+  <h3>3.3 · Primeiro deploy</h3>
+  <p>Sem CI ainda — deploy manual, de propósito, para você sentir cada passo. Postgres no Neon, API no Render, web na Vercel. As descobertas previsíveis: o banco gerenciado exige <code>sslmode=require</code>; <code>NODE_ENV=production</code> muda o comportamento do Express; a URL da API no front precisa vir de variável de ambiente de build; o CORS agora tem duas origens; e <code>prisma migrate deploy</code> — não <code>dev</code> — é o comando de produção.</p>
+
+  <div class="note dec">
+    <span class="lbl">Fase 3 concluída quando</span>
+    <p>O app está acessível numa URL pública com HTTPS; uma pessoa que não é você conseguiu criar conta e lançar uma transação; <code>docker compose up</code> sobe o ambiente inteiro em uma máquina limpa; os testes de concorrência passam; e existe um <code>docs/deploy.md</code> descrevendo o processo manual passo a passo — que vira a especificação da automação da Fase 8.</p>
+  </div>
+</section>
+
+<section id="s10">
+  <div class="sec-head">
+    <span class="sec-num">SEÇÃO 10</span>
+    <h2>Fase 4 — Mobile</h2>
+  </div>
+  <div class="phase">
+    <div class="phase-top">
+      <span class="phase-n">04</span>
+      <span class="chip on">Semanas 21–24</span>
+      <span class="chip">~48 h</span>
+      <span class="chip">Zero mudança na API</span>
+    </div>
+  </div>
+
+  <p>O critério de sucesso desta fase é peculiar: <strong>a API não deve precisar de nenhuma alteração</strong>. Se precisar, é porque a V1 vazou premissas de navegador para dentro do backend — e descobrir isso é parte do aprendizado.</p>
+
+  <h3>O que é compartilhado e o que não é</h3>
+  <div class="scroll">
+  <table>
+    <thead><tr><th>Camada</th><th>Compartilhar?</th><th>Motivo</th></tr></thead>
+    <tbody>
+      <tr><td>Tipos e schemas Zod</td><td>Sim — <code>packages/shared</code></td><td>É o contrato. Duplicar é garantir divergência.</td></tr>
+      <tr><td>Funções de formatação (moeda, data)</td><td>Sim</td><td>Lógica pura, sem DOM.</td></tr>
+      <tr><td>Cliente HTTP</td><td>Parcial</td><td>A lógica de refresh é a mesma; o armazenamento do token é diferente.</td></tr>
+      <tr><td>Componentes de UI</td><td><strong>Não</strong></td><td><code>&lt;div&gt;</code> não existe em React Native. Tentar unificar com React Native Web custa mais do que reescrever cinco telas.</td></tr>
+      <tr><td>Navegação</td><td>Não</td><td>Expo Router usa arquivos; a semântica de pilha e aba não tem equivalente na web.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h3>Diferenças que mudam decisões</h3>
+  <ul>
+    <li><strong>Armazenamento seguro.</strong> Cookie <code>httpOnly</code> não se aplica. O refresh vai para <code>expo-secure-store</code>, que usa Keychain no iOS e Keystore no Android. <code>AsyncStorage</code> é texto puro — nunca guarde credencial nele.</li>
+    <li><strong>Conectividade.</strong> Web assume rede; celular não. Toda tela precisa lidar com "sem conexão", e criação de transação precisa de retentativa — que é exatamente o motivo pelo qual a chave de idempotência da Fase 3 existe. As peças se encaixam.</li>
+    <li><strong>Ciclo de vida.</strong> O app volta do segundo plano depois de duas horas com o access token expirado. O refresh precisa acontecer sem o usuário perceber.</li>
+    <li><strong>Entrada de dados.</strong> Teclado numérico para valor, seletor nativo de data, alvos de toque de no mínimo 44 pt. Um formulário web transposto literalmente fica ruim de usar.</li>
+  </ul>
+
+  <div class="note dec">
+    <span class="lbl">Fase 4 concluída quando</span>
+    <p>O app roda no seu celular físico via Expo Go apontando para a API em produção; login persiste ao fechar e reabrir; as cinco telas principais funcionam (login, lista, criar, editar, resumo); há tratamento explícito de offline; e a API não teve um único commit por causa do mobile.</p>
+  </div>
+</section>
+
+<section id="s11">
+  <div class="sec-head">
+    <span class="sec-num">SEÇÃO 11</span>
+    <h2>Fase 5 — Data Science</h2>
+  </div>
+  <div class="phase">
+    <div class="phase-top">
+      <span class="phase-n">05</span>
+      <span class="chip on">Semanas 25–27</span>
+      <span class="chip">~36 h</span>
+      <span class="chip">Ainda sem modelo</span>
+    </div>
+  </div>
+
+  <p>Três semanas sem treinar nada. Isso é intencional: a maior parte dos projetos de ML de portfólio falha porque a pessoa pulou direto para <code>model.fit()</code> sem nunca ter olhado os dados. Aqui você olha.</p>
+
+  <h3>De onde vêm os dados</h3>
+  <div class="scroll">
+  <table>
+    <thead><tr><th>Etapa</th><th>Fonte</th><th>Volume</th><th>Serve para</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>Gerador sintético escrito por você</td><td>~5 000 linhas</td><td>Ter dados no dia 1; controlar a distribuição</td></tr>
+      <tr><td>2</td><td>Seus próprios extratos, anonimizados</td><td>200–800 linhas</td><td>Realismo — nomes de comerciante que existem de verdade</td></tr>
+      <tr><td>3</td><td>Datasets públicos de varejo/comerciantes</td><td>varia</td><td>Ampliar vocabulário de descrições</td></tr>
+      <tr><td>4</td><td>Correções feitas pelos usuários no app</td><td>cresce sozinho</td><td>Retreino contínuo, a partir da Fase 7</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="note risk">
+    <span class="lbl">Privacidade — regra inegociável</span>
+    <p>Extrato bancário é dado pessoal e, no Brasil, sujeito à LGPD. Antes de qualquer arquivo entrar no repositório: remova nome, CPF, agência, conta e identificadores de pessoa física nas descrições. Nunca faça commit de CSV com dado real — coloque <code>data/raw/</code> no <code>.gitignore</code> e versione apenas o gerador sintético e os agregados. Para dados de usuários do app, o treino só pode usar quem consentiu explicitamente, e o consentimento precisa ser opt-in, revogável e registrado. Documente isso no README; é diferencial real.</p>
+  </div>
+
+  <h3>O que fazer, em ordem</h3>
+  <ol>
+    <li><strong>Escrever o gerador sintético.</strong> Uma lista de comerciantes por categoria, variações realistas de escrita (<code>UBER *TRIP</code>, <code>UBER   TRIP SP</code>, <code>UBER*TRIP 04SET</code>), valores com distribuição plausível por categoria, sazonalidade e recorrentes mensais. <em>Escrever esse gerador ensina mais sobre os dados do que baixar um dataset pronto</em>, porque você é obrigado a decidir como o mundo real se comporta.</li>
+    <li><strong>Pandas na prática.</strong> <code>read_csv</code>, indexação, <code>groupby</code>, <code>merge</code>, <code>pivot_table</code>, <code>resample</code> por mês, tratamento de nulo e duplicata.</li>
+    <li><strong>EDA de verdade.</strong> Distribuição de valores por categoria (vai ser assimétrica, com cauda longa), balanceamento das classes (vai ser desbalanceado — Alimentação e Transporte dominam), comprimento e vocabulário das descrições, sazonalidade mensal.</li>
+    <li><strong>Estatística só do que você vai usar.</strong> Média vs. mediana e por que mediana é melhor para gasto; percentis; desvio padrão; correlação e sua diferença de causalidade; o suficiente sobre distribuição para entender por que uma média mensal engana.</li>
+    <li><strong>Feature engineering para texto.</strong> Normalização (maiúsculas, acentos, remoção de números de cartão e datas coladas na descrição), tokenização, e por que n-gramas de <em>caracteres</em> vencem n-gramas de palavras em descrições curtas e cheias de abreviação.</li>
+  </ol>
+
+  <div class="note dec">
+    <span class="lbl">Fase 5 concluída quando</span>
+    <p>Existe um notebook de EDA com pelo menos cinco descobertas escritas em português claro, e ao menos uma delas mudou uma decisão de produto ou de modelagem; o gerador sintético produz dados que você consegue defender como realistas; e o pipeline de limpeza é uma função <code>.py</code> testada, não células de notebook.</p>
+  </div>
+</section>
+
+<section id="s12">
+  <div class="sec-head">
+    <span class="sec-num">SEÇÃO 12</span>
+    <h2>Fase 6 — Machine Learning</h2>
+  </div>
+  <div class="phase">
+    <div class="phase-top">
+      <span class="phase-n">06</span>
+      <span class="chip on">Semanas 28–31</span>
+      <span class="chip">~48 h</span>
+      <span class="chip">Dois problemas</span>
+    </div>
+  </div>
+
+  <h3>Problema 1 · Classificação de transações</h3>
+  <p>Entrada: descrição textual (e, opcionalmente, valor). Saída: categoria + confiança. Supervisionado, multiclasse, texto curto.</p>
+
+  <h4>A baseline vem antes do modelo</h4>
+  <p>Primeiro implemente o classificador burro: casamento exato da descrição normalizada contra um dicionário. Meça. <strong>Esse número é a régua.</strong> Um modelo que não bate a baseline não deve ir para produção, por mais elegante que seja. Muita gente pula essa etapa e nunca descobre que gastou duas semanas para perder para vinte linhas de <code>if</code>.</p>
+
+  <h4>Sequência de trabalho</h4>
+  <pre class="code">1. Split <b>estratificado</b> treino/validação/teste — 70/15/15
+   <i>Estratificado porque as classes são desbalanceadas: um split</i>
+   <i>aleatório pode deixar uma categoria rara fora do treino.</i>
+2. Pipeline do sklearn: TfidfVectorizer(analyzer='char_wb',
+   ngram_range=(3,5)) → LogisticRegression(class_weight='balanced')
+   <i>Pipeline, e não passos soltos, porque assim o vectorizer é</i>
+   <i>ajustado só no treino — é o que impede data leakage.</i>
+3. Comparar: LogisticRegression · LinearSVC · MultinomialNB ·
+   RandomForest. Mesma métrica, mesmo split, tabela comparativa.
+4. Validação cruzada estratificada 5-fold para não decidir no ruído.
+5. Ajuste de hiperparâmetros com GridSearchCV — sobre a validação.
+6. Tocar o conjunto de teste <b>uma única vez</b>, no fim.
+7. Calibrar o limiar de abstenção olhando precisão × cobertura.
+8. Serializar com joblib: modelo + versão + data + métricas + a
+   lista de categorias, tudo num único artefato versionado.</pre>
+
+  <h4>Métricas — e por que acurácia mente aqui</h4>
+  <p>Se 40% das transações são Alimentação, um modelo que responde "Alimentação" para tudo acerta 40%. Use <strong>F1 macro</strong> (dá o mesmo peso a cada categoria, inclusive as raras), leia a <strong>matriz de confusão</strong> (as confusões são informativas: Mercado × Alimentação é um erro compreensível; Mercado × Transporte indica problema real), e acompanhe <strong>precisão por classe</strong> — porque numa sugestão automática, errar com confiança é pior do que não sugerir.</p>
+
+  <div class="note trap">
+    <span class="lbl">Data leakage · três formas de cometer neste projeto</span>
+    <ul>
+      <li>Ajustar o <code>TfidfVectorizer</code> no dataset inteiro antes do split — o vocabulário do teste vaza para o treino.</li>
+      <li>Dividir aleatoriamente quando existem transações recorrentes: a mesma "NETFLIX.COM" cai no treino e no teste, e a métrica infla.</li>
+      <li>Usar como feature a <code>categoryId</code> que o próprio usuário já corrigiu — você estaria prevendo a resposta com a resposta.</li>
+    </ul>
+  </div>
+
+  <h3>Problema 2 · Previsão de fechamento do mês</h3>
+  <p>Você pediu para eu escolher entre previsão de gastos, fluxo de caixa, detecção de anomalia e perfil de comportamento. <strong>Escolho previsão de fechamento do mês, resolvida em duas etapas: detecção de recorrentes + projeção do gasto variável.</strong></p>
+  <div class="scroll">
+  <table>
+    <thead><tr><th>Candidato</th><th>Valor educacional</th><th>Utilidade</th><th>Viabilidade</th><th>Veredito</th></tr></thead>
+    <tbody>
+      <tr><td>Fechamento do mês</td><td>Série temporal, validação temporal, incerteza</td><td>Alta — é a pergunta que o usuário faz</td><td>Alta — funciona com 2–3 meses de dados</td><td><span class="verdict v-keep">escolhido</span></td></tr>
+      <tr><td>Detecção de anomalia</td><td>Boa — não supervisionado</td><td>Média — muito falso positivo irrita</td><td>Baixa — sem rótulo, não há como medir</td><td><span class="verdict v-cut">não</span></td></tr>
+      <tr><td>Previsão de gasto por categoria</td><td>Média — repete o problema 1</td><td>Baixa</td><td>Baixa — pouquíssimo dado por célula</td><td><span class="verdict v-cut">não</span></td></tr>
+      <tr><td>Perfil de comportamento</td><td>Clusterização é interessante</td><td>Baixa — difícil de acionar</td><td>Média</td><td><span class="verdict v-cut">não</span></td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p><strong>Por que a decomposição em duas etapas:</strong> um usuário novo tem três meses de histórico, ou seja, três pontos na série mensal. Nenhum modelo de série temporal funciona com três pontos — e fingir que funciona seria desonesto. Mas gasto pessoal tem estrutura: uma parte é recorrente (aluguel, assinatura, mensalidade) e previsível quase com certeza; a outra é variável e só admite uma projeção com faixa de incerteza. Detectar recorrentes é um problema de agrupamento por descrição + regularidade de intervalo e valor — resolvido bem sem ML pesado. O resto é uma média móvel do gasto diário do mês projetada até o fim do período.</p>
+  <div class="note why">
+    <span class="lbl">Por que isso é <em>melhor</em> para o portfólio do que um modelo sofisticado</span>
+    <p>Porque a resposta certa para "por que você não usou LSTM aqui?" é <em>"porque eu tinha três pontos de dado por usuário, e eu medi"</em>. Reconhecer o limite do dado, decompor o problema e entregar uma previsão com faixa de incerteza é senioridade. Empilhar Prophet sobre dados insuficientes é o oposto. Apresente sempre um intervalo — "entre R$ 2 400 e R$ 3 100" — nunca um número seco: previsão sem incerteza é chute com aparência de ciência.</p>
+  </div>
+
+  <div class="note dec">
+    <span class="lbl">Fase 6 concluída quando</span>
+    <p>Existe <code>train.py</code> reprodutível (não notebook) que lê dados, treina, avalia e salva o artefato versionado; a tabela comparativa de modelos está no README com a baseline incluída; a matriz de confusão está interpretada em texto; o limiar de abstenção foi escolhido com base em dados, não por chute; e você consegue explicar por que o modelo escolhido venceu.</p>
+  </div>
+</section>
+
+<section id="s13">
+  <div class="sec-head">
+    <span class="sec-num">SEÇÃO 13</span>
+    <h2>Fase 7 — Integração do ML no sistema</h2>
+  </div>
+  <div class="phase">
+    <div class="phase-top">
+      <span class="phase-n">07</span>
+      <span class="chip on">Semanas 32–33</span>
+      <span class="chip">~24 h</span>
+      <span class="chip">O modelo encontra usuários</span>
+    </div>
+  </div>
+
+  <h3>As cinco arquiteturas, comparadas</h3>
+  <div class="scroll">
+  <table>
+    <thead><tr><th>Opção</th><th>Latência</th><th>Complexidade</th><th>Custo</th><th>Aprendizado</th><th>Veredito</th></tr></thead>
+    <tbody>
+      <tr><td><strong>A ·</strong> Node → serviço Python (FastAPI, mesma plataforma)</td><td>20–60 ms</td><td>Baixa</td><td>US$ 0–7</td><td>Alto: contrato entre serviços, timeout, degradação</td><td><span class="verdict v-keep">escolhido</span></td></tr>
+      <tr><td><strong>B ·</strong> Node → AWS Lambda</td><td>3–8 s a frio</td><td>Alta</td><td>Baixo em uso, alto em setup</td><td>Ensina AWS, não ensina ML</td><td><span class="verdict v-cut">não</span></td></tr>
+      <tr><td><strong>C ·</strong> Modelo dentro do Node (ONNX)</td><td>&lt; 5 ms</td><td>Média</td><td>US$ 0</td><td>Perde-se o ciclo de treino em Python</td><td><span class="verdict v-cut">não</span></td></tr>
+      <tr><td><strong>D ·</strong> Vários microserviços Python</td><td>—</td><td>Muito alta</td><td>Alto</td><td>Overengineering puro</td><td><span class="verdict v-cut">não</span></td></tr>
+      <tr><td><strong>E ·</strong> Regras no banco, sem ML</td><td>&lt; 1 ms</td><td>Mínima</td><td>US$ 0</td><td>Nenhum aprendizado de ML</td><td><span class="verdict v-keep">camada 1</span></td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p><strong>A + E.</strong> As regras determinísticas ficam no Node porque são consulta ao banco; o modelo fica no serviço Python porque é onde o ecossistema está. A opção C é tecnicamente elegante e vale um parágrafo no README como "alternativa considerada" — exportar para ONNX e rodar no Node elimina um serviço inteiro, mas afasta você do ciclo real de treino/avaliação, que é o que você quer aprender.</p>
+
+  <h3>Contrato e comportamento</h3>
+  <pre class="code"><b>POST</b> http://ml-service:8000/predict     <i>(rede interna, header X-Internal-Key)</i>
+{ "descriptions": ["UBER *TRIP", "IFOOD *REST"] }   <i>← em lote, sempre</i>
+
+<b>200</b>
+{ "modelVersion": "cls-2026-11-03",
+  "predictions": [
+    { "category": "Transporte",  "confidence": 0.94 },
+    { "category": null,          "confidence": 0.41 }   <i>← abaixo do limiar</i>
+  ] }</pre>
+  <p>Aceitar lote desde o começo evita reescrever a interface quando chegar a importação de CSV com 300 linhas. Uma chamada com 300 descrições custa quase o mesmo que uma com uma.</p>
+
+  <div class="diag">
+    <span class="dcap">Fluxo de categorização — a cascata</span>
+    <div class="dnode sm">POST /transactions chega</div>
+    <div class="dedge"></div>
+    <div class="dnode hi">Grava a transação e responde 201 <span class="dlabel">o usuário não espera pelo ML</span></div>
+    <div class="dedge"></div>
+    <div class="dnode sm">1 · Regra pessoal do usuário casa? → aplica, fim</div>
+    <div class="dedge"></div>
+    <div class="dnode sm">2 · Dicionário de comerciantes casa? → aplica, fim</div>
+    <div class="dedge"></div>
+    <div class="dnode ml">3 · ml-service · timeout 400 ms</div>
+    <div class="dedge"></div>
+    <div class="drow">
+      <div class="dnode sm">conf ≥ 0,60 → sugere</div>
+      <div class="dnode sm">conf &lt; 0,60 ou falha → sem sugestão</div>
+    </div>
+    <div class="dedge"></div>
+    <div class="dnode sm">Usuário aceita ou corrige → grava em Suggestion → vira dado de treino</div>
+  </div>
+
+  <h3>O laço de realimentação</h3>
+  <p>Toda correção do usuário é gravada com a predição original, a versão do modelo e a categoria final. Isso dá três coisas de graça: dados de treino rotulados de graça, uma métrica de produção de verdade (taxa de aceitação da sugestão), e a base para detectar <em>drift</em> — se a taxa de aceitação cair de 78% para 61% ao longo de um mês, o mundo mudou e o modelo não.</p>
+
+  <div class="note risk">
+    <span class="lbl">Privacidade no retreino</span>
+    <p>O modelo global aprende com descrições de todos os usuários. Descrição de transação pode conter nome próprio (PIX para pessoa física, por exemplo). Regra: só descrições que aparecem em <strong>pelo menos cinco usuários distintos</strong> entram no treino global — o que elimina naturalmente tudo que é idiossincrático de uma pessoa. O que é específico de um usuário fica na tabela <code>MerchantRule</code> dele, que nunca sai do escopo dele. Escreva isso num ADR; é o tipo de raciocínio que distingue um projeto de portfólio.</p>
+  </div>
+</section>
+
+<section id="s14">
+  <div class="sec-head">
+    <span class="sec-num">SEÇÃO 14</span>
+    <h2>Fase 8 — Cloud, CI/CD e infraestrutura</h2>
+  </div>
+  <div class="phase">
+    <div class="phase-top">
+      <span class="phase-n">08</span>
+      <span class="chip on">Semanas 34–37</span>
+      <span class="chip">~48 h</span>
+      <span class="chip">Deploy vira rotina</span>
+    </div>
+  </div>
+
+  <p>Como o app já está no ar desde a semana 20, esta fase não é sobre "aprender a publicar" — é sobre transformar um processo manual e assustador em algo automático e entediante. Entediante é o objetivo.</p>
+
+  <h3>O que entra aqui</h3>
+  <ul>
+    <li><strong>Pipeline de CI</strong> em GitHub Actions: lint → typecheck → testes com Postgres de serviço → build. Roda em todo pull request.</li>
+    <li><strong>Deploy automático</strong> ao mergear na <code>main</code>, com <code>prisma migrate deploy</code> como passo explícito e <em>health check</em> antes de considerar o deploy bem-sucedido.</li>
+    <li><strong>Ambientes.</strong> Produção e <em>staging</em>, com bancos separados. O branch de banco do Neon torna isso barato: staging pode ser um branch do banco de produção com dados anonimizados.</li>
+    <li><strong>Gestão de segredos.</strong> Nada de <code>.env</code> commitado; variáveis na plataforma e no GitHub Secrets; <code>env.ts</code> que valida na inicialização e derruba o processo se faltar uma variável — falhar cedo e alto é melhor do que descobrir em produção às 3 h.</li>
+    <li><strong>Backup.</strong> Confirme a retenção do provedor e <strong>execute um restore de teste</strong>. Backup nunca testado não é backup.</li>
+    <li><strong>Domínio e HTTPS</strong>, com redirecionamento de <code>www</code> e cabeçalhos de segurança via <code>helmet</code>.</li>
+    <li><strong>Módulo AWS opcional (semana 36).</strong> Escopo fechado: bucket S3 privado para artefatos de modelo e exportações CSV, usuário IAM com política de menor privilégio, URL pré-assinada com expiração. Você aprende IAM, política de bucket e assinatura resolvendo um problema real — sem NAT Gateway, sem VPC, sem surpresa na fatura.</li>
+  </ul>
+
+  <div class="note trap">
+    <span class="lbl">Migrations em produção</span>
+    <p>A migration roda enquanto a versão antiga do código ainda está no ar. Isso significa que toda mudança de schema precisa ser compatível com as duas versões: adicionar coluna <code>NOT NULL</code> sem default quebra o código antigo. O padrão de <strong>expandir, migrar, contrair</strong> — adiciona coluna opcional, faz o backfill, muda o código, e só depois torna obrigatória — é o que permite atualizar sem derrubar o sistema. Pratique isso pelo menos uma vez de propósito.</p>
+  </div>
+</section>
+
+<section id="s15">
+  <div class="sec-head">
+    <span class="sec-num">SEÇÃO 15</span>
+    <h2>Fase 9 — Produção multiusuário e otimização</h2>
+  </div>
+  <div class="phase">
+    <div class="phase-top">
+      <span class="phase-n">09</span>
+      <span class="chip on">Semanas 38–42</span>
+      <span class="chip">~60 h</span>
+      <span class="chip">Medir antes de otimizar</span>
+    </div>
+  </div>
+
+  <p>Esta fase é feita com número na mão. A regra que governa tudo aqui: <strong>nenhuma otimização sem uma medição antes e outra depois.</strong> Otimizar por intuição é como depurar por adivinhação.</p>
+
+  <h3>15.1 · Teste de carga real</h3>
+  <p>Popule o banco com 50 usuários e 20 000 transações. Rode <code>k6</code> ou <code>autocannon</code> simulando um perfil realista: 70% de leitura de listagem, 15% de dashboard, 15% de escrita. Registre p50, p95, p99 e taxa de erro. Esses números vão para o README — poucos projetos de portfólio têm isso, e é imediatamente visível para quem entende.</p>
+
+  <h3>15.2 · Onde o tempo vai</h3>
+  <div class="scroll">
+  <table>
+    <thead><tr><th>Sintoma provável</th><th>Diagnóstico</th><th>Correção</th></tr></thead>
+    <tbody>
+      <tr><td>Listagem lenta com muitas linhas</td><td><code>EXPLAIN ANALYZE</code> mostra <em>seq scan</em></td><td>Índice composto <code>(user_id, occurred_on DESC)</code></td></tr>
+      <tr><td>Dashboard lento</td><td>Agregação varrendo o ano inteiro</td><td><code>GROUP BY</code> no banco + cache curto em memória com invalidação na escrita</td></tr>
+      <tr><td>Latência explode acima de N conexões</td><td>Fila do pool</td><td>Ajustar <code>connection_limit</code>; usar o pooler do Neon</td></tr>
+      <tr><td>Payload grande</td><td>Endpoint devolvendo campos que ninguém usa</td><td><code>select</code> explícito no Prisma; compressão gzip</td></tr>
+      <tr><td>N+1 na listagem</td><td>Uma query de categoria por transação</td><td><code>include</code> no Prisma → vira <code>JOIN</code></td></tr>
+      <tr><td>Primeiro carregamento pesado</td><td>Bundle único e grande</td><td>Divisão por rota; carregar a biblioteca de gráfico sob demanda</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h3>15.3 · Proteção contra abuso</h3>
+  <ul>
+    <li>Rate limit global por IP e limites mais apertados em <code>/auth/login</code> e <code>/auth/register</code>.</li>
+    <li>Limites por usuário: teto de transações por dia, tamanho máximo de importação, tamanho máximo de corpo (<code>express.json({ limit: '100kb' })</code>).</li>
+    <li><code>limit</code> da paginação com teto rígido — sem isso, <code>?limit=999999</code> é um ataque de negação de serviço de uma linha.</li>
+    <li>Timeout em toda chamada externa. Sem timeout, uma dependência lenta esgota seu pool e derruba o app inteiro.</li>
+  </ul>
+
+  <div class="note dec">
+    <span class="lbl">Fase 9 concluída quando</span>
+    <p>Existe um relatório de carga com números antes/depois de cada otimização; toda query da listagem e do dashboard usa índice (comprovado por <code>EXPLAIN</code>); rate limit está ativo e testado; e você consegue responder, com dados seus, quantos usuários simultâneos a arquitetura aguenta e qual seria o próximo gargalo.</p>
+  </div>
+</section>
+<section id="s16">
+  <div class="sec-head">
+    <span class="sec-num">SEÇÃO 16</span>
+    <h2>Escalabilidade em quatro níveis</h2>
+  </div>
+
+  <p>Escalabilidade não é adicionar microserviços. É saber <em>onde</em> o sistema quebra em seguida e ter uma resposta proporcional. Os números abaixo são estimativas de ordem de grandeza para esta arquitetura, e existem para dar uma noção de escala — você vai substituí-los pelos seus na Fase 9.</p>
+
+  <div class="scroll">
+  <table>
+    <thead><tr><th>Nível</th><th>Usuários</th><th>Arquitetura</th><th>Primeiro gargalo</th><th>Custo/mês</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><strong>1</strong></td><td>1–10</td>
+        <td>Uma instância da API, um Postgres free, front em CDN</td>
+        <td><strong>Hibernação do free tier</strong> — nenhum limite técnico é atingido; o problema é o container dormir</td>
+        <td class="num">US$ 0</td>
+      </tr>
+      <tr>
+        <td><strong>2</strong></td><td>10–100</td>
+        <td>Igual, com instância paga e sem hibernação</td>
+        <td><strong>Query sem índice.</strong> Com 50 mil transações, uma listagem sem índice composto passa de 800 ms; com índice fica em 5 ms</td>
+        <td class="num">US$ 7–14</td>
+      </tr>
+      <tr>
+        <td><strong>3</strong></td><td>100–1 000</td>
+        <td>Duas instâncias da API atrás do balanceador da plataforma; pooler no banco; cache de dashboard</td>
+        <td><strong>Conexões e agregações.</strong> Cada instância traz seu pool; o dashboard vira a rota mais cara</td>
+        <td class="num">US$ 25–60</td>
+      </tr>
+      <tr>
+        <td><strong>4</strong></td><td>1 000+</td>
+        <td>Réplica de leitura; Redis para cache e rate limit distribuído; fila para tarefas de ML e importações</td>
+        <td><strong>Escrita no primário</strong> e trabalho pesado no caminho da requisição</td>
+        <td class="num">US$ 150+</td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h3>Quantos usuários simultâneos esta arquitetura aguenta?</h3>
+  <p>Separe três números que costumam ser confundidos:</p>
+  <div class="kv">
+    <dt>Cadastrados</dt><dd>Ilimitado até o disco acabar. Não é gargalo de ninguém.</dd>
+    <dt>Ativos por dia</dt><dd>Alguns milhares, tranquilamente.</dd>
+    <dt>Simultâneos de verdade</dt><dd>Requisições no mesmo instante — este é o número que importa.</dd>
+  </div>
+  <p>Uma instância Node de 512 MB atende algo entre <strong>150 e 400 requisições por segundo</strong> em rotas simples com índice adequado. Como uma pessoa usando o app gera cerca de uma requisição a cada 5–10 segundos, isso corresponde a algo na casa de <strong>1 000 a 3 000 pessoas usando ao mesmo tempo</strong> — muito acima do que este projeto vai ver.</p>
+  <div class="note why">
+    <span class="lbl">A conclusão que importa</span>
+    <p>O limite real não é o Node. É <strong>uma query sem índice</strong> ou <strong>uma transação de banco segurando conexão</strong>. Uma rota de dashboard mal escrita derruba o sistema com 20 usuários; a mesma rota com <code>GROUP BY</code> indexado aguenta 2 000. É por isso que a Fase 9 é sobre medir, e não sobre comprar máquina maior. Saber dizer isso — com o <code>EXPLAIN ANALYZE</code> na mão — é o que diferencia alguém que entende de escala de alguém que decorou a palavra.</p>
+  </div>
+
+  <h3>Sinais para mudar de nível</h3>
+  <ul>
+    <li><strong>Nível 1 → 2:</strong> alguém que não é você reclamou de lentidão, ou o app hibernou durante uma demonstração.</li>
+    <li><strong>Nível 2 → 3:</strong> p95 acima de 500 ms de forma consistente, ou a CPU passa de 70% em horário de pico.</li>
+    <li><strong>Nível 3 → 4:</strong> o banco satura mesmo com pooler, ou tarefas em lote começam a competir com requisições de usuário.</li>
+  </ul>
+  <p>Não pule níveis. Ir do 1 para o 4 "para estar preparado" é construir e operar complexidade que não resolve problema nenhum — e é exatamente o tipo de decisão que uma entrevista técnica boa vai questionar.</p>
+</section>
+
+<section id="s17">
+  <div class="sec-head">
+    <span class="sec-num">SEÇÃO 17</span>
+    <h2>Segurança</h2>
+  </div>
+
+  <p>Cada linha começa pelo ataque, porque defesa memorizada sem ameaça compreendida é ritual. Se você não sabe o que a medida impede, não sabe quando ela deixou de funcionar.</p>
+
+  <div class="scroll">
+  <table>
+    <thead><tr><th>Ameaça</th><th>Como o ataque funciona</th><th>Defesa</th><th>Fase</th></tr></thead>
+    <tbody>
+      <tr><td><strong>SQL injection</strong></td><td>Entrada do usuário concatenada na query muda a estrutura do SQL: <code>' OR 1=1 --</code></td><td>Query parametrizada sempre. O Prisma já faz; se usar <code>$queryRaw</code>, use a versão com template tag, nunca concatenação</td><td>1</td></tr>
+      <tr><td><strong>Vazamento por falta de escopo</strong></td><td>Trocar o id na URL e acessar dado alheio (IDOR)</td><td><code>userId</code> no <code>WHERE</code> de toda query; teste automatizado por endpoint; 404 em vez de 403</td><td>2</td></tr>
+      <tr><td><strong>Senha em texto puro</strong></td><td>Vazamento do banco expõe a senha, que a pessoa reusa em outros sites</td><td>bcrypt custo 12; nunca logar senha; nunca devolver o hash na API</td><td>2</td></tr>
+      <tr><td><strong>XSS</strong></td><td>Script injetado num campo executa no navegador de outro usuário e rouba o que estiver no <code>localStorage</code></td><td>React escapa por padrão — nunca use <code>dangerouslySetInnerHTML</code>; access token em memória; refresh em cookie <code>httpOnly</code>; CSP</td><td>2</td></tr>
+      <tr><td><strong>CSRF</strong></td><td>Site malicioso dispara requisição autenticada usando o cookie da vítima</td><td>Cookie <code>SameSite=Strict</code> no refresh; o access vai por header <code>Authorization</code>, que não é enviado automaticamente</td><td>2</td></tr>
+      <tr><td><strong>Força bruta</strong></td><td>Milhares de tentativas de senha por minuto</td><td>Rate limit por IP e por e-mail; atraso progressivo; bcrypt custo 12 já torna caro</td><td>2</td></tr>
+      <tr><td><strong>Enumeração de contas</strong></td><td>Mensagens diferentes revelam quais e-mails existem</td><td>Resposta e tempo idênticos nos dois casos</td><td>2</td></tr>
+      <tr><td><strong>Roubo de token</strong></td><td>Refresh interceptado é usado indefinidamente</td><td>Rotação com detecção de reuso: token repetido revoga a família inteira</td><td>2</td></tr>
+      <tr><td><strong>Escalada por corpo de requisição</strong></td><td>Enviar <code>{"userId": "outro"}</code> ou <code>{"role": "admin"}</code> e o ORM aceitar</td><td>Zod com <code>.strict()</code>; nunca passar <code>req.body</code> direto para o Prisma; montar o objeto campo a campo</td><td>2</td></tr>
+      <tr><td><strong>Segredo vazado no Git</strong></td><td><code>.env</code> commitado; a chave fica no histórico para sempre</td><td><code>.gitignore</code> desde o commit 1; <em>secret scanning</em> do GitHub ligado; rotacionar imediatamente se acontecer</td><td>1</td></tr>
+      <tr><td><strong>Origem indevida</strong></td><td>Qualquer site chama sua API com credenciais do usuário</td><td>CORS com lista explícita de origens. <code>origin: '*'</code> com credenciais é proibido pelo próprio navegador — e por bom senso</td><td>1</td></tr>
+      <tr><td><strong>DoS por payload</strong></td><td>Corpo de 500 MB ou <code>?limit=999999</code></td><td>Limite de corpo; teto rígido de paginação; timeout de requisição</td><td>9</td></tr>
+      <tr><td><strong>Vazamento por erro</strong></td><td><em>Stack trace</em> em produção revela caminhos, versões e queries</td><td>Handler central: log completo no servidor, mensagem genérica na resposta</td><td>2</td></tr>
+      <tr><td><strong>Dependência comprometida</strong></td><td>Pacote malicioso ou vulnerável entra pelo <code>npm install</code></td><td><code>pnpm audit</code> no CI; Dependabot; travar versões; desconfiar de pacote novo com poucos downloads</td><td>8</td></tr>
+      <tr><td><strong>Serviço interno exposto</strong></td><td>O <code>ml-service</code> acessível pela internet vira porta dos fundos</td><td>Rede interna da plataforma + header com segredo compartilhado; nunca publicar a porta</td><td>7</td></tr>
+      <tr><td><strong>Dado pessoal no log</strong></td><td>Log com e-mail e descrição de transação vira um segundo banco de dados sem proteção</td><td>Redigir campos sensíveis no logger; logar <code>userId</code>, nunca e-mail</td><td>8</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="note why">
+    <span class="lbl">Menor privilégio, na prática deste projeto</span>
+    <p>O usuário do banco que a aplicação usa não precisa de permissão para criar tabela — só as migrations precisam. Crie dois papéis: um para a aplicação (<code>SELECT/INSERT/UPDATE/DELETE</code>) e outro para migration (DDL). Se a aplicação for comprometida, o atacante não consegue derrubar tabela. É uma configuração de dez minutos que demonstra que você entende o princípio, e não só a frase.</p>
+  </div>
+</section>
+
+<section id="s18">
+  <div class="sec-head">
+    <span class="sec-num">SEÇÃO 18</span>
+    <h2>Testes</h2>
+  </div>
+
+  <p>Cobertura é uma métrica ruim: 100% de cobertura com asserções fracas dá falsa segurança. A pergunta certa é <strong>"que erro este teste impede de chegar em produção?"</strong>. Se não houver resposta, o teste é peso morto.</p>
+
+  <div class="scroll">
+  <table>
+    <thead><tr><th>Camada</th><th>Quantidade</th><th>O que testar</th><th>O que NÃO testar</th><th>Ferramenta</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><strong>Unitário</strong></td><td>Poucos, cirúrgicos</td>
+        <td>Lógica pura com muitos casos de borda: cálculo de saldo, formatação de moeda, normalização de descrição, decodificação de cursor, detecção de recorrência</td>
+        <td>Funções que só repassam chamada. Testar <em>mock</em> não prova nada</td>
+        <td>Vitest</td>
+      </tr>
+      <tr>
+        <td><strong>Integração de API</strong></td><td><em>A maior parte do esforço</em></td>
+        <td>Requisição HTTP real contra banco de teste real: fluxo de auth, CRUD completo, validação, paginação, <strong>e um teste de autorização por endpoint</strong></td>
+        <td>Banco mockado. Metade dos bugs mora exatamente na fronteira com o banco</td>
+        <td>Vitest + Supertest + Postgres em Docker</td>
+      </tr>
+      <tr>
+        <td><strong>Frontend</strong></td><td>Seletivo</td>
+        <td>Formulário com validação, componente que muda a UI conforme estado, renderização de listagem vazia/carregando/erro</td>
+        <td>Que o React renderiza. Snapshot de tudo — quebram sempre e ninguém lê</td>
+        <td>Testing Library</td>
+      </tr>
+      <tr>
+        <td><strong>Ponta a ponta</strong></td><td>3 a 5, no máximo</td>
+        <td>Os caminhos que, se quebrarem, o produto não existe: cadastrar → logar → criar transação → ver no dashboard → deslogar</td>
+        <td>Casos de borda. E2E é lento e instável; use para o caminho feliz crítico</td>
+        <td>Playwright</td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h3>A regra do teste de autorização</h3>
+  <pre class="code"><i>// Este teste, repetido para cada endpoint, é o mais valioso do projeto.</i>
+it('não deixa o usuário A ler a transação do usuário B', async () =&gt; {
+  const a = await criarUsuario('a@teste.com')
+  const b = await criarUsuario('b@teste.com')
+  const t = await criarTransacao(b, { amountCents: 5000 })
+
+  const res = await request(app)
+    .get(`/transactions/${t.id}`)
+    .set('Authorization', `Bearer ${a.accessToken}`)
+
+  <b>expect(res.status).toBe(404)</b>   <i>← 404, não 403: não confirmar existência</i>
+})</pre>
+  <p>Escreva um desses para cada rota que aceita id, incluindo <code>PATCH</code> e <code>DELETE</code>. São vinte minutos de trabalho e é a única rede que impede que uma refatoração futura reintroduza o vazamento.</p>
+
+  <div class="note trap">
+    <span class="lbl">Teste que dá trabalho e não paga</span>
+    <ul>
+      <li>Teste que reimplementa a lógica que está testando — se ambos estiverem errados do mesmo jeito, passa.</li>
+      <li>Teste dependente de ordem: se rodar isolado falha, ele mente sobre o que verifica.</li>
+      <li>Teste de data que quebra na virada do mês. Injete o relógio, não use <code>new Date()</code> direto.</li>
+      <li>Suíte E2E grande. Você vai começar a ignorar falha vermelha, e aí ela deixa de ter valor.</li>
+    </ul>
+  </div>
+</section>
+
+<section id="s19">
+  <div class="sec-head">
+    <span class="sec-num">SEÇÃO 19</span>
+    <h2>CI/CD</h2>
+  </div>
+
+  <div class="diag">
+    <span class="dcap">Pipeline · o que cada etapa impede</span>
+    <div class="dnode sm">push na branch → abre pull request</div>
+    <div class="dedge"></div>
+    <div class="dnode sm">install com lockfile congelado <span class="dlabel">impede: "na minha máquina funciona"</span></div>
+    <div class="dedge"></div>
+    <div class="dnode sm">lint + format <span class="dlabel">impede: discussão de estilo no code review</span></div>
+    <div class="dedge"></div>
+    <div class="dnode sm">typecheck <span class="dlabel">impede: erro de tipo que o build de dev não pega</span></div>
+    <div class="dedge"></div>
+    <div class="dnode sm">testes com Postgres de serviço <span class="dlabel">impede: regressão, e vazamento entre usuários</span></div>
+    <div class="dedge"></div>
+    <div class="dnode sm">build de web e API <span class="dlabel">impede: código que compila em dev e quebra em prod</span></div>
+    <div class="dedge"></div>
+    <div class="dnode sm">audit de dependências <span class="dlabel">impede: vulnerabilidade conhecida entrar sem ninguém ver</span></div>
+    <div class="dedge"></div>
+    <div class="dnode hi">merge na main → deploy automático</div>
+    <div class="dedge"></div>
+    <div class="dnode sm">migrate deploy → health check → pronto <span class="dlabel">se o health falhar, a plataforma mantém a versão anterior</span></div>
+  </div>
+
+  <h3>Detalhes que importam</h3>
+  <ul>
+    <li><strong>Instalação com lockfile congelado</strong> (<code>--frozen-lockfile</code>): garante que o CI usa exatamente as versões do repositório. Sem isso, uma versão menor nova pode quebrar o build só no CI, e você perde uma tarde.</li>
+    <li><strong>Postgres como <em>service container</em></strong> no Actions: os testes de integração rodam contra banco real, não mock. É o que torna a suíte confiável.</li>
+    <li><strong>Cache de dependências</strong> por hash do lockfile: reduz o pipeline de ~4 min para ~90 s. Pipeline lento é pipeline que você começa a ignorar.</li>
+    <li><strong>Proteção de branch:</strong> <code>main</code> só aceita merge com CI verde. É o que transforma o pipeline de sugestão em regra.</li>
+    <li><strong>Deploy de preview por PR</strong> na Vercel: cada pull request ganha uma URL. Excelente para o README e para revisar visualmente antes do merge.</li>
+  </ul>
+</section>
+
+<section id="s20">
+  <div class="sec-head">
+    <span class="sec-num">SEÇÃO 20</span>
+    <h2>Observabilidade</h2>
+  </div>
+
+  <p>Observabilidade responde a uma pergunta só: <em>quando um usuário disser "não funcionou", você consegue descobrir o que aconteceu?</em> Se a resposta depende de reproduzir o problema, você não tem observabilidade.</p>
+
+  <h3>Aplicação</h3>
+  <div class="scroll">
+  <table>
+    <thead><tr><th>Peça</th><th>Implementação</th><th>Responde a</th></tr></thead>
+    <tbody>
+      <tr><td>Log estruturado</td><td><code>pino</code> em JSON, com <code>requestId</code> propagado</td><td>"O que aconteceu nesta requisição específica?"</td></tr>
+      <tr><td>Log de requisição</td><td>método, rota, status, duração, <code>userId</code></td><td>"Qual rota está lenta? Quem está sendo afetado?"</td></tr>
+      <tr><td>Rastreio de erro</td><td>Sentry com <em>release</em> marcada</td><td>"Quantas pessoas viram esse erro? Desde qual deploy?"</td></tr>
+      <tr><td><code>/health</code></td><td>Verifica o próprio processo e um <code>SELECT 1</code> no banco</td><td>"A aplicação está viva e enxerga o banco?"</td></tr>
+      <tr><td>Verificação externa</td><td>UptimeRobot a cada 5 min, com alerta por e-mail</td><td>"Está fora do ar agora?" — e ainda impede a hibernação</td></tr>
+      <tr><td>Métricas de negócio</td><td>Contagem diária de cadastros, transações e sugestões aceitas</td><td>"O produto está sendo usado?"</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="note trap">
+    <span class="lbl">Nunca logue</span>
+    <p>Senha, token, hash, e-mail completo, corpo de requisição de autenticação. Log tem retenção longa, é lido por ferramenta de terceiro e raramente é criptografado. Logar <code>userId</code> resolve toda necessidade de depuração sem criar um banco paralelo de dados pessoais.</p>
+  </div>
+
+  <h3>MLOps — o mínimo viável e suficiente</h3>
+  <p>MLOps para um projeto de uma pessoa não é Kubeflow. São cinco práticas:</p>
+  <ol>
+    <li><strong>Versionar o modelo</strong> com um identificador (<code>cls-2026-11-03</code>) e gravá-lo em toda predição. Sem isso é impossível dizer qual modelo causou qual erro.</li>
+    <li><strong>Guardar as métricas junto do artefato</strong>: F1 macro, matriz de confusão, tamanho do treino, data. Um JSON ao lado do <code>.joblib</code>.</li>
+    <li><strong>Medir o modelo em produção</strong>, não só no teste: taxa de aceitação das sugestões, por categoria e por semana. É a única métrica que reflete a realidade.</li>
+    <li><strong>Detectar <em>drift</em></strong>: se a taxa de aceitação cair mais de 10 pontos em relação à linha de base, alerta. Também vale monitorar a proporção de descrições com palavras fora do vocabulário do modelo.</li>
+    <li><strong>Retreinar de forma reprodutível</strong>: <code>train.py</code> versionado, dados de treino com marca temporal, e um endpoint que reporta a versão do modelo em execução para você conferir o que está no ar.</li>
+  </ol>
+  <div class="note why">
+    <span class="lbl">O gráfico que vale o projeto inteiro</span>
+    <p>Um gráfico simples de <em>taxa de aceitação das sugestões ao longo das semanas</em>, com marcações de quando cada versão do modelo entrou. Ele mostra que você entende que ML em produção é um ciclo, não um entregável. É a imagem mais forte que o README pode ter — mais forte que qualquer diagrama de arquitetura.</p>
+  </div>
+</section>
+<section id="s21">
+  <div class="sec-head">
+    <span class="sec-num">SEÇÃO 21</span>
+    <h2>Roadmap semanal</h2>
+  </div>
+
+  <p>Quarenta e duas semanas, a 12 h/semana em média — cerca de <strong>500 horas</strong>. A duração de cada bloco vem da quantidade de conceito novo, não de uma divisão uniforme: a semana 12 tem quatro dias de conteúdo denso, a semana 24 tem uma tarde. Semanas mais leves são de propósito; use a folga para revisar, escrever ADR ou descansar. Perder uma semana não invalida o plano — só empurra o resto.</p>
+
+  <div class="phase">
+    <div class="phase-top"><span class="phase-n">00</span><h3 style="margin:0">Fundamentos</h3><span class="chip on">Semanas 1–3</span></div>
+  </div>
+
+  <div class="week">
+    <div class="week-head"><span class="week-id">SEMANA 01</span><p class="week-title">Ambiente, terminal e Git</p></div>
+    <dl>
+      <dt>Objetivo</dt><dd>Eliminar toda fricção de ferramenta antes de escrever a primeira linha do projeto.</dd>
+      <dt>Estudo</dt><dd>Terminal; Git: staging, commit, branch, merge, conflito; chave SSH no GitHub.</dd>
+      <dt>Conceitos</dt><dd>Repositório, área de staging, histórico, branch como ponteiro, resolução de conflito.</dd>
+      <dt>Exercício</dt><dd>Criar um repositório, provocar um conflito entre duas branches e resolvê-lo à mão, sem ferramenta gráfica.</dd>
+      <dt>Implementação</dt><dd>Repositório <code>expense-tracker</code> com <code>README</code>, <code>.gitignore</code> e <code>.gitattributes</code>.</dd>
+      <dt>Entrega</dt><dd>Repositório público com dez commits de mensagem clara.</dd>
+      <dt>Critério</dt><dd>Você faz branch, commit, merge e resolve conflito sem consultar nada.</dd>
+    </dl>
+  </div>
+
+  <div class="week">
+    <div class="week-head"><span class="week-id">SEMANA 02</span><p class="week-title">HTTP, REST e JavaScript moderno</p></div>
+    <dl>
+      <dt>Objetivo</dt><dd>Entender o que trafega entre cliente e servidor, e escrever JS com fluência.</dd>
+      <dt>Estudo</dt><dd>Requisição/resposta, métodos, status, headers; JSON; REST; sintaxe moderna do JS; <code>async/await</code>.</dd>
+      <dt>Conceitos</dt><dd>Stateless, idempotência dos métodos, recurso vs. ação, Promise, event loop.</dd>
+      <dt>Exercício</dt><dd>Abrir a aba Network num site que você usa e narrar em voz alta o que cada requisição faz. Reescrever três funções suas de Python em JS.</dd>
+      <dt>Implementação</dt><dd><code>docs/api-contract.md</code> com os 12 endpoints do MVP: método, caminho, corpo, status de sucesso e de erro.</dd>
+      <dt>Entrega</dt><dd>O contrato da API, escrito antes de existir API.</dd>
+      <dt>Critério</dt><dd>Você explica <code>401</code> × <code>403</code> × <code>404</code> e por que <code>PUT</code> é idempotente e <code>POST</code> não.</dd>
+    </dl>
+  </div>
+
+  <div class="week">
+    <div class="week-head"><span class="week-id">SEMANA 03</span><p class="week-title">TypeScript e modelo relacional</p></div>
+    <dl>
+      <dt>Objetivo</dt><dd>Tipar código com intenção e modelar dados em tabelas.</dd>
+      <dt>Estudo</dt><dd>TS: tipos, <code>interface</code>, união, opcional, inferência, <code>strict</code>. SQL: <code>SELECT</code>, <code>WHERE</code>, <code>JOIN</code>, <code>GROUP BY</code>.</dd>
+      <dt>Conceitos</dt><dd>Tipo em tempo de compilação vs. valor em execução; chave primária, estrangeira, <code>NOT NULL</code>, <code>UNIQUE</code>; cardinalidade.</dd>
+      <dt>Exercício</dt><dd>Trinta consultas SQL à mão numa base de exemplo. Provocar três erros de compilação do TS e explicar cada mensagem.</dd>
+      <dt>Implementação</dt><dd>Diagrama do modelo: usuário, categoria, transação, com chaves e justificativa de cada <code>NOT NULL</code>.</dd>
+      <dt>Entrega</dt><dd><code>docs/data-model.md</code>.</dd>
+      <dt>Checkpoint</dt><dd><strong>CP-0</strong> — ver <a href="#s23">Seção 23</a>.</dd>
+    </dl>
+  </div>
+
+  <div class="phase">
+    <div class="phase-top"><span class="phase-n">01</span><h3 style="margin:0">MVP local</h3><span class="chip on">Semanas 4–9</span></div>
+  </div>
+
+  <div class="week">
+    <div class="week-head"><span class="week-id">SEMANA 04</span><p class="week-title">Primeira API, com dados na memória</p></div>
+    <dl>
+      <dt>Objetivo</dt><dd>Um servidor HTTP que responde JSON — sem banco, de propósito.</dd>
+      <dt>Estudo</dt><dd>Node, npm, Express, roteamento, <code>express.json()</code>, <code>tsx</code> para rodar TS em desenvolvimento.</dd>
+      <dt>Conceitos</dt><dd><code>package.json</code>, dependência vs. devDependency, porta, <code>req</code>/<code>res</code>, roteador.</dd>
+      <dt>Exercício</dt><dd>Mini-projeto 1: API de tarefas com CRUD em array, testada só pelo REST Client.</dd>
+      <dt>Implementação</dt><dd><code>apps/api</code> com <code>GET/POST/PATCH/DELETE /transactions</code> sobre um array.</dd>
+      <dt>Entrega</dt><dd>Coleção de requisições em <code>docs/api.http</code>.</dd>
+      <dt>Critério</dt><dd>Os quatro verbos funcionam e devolvem os status corretos.</dd>
+    </dl>
+  </div>
+
+  <div class="week">
+    <div class="week-head"><span class="week-id">SEMANA 05</span><p class="week-title">Middleware, erros e estrutura</p></div>
+    <dl>
+      <dt>Objetivo</dt><dd>Sair do arquivo único sem cair em arquitetura prematura.</dd>
+      <dt>Estudo</dt><dd>Cadeia de middlewares, tratamento centralizado de erro, variáveis de ambiente.</dd>
+      <dt>Conceitos</dt><dd>Ordem de execução, <code>next()</code>, middleware de erro com quatro argumentos, <code>.env</code> fora do Git.</dd>
+      <dt>Exercício</dt><dd>Inverter a ordem de dois middlewares de propósito e explicar exatamente o que quebrou.</dd>
+      <dt>Implementação</dt><dd>Organização por módulo; middleware de log; <code>AppError</code>; handler central; <code>env.ts</code> validado.</dd>
+      <dt>Entrega</dt><dd>Erros com formato consistente em toda a API.</dd>
+      <dt>Critério</dt><dd>Você explica o que acontece se o handler de erro for registrado antes das rotas.</dd>
+    </dl>
+  </div>
+
+  <div class="week">
+    <div class="week-head"><span class="week-id">SEMANA 06</span><p class="week-title">PostgreSQL de verdade, com SQL na mão</p></div>
+    <dl>
+      <dt>Objetivo</dt><dd>Persistir dados e sentir por que persistência importa.</dd>
+      <dt>Estudo</dt><dd>Postgres no Docker; <code>psql</code>; DDL; <code>pg</code> com query parametrizada.</dd>
+      <dt>Conceitos</dt><dd>Container e volume; tipos do Postgres; PK, FK, constraint; <strong>por que parametrizar</strong>.</dd>
+      <dt>Exercício</dt><dd>Tentar SQL injection na sua própria API com concatenação e ver funcionar. Depois parametrizar e ver falhar.</dd>
+      <dt>Implementação</dt><dd>Tabelas <code>users</code>, <code>categories</code>, <code>transactions</code>; a API troca o array por SQL escrito à mão.</dd>
+      <dt>Entrega</dt><dd><code>docker-compose.yml</code> com o banco; dados sobrevivem ao reinício.</dd>
+      <dt>Critério</dt><dd>Você escreve o <code>JOIN</code> da listagem sem consultar documentação.</dd>
+    </dl>
+  </div>
+
+  <div class="week">
+    <div class="week-head"><span class="week-id">SEMANA 07</span><p class="week-title">Prisma, migrations e schema definitivo</p></div>
+    <dl>
+      <dt>Objetivo</dt><dd>Trocar SQL manual por ORM — agora sabendo o que está sendo escondido.</dd>
+      <dt>Estudo</dt><dd><code>schema.prisma</code>, <code>migrate dev</code>, cliente gerado, <code>include</code>, <code>select</code>.</dd>
+      <dt>Conceitos</dt><dd>Migration versionada, drift de schema, tipos gerados, log de query.</dd>
+      <dt>Exercício</dt><dd>Ligar o log de query do Prisma e comparar o SQL gerado com o que você escreveu na semana 6.</dd>
+      <dt>Implementação</dt><dd>Schema completo com <code>amountCents Int</code>, <code>occurredOn Date</code> e os índices. Seed de categorias.</dd>
+      <dt>Entrega</dt><dd>Primeira migration versionada no repositório.</dd>
+      <dt>Critério</dt><dd>Você explica o que <code>migrate dev</code> faz e por que ele nunca roda em produção.</dd>
+    </dl>
+  </div>
+
+  <div class="week">
+    <div class="week-head"><span class="week-id">SEMANA 08</span><p class="week-title">React consome a API</p></div>
+    <dl>
+      <dt>Objetivo</dt><dd>Fechar o circuito: clique na tela produz linha no banco.</dd>
+      <dt>Estudo</dt><dd>Vite, componente, props, <code>useState</code>, <code>useEffect</code>, <code>fetch</code>, formulário controlado.</dd>
+      <dt>Conceitos</dt><dd>Renderização por estado, array de dependências, CORS, estados de carregando/erro/vazio.</dd>
+      <dt>Exercício</dt><dd>Mini-projeto 4: uma página que lista dados de uma API pública, com os três estados tratados.</dd>
+      <dt>Implementação</dt><dd><code>apps/web</code>: listagem, formulário de criação, exclusão, edição inline.</dd>
+      <dt>Entrega</dt><dd>Web e API rodando juntas em <code>localhost</code>.</dd>
+      <dt>Critério</dt><dd>Você explica por que o <code>useEffect</code> entrou em laço infinito e como resolveu.</dd>
+    </dl>
+  </div>
+
+  <div class="week">
+    <div class="week-head"><span class="week-id">SEMANA 09</span><p class="week-title">Login ingênuo, dashboard e fechamento do MVP</p></div>
+    <dl>
+      <dt>Objetivo</dt><dd>Ter um sistema completo — imperfeito, mas inteiro.</dd>
+      <dt>Estudo</dt><dd>Agregação em SQL; noção de sessão.</dd>
+      <dt>Conceitos</dt><dd><code>GROUP BY</code> com <code>SUM</code>; por que agregar no banco e não em JS.</dd>
+      <dt>Exercício</dt><dd>Escrever a query do dashboard à mão antes de traduzi-la para Prisma.</dd>
+      <dt>Implementação</dt><dd>Cadastro e login (ainda simples), dashboard com saldo, entradas e saídas.</dd>
+      <dt>Entrega</dt><dd><strong>MVP funcionando ponta a ponta.</strong> Tag <code>v0.1.0</code>.</dd>
+      <dt>Checkpoint</dt><dd><strong>CP-1 · CP-2 · CP-3</strong></dd>
+    </dl>
+  </div>
+
+  <div class="phase">
+    <div class="phase-top"><span class="phase-n">02</span><h3 style="margin:0">V1 multiusuário</h3><span class="chip on">Semanas 10–16</span></div>
+  </div>
+
+  <div class="week">
+    <div class="week-head"><span class="week-id">SEMANA 10</span><p class="week-title">Senhas e o modelo de ameaça</p></div>
+    <dl>
+      <dt>Objetivo</dt><dd>Entender o ataque antes de aplicar a defesa.</dd>
+      <dt>Estudo</dt><dd>Hash × criptografia; sal; custo de trabalho; bcrypt.</dd>
+      <dt>Conceitos</dt><dd>Rainbow table, força bruta, enumeração de usuário, timing attack.</dd>
+      <dt>Exercício</dt><dd>Rodar bcrypt com custo 4, 10 e 14 e medir o tempo. Entender por que "lento" é uma feature.</dd>
+      <dt>Implementação</dt><dd>Hash no cadastro; comparação no login; mensagem idêntica para os dois erros; migration que zera as senhas antigas.</dd>
+      <dt>Entrega</dt><dd>Nenhuma senha legível no banco.</dd>
+      <dt>Critério</dt><dd>Você explica por que aumentar o custo é a defesa que envelhece bem.</dd>
+    </dl>
+  </div>
+
+  <div class="week">
+    <div class="week-head"><span class="week-id">SEMANA 11</span><p class="week-title">JWT, refresh rotativo e o middleware de identidade</p></div>
+    <dl>
+      <dt>Objetivo</dt><dd>Sessão que funciona em web e mobile, com logout de verdade.</dd>
+      <dt>Estudo</dt><dd>Estrutura do JWT; assinatura; expiração; cookie <code>httpOnly</code>/<code>SameSite</code>; rotação de refresh.</dd>
+      <dt>Conceitos</dt><dd>Stateless × stateful; por que o JWT não é criptografado; revogação; detecção de reuso.</dd>
+      <dt>Exercício</dt><dd>Colar seu JWT em <code>jwt.io</code> e ler o payload. Entender que qualquer pessoa faria o mesmo.</dd>
+      <dt>Implementação</dt><dd><code>/auth/register · login · refresh · logout</code>; tabela <code>RefreshToken</code>; middleware <code>requireUser</code>.</dd>
+      <dt>Entrega</dt><dd>Sessão que sobrevive a recarregar a página e morre no logout.</dd>
+      <dt>Critério</dt><dd>Você explica por que o access token vive em memória e o refresh em cookie.</dd>
+    </dl>
+  </div>
+
+  <div class="week">
+    <div class="week-head"><span class="week-id">SEMANA 12</span><p class="week-title">Isolamento de dados — a semana mais importante</p></div>
+    <dl>
+      <dt>Objetivo</dt><dd>Garantir, com prova, que um usuário não alcança o dado de outro.</dd>
+      <dt>Estudo</dt><dd>Autenticação × autorização; ownership; escopo de query; IDOR.</dd>
+      <dt>Conceitos</dt><dd><code>findUnique</code> × <code>findFirst</code> com escopo; <code>updateMany</code>/<code>deleteMany</code> com <code>userId</code>; 404 em vez de 403.</dd>
+      <dt>Exercício</dt><dd><strong>O vazamento provocado</strong> — criar o bug, explorá-lo, printar, corrigir. Ver a <a href="#s8">Seção 8</a>.</dd>
+      <dt>Implementação</dt><dd><code>userId</code> em toda query; validar que a <code>categoryId</code> pertence ao usuário; nunca aceitar <code>userId</code> no corpo.</dd>
+      <dt>Entrega</dt><dd>ADR sobre a estratégia de isolamento.</dd>
+      <dt>Checkpoint</dt><dd><strong>CP-4</strong></dd>
+    </dl>
+  </div>
+
+  <div class="week">
+    <div class="week-head"><span class="week-id">SEMANA 13</span><p class="week-title">Validação, erros e testes de API</p></div>
+    <dl>
+      <dt>Objetivo</dt><dd>Confiar em zero entrada externa e ter rede de segurança automatizada.</dd>
+      <dt>Estudo</dt><dd>Zod; Vitest; Supertest; banco de teste isolado.</dd>
+      <dt>Conceitos</dt><dd>Validação na fronteira; <code>.strict()</code> contra mass assignment; arrange-act-assert; isolamento entre testes.</dd>
+      <dt>Exercício</dt><dd>Enviar <code>{"userId":"outro","amountCents":"muito"}</code> e verificar que a API rejeita os dois campos.</dd>
+      <dt>Implementação</dt><dd>Schema Zod por endpoint; suíte de integração; <strong>um teste de autorização por rota</strong>.</dd>
+      <dt>Entrega</dt><dd>Suíte verde, rodando contra Postgres real.</dd>
+      <dt>Critério</dt><dd>O teste de autorização falha se você remover o <code>userId</code> de uma query.</dd>
+    </dl>
+  </div>
+
+  <div class="week">
+    <div class="week-head"><span class="week-id">SEMANA 14</span><p class="week-title">Filtros, busca e paginação por cursor</p></div>
+    <dl>
+      <dt>Objetivo</dt><dd>Listagem que continua rápida e correta com muitas linhas.</dd>
+      <dt>Estudo</dt><dd><code>OFFSET</code> × cursor; índices compostos; <code>EXPLAIN ANALYZE</code>.</dd>
+      <dt>Conceitos</dt><dd>Por que o <code>OFFSET</code> degrada e pode duplicar itens; ordenação estável; seq scan × index scan.</dd>
+      <dt>Exercício</dt><dd>Inserir 100 mil transações e comparar <code>OFFSET 90000</code> com cursor, medindo os dois.</dd>
+      <dt>Implementação</dt><dd>Filtro por período, categoria, tipo e texto; paginação por cursor; índice <code>(userId, occurredOn DESC)</code>.</dd>
+      <dt>Entrega</dt><dd>Números do antes e depois no <code>docs/performance.md</code>.</dd>
+      <dt>Critério</dt><dd>Você lê um <code>EXPLAIN</code> e aponta onde o índice entrou.</dd>
+    </dl>
+  </div>
+
+  <div class="week">
+    <div class="week-head"><span class="week-id">SEMANA 15</span><p class="week-title">Frontend de aplicação: rotas, sessão e cache</p></div>
+    <dl>
+      <dt>Objetivo</dt><dd>Uma SPA que se comporta bem quando a sessão expira.</dd>
+      <dt>Estudo</dt><dd>React Router; TanStack Query; interceptador de <code>401</code>.</dd>
+      <dt>Conceitos</dt><dd>Rota protegida; cache e revalidação; estado do servidor × estado da UI; renovação silenciosa.</dd>
+      <dt>Exercício</dt><dd>Reduzir o access token para 30 s e usar o app. Consertar tudo que quebrar.</dd>
+      <dt>Implementação</dt><dd>Rotas públicas e privadas; cliente HTTP único com refresh automático; formulários com erro de campo.</dd>
+      <dt>Entrega</dt><dd>Expirar a sessão não desloga o usuário nem mostra tela branca.</dd>
+      <dt>Checkpoint</dt><dd><strong>CP-5</strong></dd>
+    </dl>
+  </div>
+
+  <div class="week">
+    <div class="week-head"><span class="week-id">SEMANA 16</span><p class="week-title">Dashboard, gráficos e polimento da V1</p></div>
+    <dl>
+      <dt>Objetivo</dt><dd>Transformar dado em resposta visual, e fechar a V1.</dd>
+      <dt>Estudo</dt><dd>Recharts; agregação por período; responsividade.</dd>
+      <dt>Conceitos</dt><dd>Agregação no banco; formatação com <code>Intl</code>; acessibilidade básica (foco, contraste, rótulo).</dd>
+      <dt>Exercício</dt><dd>Usar o app inteiro só pelo teclado. Corrigir o que não for alcançável.</dd>
+      <dt>Implementação</dt><dd>Gasto por categoria (barras), evolução mensal (linha), cartões de resumo; layout responsivo.</dd>
+      <dt>Entrega</dt><dd><strong>V1 completa.</strong> Tag <code>v1.0.0</code>.</dd>
+      <dt>Critério</dt><dd>Dois usuários usam simultaneamente sem ver nada um do outro.</dd>
+    </dl>
+  </div>
+
+  <div class="phase">
+    <div class="phase-top"><span class="phase-n">03</span><h3 style="margin:0">Qualidade, concorrência e deploy</h3><span class="chip on">Semanas 17–20</span></div>
+  </div>
+
+  <div class="week">
+    <div class="week-head"><span class="week-id">SEMANA 17</span><p class="week-title">Docker de verdade</p></div>
+    <dl>
+      <dt>Objetivo</dt><dd>Ambiente reproduzível e imagem pronta para deploy.</dd>
+      <dt>Estudo</dt><dd>Dockerfile multi-estágio; camadas e cache; Compose; rede entre containers.</dd>
+      <dt>Conceitos</dt><dd>Imagem × container × volume; por que a API chama <code>db:5432</code>; <code>.dockerignore</code>.</dd>
+      <dt>Exercício</dt><dd>Mini-projeto 6: containerizar uma app trivial e reduzir a imagem de 1,2 GB para menos de 200 MB.</dd>
+      <dt>Implementação</dt><dd><code>Dockerfile</code> da API; Compose com banco, API e web; <code>make dev</code> ou script equivalente.</dd>
+      <dt>Entrega</dt><dd>Máquina limpa roda o projeto com um comando.</dd>
+      <dt>Checkpoint</dt><dd><strong>CP-7</strong></dd>
+    </dl>
+  </div>
+
+  <div class="week">
+    <div class="week-head"><span class="week-id">SEMANA 18</span><p class="week-title">Concorrência e idempotência</p></div>
+    <dl>
+      <dt>Objetivo</dt><dd>Entender o que acontece quando duas requisições chegam juntas.</dd>
+      <dt>Estudo</dt><dd>Event loop; transações; <code>READ COMMITTED</code>; <code>FOR UPDATE</code>; bloqueio otimista; pool.</dd>
+      <dt>Conceitos</dt><dd>Lost update; race condition; idempotência; serialização de <code>UPDATE</code> na mesma linha.</dd>
+      <dt>Exercício</dt><dd>O exercício de 200 requisições simultâneas descrito na <a href="#s9">Seção 9</a>.</dd>
+      <dt>Implementação</dt><dd>Chave de idempotência com <code>@@unique</code>; tratamento do erro P2002; coluna <code>version</code> para edição concorrente.</dd>
+      <dt>Entrega</dt><dd>Teste de concorrência automatizado na suíte.</dd>
+      <dt>Checkpoint</dt><dd><strong>CP-6</strong></dd>
+    </dl>
+  </div>
+
+  <div class="week">
+    <div class="week-head"><span class="week-id">SEMANA 19</span><p class="week-title">Endurecimento e preparo para produção</p></div>
+    <dl>
+      <dt>Objetivo</dt><dd>Deixar a aplicação apresentável para a internet aberta.</dd>
+      <dt>Estudo</dt><dd><code>helmet</code>; rate limiting; log estruturado; validação de ambiente.</dd>
+      <dt>Conceitos</dt><dd>Cabeçalhos de segurança; janela deslizante de rate limit; o que nunca pode ir para o log.</dd>
+      <dt>Exercício</dt><dd>Rodar 300 tentativas de login em 10 s e verificar que o limite corta.</dd>
+      <dt>Implementação</dt><dd>Rate limit global e por rota de auth; <code>pino</code> com <code>requestId</code>; <code>/health</code>; limite de corpo; CORS por lista.</dd>
+      <dt>Entrega</dt><dd>Checklist de produção preenchido.</dd>
+      <dt>Critério</dt><dd>Faltando uma variável de ambiente, o processo não sobe — e diz qual falta.</dd>
+    </dl>
+  </div>
+
+  <div class="week">
+    <div class="week-head"><span class="week-id">SEMANA 20</span><p class="week-title">Primeiro deploy — o app fica online</p></div>
+    <dl>
+      <dt>Objetivo</dt><dd>URL pública, HTTPS, banco gerenciado, deploy manual e documentado.</dd>
+      <dt>Estudo</dt><dd>Neon; Render; Vercel; variáveis de build × de runtime; <code>migrate deploy</code>.</dd>
+      <dt>Conceitos</dt><dd>SSL obrigatório no banco gerenciado; hibernação; diferença entre <code>NODE_ENV</code>.</dd>
+      <dt>Exercício</dt><dd>Derrubar a API de propósito e observar o que o front mostra. Corrigir a experiência de falha.</dd>
+      <dt>Implementação</dt><dd>Deploy dos três componentes; <code>seed</code> de produção; conta de demonstração.</dd>
+      <dt>Entrega</dt><dd><strong>Link público funcionando.</strong> Tag <code>v1.1.0</code>. <code>docs/deploy.md</code> com o passo a passo manual.</dd>
+      <dt>Checkpoint</dt><dd><strong>CP-12</strong></dd>
+    </dl>
+  </div>
+
+  <div class="phase">
+    <div class="phase-top"><span class="phase-n">04</span><h3 style="margin:0">Mobile</h3><span class="chip on">Semanas 21–24</span></div>
+  </div>
+
+  <div class="week">
+    <div class="week-head"><span class="week-id">SEMANA 21</span><p class="week-title">React Native e Expo — fundamentos</p></div>
+    <dl>
+      <dt>Objetivo</dt><dd>Entender o que muda ao sair do navegador.</dd>
+      <dt>Estudo</dt><dd>Expo; <code>View</code>/<code>Text</code>/<code>Pressable</code>; <code>StyleSheet</code>; Expo Router.</dd>
+      <dt>Conceitos</dt><dd>Não existe DOM nem CSS em cascata; flexbox como padrão; navegação em pilha e aba.</dd>
+      <dt>Exercício</dt><dd>Recriar uma tela do web em RN sem olhar o código dela. Anotar toda diferença encontrada.</dd>
+      <dt>Implementação</dt><dd><code>apps/mobile</code>; navegação; telas vazias; consumo de <code>packages/shared</code>.</dd>
+      <dt>Entrega</dt><dd>App abrindo no celular físico via Expo Go.</dd>
+      <dt>Critério</dt><dd>Você lista cinco diferenças concretas entre web e RN.</dd>
+    </dl>
+  </div>
+
+  <div class="week">
+    <div class="week-head"><span class="week-id">SEMANA 22</span><p class="week-title">Autenticação no mobile</p></div>
+    <dl>
+      <dt>Objetivo</dt><dd>Sessão persistente e segura, sem cookie.</dd>
+      <dt>Estudo</dt><dd><code>expo-secure-store</code>; ciclo de vida do app; renovação em segundo plano.</dd>
+      <dt>Conceitos</dt><dd>Keychain/Keystore × <code>AsyncStorage</code>; retomada do app com token expirado.</dd>
+      <dt>Exercício</dt><dd>Deixar o app em segundo plano por 20 min, voltar e verificar que o refresh acontece sem o usuário notar.</dd>
+      <dt>Implementação</dt><dd>Login, logout, sessão persistente, cliente HTTP com refresh.</dd>
+      <dt>Entrega</dt><dd>Login que sobrevive a fechar e reabrir o app.</dd>
+      <dt>Checkpoint</dt><dd><strong>CP-8</strong></dd>
+    </dl>
+  </div>
+
+  <div class="week">
+    <div class="week-head"><span class="week-id">SEMANA 23</span><p class="week-title">Telas principais e experiência offline</p></div>
+    <dl>
+      <dt>Objetivo</dt><dd>App usável de verdade, inclusive com rede ruim.</dd>
+      <dt>Estudo</dt><dd><code>FlatList</code>; teclado numérico; seletor de data nativo; detecção de conectividade.</dd>
+      <dt>Conceitos</dt><dd>Lista virtualizada; alvo de toque; retentativa com idempotência.</dd>
+      <dt>Exercício</dt><dd>Ativar o modo avião no meio de uma criação de transação e garantir que nada duplica ao voltar.</dd>
+      <dt>Implementação</dt><dd>Lista, criar, editar, resumo; aviso de offline; fila simples de retentativa.</dd>
+      <dt>Entrega</dt><dd>Cinco telas funcionais contra a API de produção.</dd>
+      <dt>Critério</dt><dd>Nenhuma alteração foi necessária na API.</dd>
+    </dl>
+  </div>
+
+  <div class="week">
+    <div class="week-head"><span class="week-id">SEMANA 24</span><p class="week-title">Build, polimento e revisão geral</p></div>
+    <dl>
+      <dt>Objetivo</dt><dd>Fechar o mobile e recuperar fôlego antes da virada para dados.</dd>
+      <dt>Estudo</dt><dd>EAS Build; ícone e splash.</dd>
+      <dt>Conceitos</dt><dd>Build na nuvem; assinatura; distribuição interna.</dd>
+      <dt>Exercício</dt><dd>Instalar o APK num celular que não é o seu e pedir para alguém usar sem instrução.</dd>
+      <dt>Implementação</dt><dd>Build de preview; correções do que o teste com outra pessoa revelou.</dd>
+      <dt>Entrega</dt><dd>APK instalável; capturas de tela para o README. Tag <code>v1.2.0</code>.</dd>
+      <dt>Critério</dt><dd>Alguém que não é você conseguiu usar o app sem ajuda.</dd>
+    </dl>
+  </div>
+
+  <div class="phase">
+    <div class="phase-top"><span class="phase-n">05</span><h3 style="margin:0">Data Science</h3><span class="chip on">Semanas 25–27</span></div>
+  </div>
+
+  <div class="week">
+    <div class="week-head"><span class="week-id">SEMANA 25</span><p class="week-title">Ambiente Python e gerador de dados</p></div>
+    <dl>
+      <dt>Objetivo</dt><dd>Ter dados realistas em volume, criados por você.</dd>
+      <dt>Estudo</dt><dd><code>venv</code>/<code>uv</code>; NumPy; distribuições; aleatoriedade com semente.</dd>
+      <dt>Conceitos</dt><dd>Reprodutibilidade; distribuição assimétrica de gasto; sazonalidade; recorrência.</dd>
+      <dt>Exercício</dt><dd>Gerar 20 variações de escrita de um mesmo comerciante e conferir se parecem extrato real.</dd>
+      <dt>Implementação</dt><dd><code>services/ml/generate.py</code> → CSV com 5 000 transações rotuladas.</dd>
+      <dt>Entrega</dt><dd>Gerador versionado e documentado.</dd>
+      <dt>Critério</dt><dd>Você justifica cada decisão de distribuição do gerador.</dd>
+    </dl>
+  </div>
+
+  <div class="week">
+    <div class="week-head"><span class="week-id">SEMANA 26</span><p class="week-title">Pandas e análise exploratória</p></div>
+    <dl>
+      <dt>Objetivo</dt><dd>Descobrir coisas nos dados que mudem decisões.</dd>
+      <dt>Estudo</dt><dd>Pandas; Matplotlib; estatística descritiva.</dd>
+      <dt>Conceitos</dt><dd><code>groupby</code>, <code>merge</code>, <code>pivot_table</code>, <code>resample</code>; média × mediana; percentil; desbalanceamento de classes.</dd>
+      <dt>Exercício</dt><dd>Responder com dados: qual categoria tem mais variância? Qual tem descrição mais ambígua?</dd>
+      <dt>Implementação</dt><dd><code>notebooks/01-eda.ipynb</code> com cinco descobertas escritas em texto.</dd>
+      <dt>Entrega</dt><dd>Notebook de EDA com conclusões, não só gráficos.</dd>
+      <dt>Checkpoint</dt><dd><strong>CP-10</strong></dd>
+    </dl>
+  </div>
+
+  <div class="week">
+    <div class="week-head"><span class="week-id">SEMANA 27</span><p class="week-title">Limpeza, features e a baseline</p></div>
+    <dl>
+      <dt>Objetivo</dt><dd>Preparar o texto e estabelecer a régua que o modelo terá de bater.</dd>
+      <dt>Estudo</dt><dd>Normalização de texto; TF-IDF; n-gramas de caractere × de palavra.</dd>
+      <dt>Conceitos</dt><dd>Por que n-grama de caractere vence em descrição curta e abreviada; vocabulário; esparsidade.</dd>
+      <dt>Exercício</dt><dd>Implementar o classificador por dicionário e medir sua acurácia. <strong>Esse número é a baseline.</strong></dd>
+      <dt>Implementação</dt><dd><code>clean.py</code> testado; <code>baseline.py</code> com métricas registradas.</dd>
+      <dt>Entrega</dt><dd>Número da baseline documentado.</dd>
+      <dt>Critério</dt><dd>Você explica exatamente o que a normalização remove e por quê.</dd>
+    </dl>
+  </div>
+
+  <div class="phase">
+    <div class="phase-top"><span class="phase-n">06</span><h3 style="margin:0">Machine Learning</h3><span class="chip on">Semanas 28–31</span></div>
+  </div>
+
+  <div class="week">
+    <div class="week-head"><span class="week-id">SEMANA 28</span><p class="week-title">Primeiro modelo e as métricas certas</p></div>
+    <dl>
+      <dt>Objetivo</dt><dd>Treinar, avaliar honestamente e comparar com a baseline.</dd>
+      <dt>Estudo</dt><dd>scikit-learn: <code>Pipeline</code>, split estratificado, <code>LogisticRegression</code>.</dd>
+      <dt>Conceitos</dt><dd>Treino/validação/teste; por que acurácia mente; precisão, recall, F1 macro; matriz de confusão.</dd>
+      <dt>Exercício</dt><dd>Treinar sem <code>Pipeline</code>, ajustando o vectorizer no dataset inteiro. Observar a métrica inflar. Entender o vazamento.</dd>
+      <dt>Implementação</dt><dd><code>train.py</code> v1 com pipeline e avaliação.</dd>
+      <dt>Entrega</dt><dd>Matriz de confusão interpretada em texto.</dd>
+      <dt>Critério</dt><dd>Você explica por que F1 macro é a métrica certa aqui.</dd>
+    </dl>
+  </div>
+
+  <div class="week">
+    <div class="week-head"><span class="week-id">SEMANA 29</span><p class="week-title">Comparação, ajuste e abstenção</p></div>
+    <dl>
+      <dt>Objetivo</dt><dd>Escolher um modelo com critério e definir quando ele deve calar a boca.</dd>
+      <dt>Estudo</dt><dd>Validação cruzada; <code>GridSearchCV</code>; curvas de precisão × cobertura.</dd>
+      <dt>Conceitos</dt><dd>Overfitting × underfitting; viés e variância; limiar de decisão; custo assimétrico do erro.</dd>
+      <dt>Exercício</dt><dd>Traçar precisão e cobertura para limiares de 0,3 a 0,9 e escolher o ponto com justificativa.</dd>
+      <dt>Implementação</dt><dd>Comparação de quatro algoritmos; ajuste de hiperparâmetros; limiar definido.</dd>
+      <dt>Entrega</dt><dd>Tabela comparativa com a baseline incluída.</dd>
+      <dt>Checkpoint</dt><dd><strong>CP-11</strong></dd>
+    </dl>
+  </div>
+
+  <div class="week">
+    <div class="week-head"><span class="week-id">SEMANA 30</span><p class="week-title">Serialização e o serviço de inferência</p></div>
+    <dl>
+      <dt>Objetivo</dt><dd>Transformar o modelo num serviço que responde HTTP.</dd>
+      <dt>Estudo</dt><dd><code>joblib</code>; FastAPI; Pydantic; Docker para Python.</dd>
+      <dt>Conceitos</dt><dd>Artefato versionado; carregar o modelo uma vez na inicialização; predição em lote.</dd>
+      <dt>Exercício</dt><dd>Medir a latência de uma predição individual × lote de 300. Entender a diferença.</dd>
+      <dt>Implementação</dt><dd><code>services/ml</code> com <code>/predict</code>, <code>/health</code> e <code>/model-info</code>; Dockerfile.</dd>
+      <dt>Entrega</dt><dd>Serviço respondendo localmente em menos de 60 ms.</dd>
+      <dt>Critério</dt><dd>O artefato carrega na inicialização, não a cada requisição.</dd>
+    </dl>
+  </div>
+
+  <div class="week">
+    <div class="week-head"><span class="week-id">SEMANA 31</span><p class="week-title">Segundo problema: fechamento do mês</p></div>
+    <dl>
+      <dt>Objetivo</dt><dd>Prever com honestidade, incluindo a incerteza.</dd>
+      <dt>Estudo</dt><dd>Séries temporais; validação temporal; detecção de recorrência.</dd>
+      <dt>Conceitos</dt><dd>Por que não se pode embaralhar dados temporais; MAE × MAPE; intervalo de previsão; problema de arranque a frio.</dd>
+      <dt>Exercício</dt><dd>Avaliar a previsão com validação temporal e depois com split aleatório. Ver a segunda mentir.</dd>
+      <dt>Implementação</dt><dd>Detector de recorrentes + projeção do variável, com faixa de incerteza.</dd>
+      <dt>Entrega</dt><dd><code>/forecast</code> devolvendo faixa, nunca número seco.</dd>
+      <dt>Critério</dt><dd>Você explica por que decompôs o problema em duas partes.</dd>
+    </dl>
+  </div>
+
+  <div class="phase">
+    <div class="phase-top"><span class="phase-n">07</span><h3 style="margin:0">Integração ML</h3><span class="chip on">Semanas 32–33</span></div>
+  </div>
+
+  <div class="week">
+    <div class="week-head"><span class="week-id">SEMANA 32</span><p class="week-title">A cascata de categorização</p></div>
+    <dl>
+      <dt>Objetivo</dt><dd>Ligar o modelo ao produto sem torná-lo uma dependência.</dd>
+      <dt>Estudo</dt><dd>Comunicação entre serviços; timeout; degradação graciosa; segredo compartilhado.</dd>
+      <dt>Conceitos</dt><dd>Caminho crítico; falha parcial; por que o usuário nunca espera pelo ML.</dd>
+      <dt>Exercício</dt><dd>Derrubar o <code>ml-service</code> e verificar que criar transação continua funcionando normalmente.</dd>
+      <dt>Implementação</dt><dd><code>MerchantRule</code>; cascata de três camadas; chamada com timeout de 400 ms; tabela <code>Suggestion</code>.</dd>
+      <dt>Entrega</dt><dd>Sugestão aparecendo na UI, com opção de aceitar ou corrigir.</dd>
+      <dt>Critério</dt><dd>Serviço de ML fora do ar não afeta nenhuma funcionalidade principal.</dd>
+    </dl>
+  </div>
+
+  <div class="week">
+    <div class="week-head"><span class="week-id">SEMANA 33</span><p class="week-title">Laço de realimentação e privacidade</p></div>
+    <dl>
+      <dt>Objetivo</dt><dd>Fazer o uso real do app melhorar o modelo — sem vazar dado de ninguém.</dd>
+      <dt>Estudo</dt><dd>LGPD aplicada a dado financeiro; consentimento; anonimização; drift.</dd>
+      <dt>Conceitos</dt><dd>Opt-in revogável; regra dos cinco usuários distintos; medir o modelo em produção.</dd>
+      <dt>Exercício</dt><dd>Escrever, em português simples, o texto que o usuário lê ao decidir se contribui com dados.</dd>
+      <dt>Implementação</dt><dd>Correções gravadas; script de exportação anonimizada; opção de consentimento no perfil; retreino.</dd>
+      <dt>Entrega</dt><dd>ADR de privacidade no ML; primeiro retreino com dados reais.</dd>
+      <dt>Critério</dt><dd>Você mostra que uma descrição idiossincrática de um usuário não entra no modelo global.</dd>
+    </dl>
+  </div>
+
+  <div class="phase">
+    <div class="phase-top"><span class="phase-n">08</span><h3 style="margin:0">Cloud e CI/CD</h3><span class="chip on">Semanas 34–37</span></div>
+  </div>
+
+  <div class="week">
+    <div class="week-head"><span class="week-id">SEMANA 34</span><p class="week-title">Pipeline de integração contínua</p></div>
+    <dl>
+      <dt>Objetivo</dt><dd>Nada entra na <code>main</code> sem passar por verificação automática.</dd>
+      <dt>Estudo</dt><dd>GitHub Actions; service containers; cache; proteção de branch.</dd>
+      <dt>Conceitos</dt><dd>O que cada etapa impede; por que instalar com lockfile congelado; pipeline rápido é pipeline respeitado.</dd>
+      <dt>Exercício</dt><dd>Abrir um PR que quebra um teste de autorização e ver o CI barrar.</dd>
+      <dt>Implementação</dt><dd>Workflow com lint, typecheck, testes com Postgres, build e audit; <code>main</code> protegida.</dd>
+      <dt>Entrega</dt><dd>Selo de build verde no README.</dd>
+      <dt>Critério</dt><dd>Pipeline completo em menos de 3 min.</dd>
+    </dl>
+  </div>
+
+  <div class="week">
+    <div class="week-head"><span class="week-id">SEMANA 35</span><p class="week-title">Entrega contínua e migrations seguras</p></div>
+    <dl>
+      <dt>Objetivo</dt><dd>Deploy automático, sem downtime e sem medo.</dd>
+      <dt>Estudo</dt><dd><code>migrate deploy</code>; expandir-migrar-contrair; health check no deploy; rollback.</dd>
+      <dt>Conceitos</dt><dd>Compatibilidade entre versões durante o deploy; por que adicionar coluna <code>NOT NULL</code> quebra o código antigo.</dd>
+      <dt>Exercício</dt><dd>Fazer uma mudança de schema pelo caminho de três passos e outra pelo caminho ingênuo. Comparar.</dd>
+      <dt>Implementação</dt><dd>Deploy automático da API, web e <code>ml-service</code>; staging com banco separado.</dd>
+      <dt>Entrega</dt><dd>Deploy por merge; <code>docs/deploy.md</code> reescrito para a versão automatizada.</dd>
+      <dt>Checkpoint</dt><dd><strong>CP-13</strong></dd>
+    </dl>
+  </div>
+
+  <div class="week">
+    <div class="week-head"><span class="week-id">SEMANA 36</span><p class="week-title">Observabilidade — e o módulo AWS opcional</p></div>
+    <dl>
+      <dt>Objetivo</dt><dd>Descobrir problemas antes do usuário avisar.</dd>
+      <dt>Estudo</dt><dd>Sentry; log estruturado; uptime check; IAM e S3, com escopo fechado.</dd>
+      <dt>Conceitos</dt><dd><code>requestId</code> ponta a ponta; menor privilégio; política de bucket; URL pré-assinada.</dd>
+      <dt>Exercício</dt><dd>Provocar um erro em produção e rastreá-lo do Sentry até a linha de log correspondente.</dd>
+      <dt>Implementação</dt><dd>Sentry na API e no front; painel de métricas de negócio; exportação CSV via S3 assinado.</dd>
+      <dt>Entrega</dt><dd>Alerta chegando por e-mail quando o app cai.</dd>
+      <dt>Critério</dt><dd>Você reconstrói uma requisição inteira a partir do <code>requestId</code>.</dd>
+    </dl>
+  </div>
+
+  <div class="week">
+    <div class="week-head"><span class="week-id">SEMANA 37</span><p class="week-title">Backup, restore e domínio</p></div>
+    <dl>
+      <dt>Objetivo</dt><dd>Poder perder o banco sem perder os dados.</dd>
+      <dt>Estudo</dt><dd>Backup do provedor; <code>pg_dump</code>/<code>pg_restore</code>; DNS; certificado.</dd>
+      <dt>Conceitos</dt><dd>RPO e RTO em linguagem simples; backup não testado não é backup.</dd>
+      <dt>Exercício</dt><dd>Restaurar o backup num banco novo e rodar a suíte de testes contra ele.</dd>
+      <dt>Implementação</dt><dd>Rotina de backup verificada; domínio próprio apontando para web e API.</dd>
+      <dt>Entrega</dt><dd>Domínio com HTTPS; <code>docs/runbook.md</code> com o procedimento de restore.</dd>
+      <dt>Critério</dt><dd>Você já restaurou de verdade, pelo menos uma vez.</dd>
+    </dl>
+  </div>
+
+  <div class="phase">
+    <div class="phase-top"><span class="phase-n">09</span><h3 style="margin:0">Produção multiusuário</h3><span class="chip on">Semanas 38–42</span></div>
+  </div>
+
+  <div class="week">
+    <div class="week-head"><span class="week-id">SEMANA 38</span><p class="week-title">Teste de carga e diagnóstico</p></div>
+    <dl>
+      <dt>Objetivo</dt><dd>Saber, com número, onde o sistema quebra.</dd>
+      <dt>Estudo</dt><dd><code>k6</code>; percentis; <code>EXPLAIN ANALYZE</code>; <code>pg_stat_statements</code>.</dd>
+      <dt>Conceitos</dt><dd>p50 × p95 × p99 e por que a média engana; throughput × latência; saturação de pool.</dd>
+      <dt>Exercício</dt><dd>Popular 20 mil transações e rodar o perfil de carga descrito na <a href="#s15">Seção 15</a>.</dd>
+      <dt>Implementação</dt><dd>Script de carga versionado; identificação das três rotas mais lentas.</dd>
+      <dt>Entrega</dt><dd>Relatório de linha de base em <code>docs/performance.md</code>.</dd>
+      <dt>Critério</dt><dd>Você sabe qual query é o gargalo — não qual você acha que é.</dd>
+    </dl>
+  </div>
+
+  <div class="week">
+    <div class="week-head"><span class="week-id">SEMANA 39</span><p class="week-title">Otimizar o que foi medido</p></div>
+    <dl>
+      <dt>Objetivo</dt><dd>Melhorar com evidência antes e depois.</dd>
+      <dt>Estudo</dt><dd>Índices compostos e parciais; cache com invalidação; N+1; compressão.</dd>
+      <dt>Conceitos</dt><dd>Custo do índice na escrita; invalidação como parte difícil do cache; <code>select</code> explícito.</dd>
+      <dt>Exercício</dt><dd>Remover um índice e refazer a medição, para ver a diferença que ele fazia.</dd>
+      <dt>Implementação</dt><dd>Índices que faltavam; cache curto no dashboard; correção de N+1; divisão do bundle.</dd>
+      <dt>Entrega</dt><dd>Tabela antes/depois com ganho percentual por otimização.</dd>
+      <dt>Checkpoint</dt><dd><strong>CP-9 · CP-14</strong></dd>
+    </dl>
+  </div>
+
+  <div class="week">
+    <div class="week-head"><span class="week-id">SEMANA 40</span><p class="week-title">Limites, abuso e resiliência</p></div>
+    <dl>
+      <dt>Objetivo</dt><dd>Sobreviver a uso mal-intencionado ou apenas desastrado.</dd>
+      <dt>Estudo</dt><dd>Rate limit por usuário; cotas; timeout; circuit breaker simples.</dd>
+      <dt>Conceitos</dt><dd>Falha em cascata; por que timeout em toda chamada externa é obrigatório.</dd>
+      <dt>Exercício</dt><dd>Introduzir 5 s de atraso no <code>ml-service</code> e provar que a API não degrada junto.</dd>
+      <dt>Implementação</dt><dd>Cotas por usuário; teto de paginação; timeouts; página de erro decente no front.</dd>
+      <dt>Entrega</dt><dd>Testes de resiliência na suíte.</dd>
+      <dt>Critério</dt><dd>Nenhuma dependência lenta consegue derrubar a aplicação inteira.</dd>
+    </dl>
+  </div>
+
+  <div class="week">
+    <div class="week-head"><span class="week-id">SEMANA 41</span><p class="week-title">Documentação e portfólio</p></div>
+    <dl>
+      <dt>Objetivo</dt><dd>Tornar o trabalho legível para quem não acompanhou.</dd>
+      <dt>Estudo</dt><dd>OpenAPI; escrita técnica; diagramação.</dd>
+      <dt>Conceitos</dt><dd>README como argumento, não como manual de instalação.</dd>
+      <dt>Exercício</dt><dd>Dar o README para alguém de fora e pedir que explique o que o sistema faz. Reescrever o que não ficou claro.</dd>
+      <dt>Implementação</dt><dd>README com arquitetura, decisões, métricas de ML e números de carga; OpenAPI publicado; capturas de tela e GIF.</dd>
+      <dt>Entrega</dt><dd>Repositório apresentável; 20 ADRs revisados.</dd>
+      <dt>Critério</dt><dd>Uma pessoa técnica entende o projeto em cinco minutos de leitura.</dd>
+    </dl>
+  </div>
+
+  <div class="week">
+    <div class="week-head"><span class="week-id">SEMANA 42</span><p class="week-title">Teste com usuários reais e encerramento</p></div>
+    <dl>
+      <dt>Objetivo</dt><dd>Provar o requisito central: várias pessoas usando ao mesmo tempo, com dados isolados.</dd>
+      <dt>Estudo</dt><dd>Nenhum. Esta semana é de operação e revisão.</dd>
+      <dt>Conceitos</dt><dd>Revisão geral de todos os checkpoints.</dd>
+      <dt>Exercício</dt><dd>Convidar cinco pessoas para usar o app na mesma tarde. Observar os logs em tempo real.</dd>
+      <dt>Implementação</dt><dd>Correção do que o uso real revelar — sempre revela algo.</dd>
+      <dt>Entrega</dt><dd><strong>Tag <code>v2.0.0</code>.</strong> Retrospectiva escrita: o que foi difícil, o que você faria diferente, o que viria depois.</dd>
+      <dt>Critério</dt><dd>Todos os 14 checkpoints respondidos sem consulta.</dd>
+    </dl>
+  </div>
+
+  <div class="note why">
+    <span class="lbl">Se atrasar</span>
+    <p>Vai atrasar — é normal. A ordem de corte, do mais dispensável ao intocável: <strong>1)</strong> módulo AWS da semana 36; <strong>2)</strong> segundo problema de ML (semana 31) — deixe como "próximos passos" no README; <strong>3)</strong> polimento do mobile (semana 24). <strong>Nunca corte:</strong> isolamento de dados (12), testes de autorização (13), concorrência (18) e primeiro deploy (20). Sem essas quatro, o projeto não sustenta a afirmação de ser um sistema multiusuário em produção.</p>
+  </div>
+</section>
+<section id="s22">
+  <div class="sec-head">
+    <span class="sec-num">SEÇÃO 22</span>
+    <h2>Mini-projetos</h2>
+  </div>
+
+  <p>Cada mini-projeto isola <strong>um</strong> conceito novo, longe do projeto principal, onde errar não custa nada. Nenhum deve passar de quatro horas. O sinal de que um mini-projeto cumpriu seu papel é você voltar ao projeto principal e a mesma tarefa parecer fácil.</p>
+
+  <div class="scroll">
+  <table>
+    <thead><tr><th>#</th><th>Antes de</th><th>Projeto</th><th>Isola</th><th>Tempo</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>Escrever a API (sem. 4)</td><td>CRUD de tarefas em memória, testado só por requisições HTTP</td><td>Express e ciclo requisição/resposta, sem banco no caminho</td><td class="num">3 h</td></tr>
+      <tr><td>2</td><td>Modelar o banco (sem. 6)</td><td>Catálogo de produtos e pedidos em SQL puro, com <code>JOIN</code> e <code>GROUP BY</code></td><td>Modelagem relacional, sem ORM escondendo nada</td><td class="num">4 h</td></tr>
+      <tr><td>3</td><td>Autenticação (sem. 10)</td><td>API só de usuários: cadastro, hash, login, rota protegida</td><td>Auth isolada da regra de negócio</td><td class="num">4 h</td></tr>
+      <tr><td>4</td><td>React (sem. 8)</td><td>Página que lista dados de uma API pública com carregando/erro/vazio</td><td>Estado assíncrono no React</td><td class="num">3 h</td></tr>
+      <tr><td>5</td><td>Mobile (sem. 21)</td><td>App Expo de uma tela que consome uma API pública</td><td>Diferenças de RN, sem sua API no meio</td><td class="num">3 h</td></tr>
+      <tr><td>6</td><td>Docker (sem. 17)</td><td>Containerizar uma app trivial e reduzir a imagem em 80%</td><td>Camadas e cache de build</td><td class="num">3 h</td></tr>
+      <tr><td>7</td><td>ML (sem. 28)</td><td>Classificar 200 frases em 3 categorias, com split e F1</td><td>Ciclo completo de ML em dados minúsculos</td><td class="num">4 h</td></tr>
+      <tr><td>8</td><td>Deploy (sem. 20)</td><td>Publicar um "olá mundo" em Node num serviço gerenciado</td><td>Só o deploy, sem banco nem front</td><td class="num">2 h</td></tr>
+      <tr><td>9</td><td>CI (sem. 34)</td><td>Workflow que roda um teste em um repositório vazio</td><td>Sintaxe do Actions, sem sua suíte complicando</td><td class="num">2 h</td></tr>
+      <tr><td>10</td><td>Concorrência (sem. 18)</td><td>Duas conexões <code>psql</code> lado a lado disputando a mesma linha</td><td>Ver o bloqueio acontecer com os próprios olhos</td><td class="num">2 h</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="note why">
+    <span class="lbl">Como usar o mini-projeto 10</span>
+    <p>Abra dois terminais com <code>psql</code>. No primeiro: <code>BEGIN; UPDATE contas SET saldo = saldo - 100 WHERE id = 1;</code> — e não confirme. No segundo, rode o mesmo comando. Ele vai <em>travar</em>, esperando. Volte ao primeiro e dê <code>COMMIT</code>. O segundo destrava na hora. Você acabou de ver, ao vivo, o mecanismo que impede o lost update. Nenhum texto ensina isso tão bem quanto o cursor parado esperando.</p>
+  </div>
+</section>
+
+<section id="s23">
+  <div class="sec-head">
+    <span class="sec-num">SEÇÃO 23</span>
+    <h2>Checkpoints</h2>
+  </div>
+
+  <p>Responda em voz alta, para uma pessoa ou para uma câmera, sem consultar nada. Se travar, a lacuna está identificada — volte a ela antes de avançar. A resposta esperada está em cinza; ela é um esqueleto, não um gabarito literal.</p>
+
+  <h4>CP-0 · Fundamentos (semana 3)</h4>
+  <div class="q"><p>Qual a diferença entre <code>401</code> e <code>403</code>, e por que a sua API vai responder <code>404</code> numa situação em que <code>403</code> pareceria natural?</p><p class="a">401 = não sei quem você é. 403 = sei quem você é e você não pode. 404 no lugar de 403 evita confirmar que o recurso existe, impedindo enumeração de ids.</p></div>
+  <div class="q"><p>O que uma chave estrangeira garante que a aplicação sozinha não garantiria?</p><p class="a">Integridade referencial no nível do banco: nenhuma transação pode apontar para uma categoria inexistente, mesmo que um bug ou um script tente inserir. A regra vive onde os dados vivem.</p></div>
+
+  <h4>CP-1 · O caminho de uma requisição (semana 9)</h4>
+  <div class="q"><p>Descreva o caminho completo de um login, do clique até a tela atualizada.</p><p class="a">Formulário React → <code>fetch POST /auth/login</code> → rede → Express → <code>cors</code> → <code>express.json()</code> → rate limit → rota → validação Zod → busca do usuário → <code>bcrypt.compare</code> → geração de access e refresh → gravação do hash do refresh → resposta 200 com cookie → cliente guarda o access em memória → redireciona → nova requisição já com o header <code>Authorization</code>.</p></div>
+
+  <h4>CP-2 · Middleware (semana 9)</h4>
+  <div class="q"><p>O que acontece se você registrar o handler de erro antes das rotas?</p><p class="a">Ele nunca é alcançado: o Express percorre a cadeia em ordem, e o erro lançado numa rota procura o próximo middleware de erro <em>depois</em> dela. Registrado antes, fica fora do caminho e o erro cai no handler padrão.</p></div>
+
+  <h4>CP-3 · SQL (semana 9)</h4>
+  <div class="q"><p>Escreva a query do gasto por categoria do mês. Por que ela não pode ser feita em JavaScript?</p><p class="a"><code>SELECT c.name, SUM(t.amount_cents) FROM transactions t JOIN categories c ON c.id = t.category_id WHERE t.user_id = $1 AND t.occurred_on BETWEEN $2 AND $3 GROUP BY c.name;</code> — em JS seria preciso trazer todas as linhas pela rede e somar em memória: mais tráfego, mais RAM, e sem uso do índice.</p></div>
+
+  <h4>CP-4 · Isolamento (semana 12)</h4>
+  <div class="q"><p>Mostre duas linhas de código que causariam vazamento entre usuários.</p><p class="a"><code>findUnique({ where: { id } })</code> sem <code>userId</code>; e <code>prisma.transaction.create({ data: req.body })</code>, que aceitaria um <code>userId</code> vindo do cliente. As correções: <code>findFirst</code> com <code>{ id, userId }</code>, e montar o objeto campo a campo usando <code>req.user.id</code>.</p></div>
+  <div class="q"><p>Como você <em>prova</em> que o isolamento funciona?</p><p class="a">Com um teste automatizado por endpoint: dois usuários, A tenta acessar o recurso de B, espera-se 404. Se alguém remover o escopo numa refatoração, o teste falha.</p></div>
+
+  <h4>CP-5 · React (semana 15)</h4>
+  <div class="q"><p>Por que um <code>useEffect</code> pode chamar a API infinitamente?</p><p class="a">Sem array de dependências ele roda a cada render; se o efeito atualiza estado, o estado causa render, que roda o efeito de novo. Também acontece com dependência que é objeto ou função recriada a cada render.</p></div>
+
+  <h4>CP-6 · Concorrência (semana 18)</h4>
+  <div class="q"><p>Duas requisições do mesmo usuário chegam simultaneamente para debitar de um orçamento. O que pode dar errado e quais são as três soluções?</p><p class="a">Lost update: as duas leem o mesmo valor e a segunda sobrescreve a primeira. Soluções: (1) <code>UPDATE ... SET x = x - $1</code>, deixando o banco serializar; (2) <code>SELECT ... FOR UPDATE</code> dentro de transação, bloqueio pessimista; (3) coluna <code>version</code> no <code>WHERE</code>, bloqueio otimista com 409 em caso de conflito.</p></div>
+  <div class="q"><p>Por que a chave de idempotência é um <code>UNIQUE</code> no banco e não um <code>SELECT</code> antes do <code>INSERT</code>?</p><p class="a">Entre o <code>SELECT</code> e o <code>INSERT</code> existe uma janela onde a outra requisição cabe. A constraint é verificada atomicamente pelo Postgres; não há janela.</p></div>
+
+  <h4>CP-7 · Docker (semana 17)</h4>
+  <div class="q"><p>Explique imagem, container e volume usando o Postgres do seu projeto.</p><p class="a">Imagem é o molde imutável (<code>postgres:16</code>). Container é uma instância em execução desse molde. Volume é o armazenamento que sobrevive à destruição do container — sem ele, <code>docker compose down</code> apaga o banco.</p></div>
+
+  <h4>CP-8 · Mobile (semana 22)</h4>
+  <div class="q"><p>Por que o refresh token vai para o <code>SecureStore</code> e não para o <code>AsyncStorage</code>?</p><p class="a">O <code>AsyncStorage</code> guarda texto puro, acessível em dispositivo com root ou por backup. O <code>SecureStore</code> usa Keychain (iOS) e Keystore (Android), com proteção de hardware. Credencial nunca vai para armazenamento simples.</p></div>
+
+  <h4>CP-9 · Performance (semana 39)</h4>
+  <div class="q"><p>Sua listagem ficou lenta. Descreva o diagnóstico, na ordem.</p><p class="a">Confirmar com medição (p95, não impressão) → identificar a query no log → <code>EXPLAIN ANALYZE</code> → procurar seq scan, ordenação em disco ou estimativa muito diferente do real → criar o índice → medir de novo → registrar antes/depois. Nunca criar índice por palpite: todo índice custa na escrita.</p></div>
+
+  <h4>CP-10 · Dados (semana 26)</h4>
+  <div class="q"><p>O que você descobriu no EDA que mudou uma decisão?</p><p class="a">Resposta pessoal, com número. Exemplo do tipo esperado: "as classes estão desbalanceadas 8:1, então acurácia era inútil e passei a usar F1 macro, e adicionei <code>class_weight='balanced'</code>".</p></div>
+
+  <h4>CP-11 · ML (semana 29)</h4>
+  <div class="q"><p>Por que acurácia é uma métrica ruim para este problema?</p><p class="a">As classes são desbalanceadas: responder sempre a classe majoritária já dá acurácia alta sem o modelo ter aprendido nada. F1 macro pesa todas as categorias igualmente e denuncia isso.</p></div>
+  <div class="q"><p>Cite um data leakage que você poderia ter cometido aqui.</p><p class="a">Ajustar o TF-IDF antes do split, vazando o vocabulário do teste; ou dividir aleatoriamente com transações recorrentes, deixando a mesma descrição no treino e no teste.</p></div>
+  <div class="q"><p>Seu modelo bateu a baseline? Em quanto?</p><p class="a">Se a resposta for "não sei", a Fase 6 não terminou.</p></div>
+
+  <h4>CP-12 · Deploy (semana 20)</h4>
+  <div class="q"><p>O que muda entre o <code>.env</code> local e o de produção, e por quê?</p><p class="a"><code>DATABASE_URL</code> com <code>sslmode=require</code>; <code>JWT_SECRET</code> forte e diferente; <code>NODE_ENV=production</code> (muda cache de view, tratamento de erro e otimizações); <code>CORS_ORIGIN</code> com o domínio real; <code>LOG_LEVEL</code> mais alto; URL da API no build do front.</p></div>
+
+  <h4>CP-13 · CI/CD (semana 35)</h4>
+  <div class="q"><p>O que a sua pipeline impede de chegar em produção?</p><p class="a">Código que não compila, que quebra teste existente, que introduz vazamento entre usuários (o teste de autorização), que não passa no lint, e dependência com vulnerabilidade conhecida. Não impede: bug de lógica que ninguém testou, e erro de configuração de ambiente.</p></div>
+
+  <h4>CP-14 · Escala (semana 39)</h4>
+  <div class="q"><p>Quantos usuários simultâneos sua arquitetura aguenta, e qual é o próximo gargalo?</p><p class="a">Com número seu, do teste de carga. A forma da resposta: "uma instância sustentou X req/s com p95 de Y ms; o perfil real dá cerca de Z pessoas simultâneas; o próximo gargalo é [a agregação do dashboard / o pool de conexões], e a próxima ação seria [cache com invalidação / pooler / segunda instância]".</p></div>
+</section>
+
+<section id="s24">
+  <div class="sec-head">
+    <span class="sec-num">SEÇÃO 24</span>
+    <h2>Estratégia anti-dependência de IA</h2>
+  </div>
+
+  <p>Você vai usar IA durante o projeto — inclusive a mim. O risco não é a IA escrever código: é você chegar na semana 42 com um sistema funcionando que não sabe explicar. O aprendizado mora na <em>tentativa frustrada</em>, e é exatamente ela que a IA elimina se você deixar.</p>
+
+  <h3>Regra dos 30 minutos</h3>
+  <p>Ao travar, cronometre. Nos primeiros 30 minutos: leia a mensagem de erro <em>inteira</em>, releia seu código, use <code>console.log</code>, consulte a documentação oficial. Só depois disso peça ajuda. E quando pedir, peça <strong>pista, não solução</strong> — a diferença entre "como faço paginação por cursor?" e "estou tentando paginação por cursor, meu <code>WHERE</code> está assim, os itens repetem entre páginas, o que estou deixando passar?" é a diferença entre receber código e aprender.</p>
+
+  <h3>Protocolo para pedir ajuda</h3>
+  <div class="scroll">
+  <table>
+    <thead><tr><th>Nível</th><th>Peça isto</th><th>Quando</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>"Explique o conceito de X, sem código"</td><td>Sempre que o assunto for novo. Comece aqui.</td></tr>
+      <tr><td>2</td><td>"Me dê um exercício pequeno sobre X"</td><td>Antes de aplicar no projeto principal.</td></tr>
+      <tr><td>3</td><td>"Aqui está minha tentativa. Onde está o erro de raciocínio?"</td><td>Depois dos 30 min. <strong>Este é o nível mais valioso.</strong></td></tr>
+      <tr><td>4</td><td>"Me dê uma pista, não a resposta"</td><td>Quando o nível 3 não bastou.</td></tr>
+      <tr><td>5</td><td>"Mostre a solução e explique cada decisão"</td><td>Último recurso — e nunca sem passar pelo 3.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h3>Se você aceitar código pronto, pague o pedágio</h3>
+  <p>Às vezes vale mesmo pedir a solução — configuração de ferramenta, sintaxe de YAML, coisas que não ensinam nada. Quando for código de lógica, cumpra os quatro passos antes de seguir em frente:</p>
+  <ol>
+    <li><strong>Explique cada linha em voz alta.</strong> Toda linha que você não conseguir explicar é uma dívida.</li>
+    <li><strong>Quebre de propósito.</strong> Altere uma linha e preveja o que vai falhar. Rode e confira se acertou a previsão.</li>
+    <li><strong>Reescreva de memória</strong> no dia seguinte, sem olhar.</li>
+    <li><strong>Escreva o teste sozinho</strong>, sem ajuda. Se você consegue testar, você entendeu.</li>
+  </ol>
+
+  <div class="note trap">
+    <span class="lbl">Sinais de que a dependência está se instalando</span>
+    <ul>
+      <li>Você não consegue explicar um trecho que está no seu repositório há uma semana.</li>
+      <li>Você pede ajuda antes de ler a mensagem de erro até o fim.</li>
+      <li>Você copia código com nomes de variável que não combinam com o resto do projeto.</li>
+      <li>Você não sabe dizer por que uma biblioteca está no <code>package.json</code>.</li>
+      <li>Ao travar, sua primeira reação é abrir o chat em vez de abrir o código.</li>
+    </ul>
+  </div>
+
+  <div class="note why">
+    <span class="lbl">O teste da sexta-feira</span>
+    <p>Toda sexta, escolha o trecho mais complicado que você escreveu na semana e explique-o em cinco minutos gravados no celular, sem consultar a tela. É desconfortável nas primeiras semanas e vira automático depois. No fim do projeto você terá 42 gravações — e, muito mais importante, terá treinado exatamente a habilidade que uma entrevista técnica avalia.</p>
+  </div>
+</section>
+
+<section id="s25">
+  <div class="sec-head">
+    <span class="sec-num">SEÇÃO 25</span>
+    <h2>Estratégia de GitHub</h2>
+  </div>
+
+  <h3>Monorepo — e o motivo concreto</h3>
+  <p>Um repositório, <code>pnpm</code> workspaces. Não por moda: você tem <code>packages/shared</code> com os tipos e schemas Zod da API, importado por web, mobile e backend. Mudou o contrato de um endpoint, o TypeScript acusa nos três no mesmo commit, e o CI barra antes do merge. Em repositórios separados isso viraria publicação de pacote npm e sincronização manual de versão — burocracia real para uma pessoa. O custo do monorepo é um CI um pouco mais elaborado; o benefício é o contrato nunca divergir.</p>
+
+  <h3>Fluxo de trabalho</h3>
+  <div class="kv">
+    <dt>Branches</dt><dd><code>main</code> sempre publicável e protegida. <code>feat/…</code>, <code>fix/…</code>, <code>docs/…</code>, <code>chore/…</code> a partir dela. Sem <code>develop</code> — para uma pessoa, é cerimônia sem ganho.</dd>
+    <dt>Commits</dt><dd>Conventional Commits (<code>feat(api): paginação por cursor</code>). O prefixo estrutura o histórico e permite gerar changelog. Um commit = uma ideia.</dd>
+    <dt>Pull requests</dt><dd><strong>Abra PR mesmo trabalhando sozinho.</strong> O PR é onde você escreve o que fez e por quê, e onde o CI roda. Revise o próprio diff antes de mergear: você vai encontrar <code>console.log</code> esquecido em metade deles.</dd>
+    <dt>Issues</dt><dd>Uma por semana do roadmap, com a lista de tarefas em checkbox. Rótulos por fase e por área.</dd>
+    <dt>Milestones</dt><dd>Uma por fase, com data alvo. Dá um gráfico de progresso e evita a sensação de estar patinando.</dd>
+    <dt>Releases</dt><dd>Tag semântica ao fim de cada fase, com notas de release escritas à mão. <code>v0.1.0</code> MVP · <code>v1.0.0</code> V1 · <code>v1.1.0</code> online · <code>v1.2.0</code> mobile · <code>v1.5.0</code> ML · <code>v2.0.0</code> produção.</dd>
+    <dt>ADRs</dt><dd><code>docs/adr/0001-monorepo.md</code> em diante. Contexto, opções, decisão, consequências. Dez minutos cada.</dd>
+  </div>
+
+  <h3>O README que faz diferença</h3>
+  <p>A maioria dos READMEs de portfólio lista tecnologias. O seu deve <strong>argumentar</strong>. Nesta ordem: link do app no ar e credenciais de demonstração; GIF de 20 s do fluxo principal; o problema que o produto resolve; diagrama de arquitetura; <strong>decisões e trade-offs</strong> (a seção que ninguém escreve e todo entrevistador lê); resultados de ML com a baseline ao lado; números de carga; como rodar localmente; e o que você faria diferente.</p>
+  <div class="note why">
+    <span class="lbl">A seção que vale mais que o código</span>
+    <p>"Por que não usei Lambda para o ML" em três parágrafos, com números de cold start e limite de pacote, é mais convincente do que qualquer badge. Ela demonstra que você <em>escolheu</em>, e escolher é a atividade central da engenharia. Cinco parágrafos assim valem mais que cinquenta commits.</p>
+  </div>
+</section>
+
+<section id="s26">
+  <div class="sec-head">
+    <span class="sec-num">SEÇÃO 26</span>
+    <h2>Matriz de competências</h2>
+  </div>
+
+  <p>"Nível necessário" é o nível para <em>este projeto</em>, não para uma carreira inteira. O critério de domínio é sempre uma demonstração, nunca uma sensação.</p>
+
+  <div class="scroll">
+  <table>
+    <thead><tr><th>Tecnologia</th><th>Início</th><th>Necessário</th><th>Onde aprende</th><th>Onde aplica</th><th>Critério de domínio</th></tr></thead>
+    <tbody>
+      <tr><td>Git / GitHub</td><td>Básico</td><td>Intermediário</td><td>Sem. 1</td><td>Todo dia</td><td>Resolve conflito e reverte commit errado sem pânico</td></tr>
+      <tr><td>Terminal</td><td>Básico</td><td>Básico+</td><td>Sem. 1</td><td>Todo dia</td><td>Navega, encadeia e lê erro sem copiar para o navegador</td></tr>
+      <tr><td>HTTP / REST</td><td>Nenhum</td><td>Sólido</td><td>Sem. 2</td><td>Toda a API</td><td>Escolhe método e status corretos sem consultar tabela</td></tr>
+      <tr><td>JavaScript</td><td>Nenhum</td><td>Intermediário</td><td>Sem. 2</td><td>API + web + mobile</td><td>Escreve código assíncrono correto sem colar exemplo</td></tr>
+      <tr><td>TypeScript</td><td>Nenhum</td><td>Intermediário</td><td>Sem. 3</td><td>API + web + mobile</td><td>Modela um domínio com tipos e lê erro do compilador sem medo</td></tr>
+      <tr><td>Node.js</td><td>Nenhum</td><td>Intermediário</td><td>Sem. 4</td><td>API</td><td>Explica o event loop e por que o backend é stateless</td></tr>
+      <tr><td>Express</td><td>Nenhum</td><td>Sólido</td><td>Sem. 4–5</td><td>API</td><td>Escreve middleware do zero e sabe onde registrá-lo</td></tr>
+      <tr><td>SQL</td><td>Nenhum</td><td>Intermediário+</td><td>Sem. 3, 6</td><td>Banco inteiro</td><td>Escreve <code>JOIN</code> + <code>GROUP BY</code> à mão e lê <code>EXPLAIN</code></td></tr>
+      <tr><td>PostgreSQL</td><td>Nenhum</td><td>Intermediário</td><td>Sem. 6, 14, 18</td><td>Banco inteiro</td><td>Cria índice com justificativa e entende transação e bloqueio</td></tr>
+      <tr><td>Prisma</td><td>Nenhum</td><td>Intermediário</td><td>Sem. 7</td><td>API</td><td>Escreve migration segura e sabe o SQL que o ORM gera</td></tr>
+      <tr><td>React</td><td>Nenhum</td><td>Intermediário</td><td>Sem. 8, 15–16</td><td>Web</td><td>Gerencia estado de servidor e de UI sem confundir os dois</td></tr>
+      <tr><td>React Native / Expo</td><td>Nenhum</td><td>Básico+</td><td>Sem. 21–24</td><td>Mobile</td><td>Constrói tela com navegação e sessão persistente</td></tr>
+      <tr><td>Autenticação</td><td>Nenhum</td><td>Sólido</td><td>Sem. 10–12</td><td>API + clientes</td><td>Implementa JWT + refresh rotativo e explica cada escolha</td></tr>
+      <tr><td>Autorização</td><td>Nenhum</td><td><strong>Sólido</strong></td><td>Sem. 12</td><td>Toda query</td><td>Prova o isolamento com teste automatizado</td></tr>
+      <tr><td>Concorrência</td><td>Nenhum</td><td>Intermediário</td><td>Sem. 18</td><td>API + banco</td><td>Identifica race condition e escolhe a estratégia certa</td></tr>
+      <tr><td>Testes</td><td>Nenhum</td><td>Intermediário</td><td>Sem. 13</td><td>API + web</td><td>Sabe o que testar em cada camada e o que não testar</td></tr>
+      <tr><td>Docker</td><td>Nenhum</td><td>Básico+</td><td>Sem. 6, 17</td><td>Dev + deploy</td><td>Escreve Dockerfile multi-estágio e compõe serviços</td></tr>
+      <tr><td>CI/CD</td><td>Nenhum</td><td>Básico+</td><td>Sem. 34–35</td><td>Repositório</td><td>Cria pipeline do zero e explica o que ela impede</td></tr>
+      <tr><td>Deploy / Cloud</td><td>Nenhum</td><td>Intermediário</td><td>Sem. 20, 35–37</td><td>Produção</td><td>Publica, monitora e restaura backup</td></tr>
+      <tr><td>AWS (S3/IAM)</td><td>Nenhum</td><td>Básico</td><td>Sem. 36</td><td>Exportação e artefatos</td><td>Cria política de menor privilégio e URL pré-assinada</td></tr>
+      <tr><td>Segurança</td><td>Nenhum</td><td>Sólido</td><td>Contínuo</td><td>Todo o sistema</td><td>Nomeia o ataque antes de citar a defesa</td></tr>
+      <tr><td>Python</td><td>Básico</td><td>Intermediário</td><td>Sem. 25</td><td>Serviço de ML</td><td>Estrutura módulo testável, não só notebook</td></tr>
+      <tr><td>NumPy / Pandas</td><td>Nenhum</td><td>Intermediário</td><td>Sem. 25–26</td><td>Dados</td><td>Faz EDA que produz conclusão acionável</td></tr>
+      <tr><td>scikit-learn</td><td>Nenhum</td><td>Intermediário</td><td>Sem. 27–31</td><td>Modelos</td><td>Monta pipeline sem leakage e avalia com honestidade</td></tr>
+      <tr><td>ML aplicado</td><td>Nenhum</td><td>Intermediário</td><td>Sem. 28–33</td><td>Categorização e previsão</td><td>Escolhe métrica com justificativa e sabe quando não usar ML</td></tr>
+      <tr><td>MLOps</td><td>Nenhum</td><td>Básico</td><td>Sem. 33, 36</td><td>Produção</td><td>Versiona modelo, mede em produção e detecta drift</td></tr>
+      <tr><td>Arquitetura</td><td>Nenhum</td><td>Intermediário</td><td>Contínuo</td><td>Todo o projeto</td><td>Justifica cada peça e sabe o que <em>não</em> incluiu</td></tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<section id="s27">
+  <div class="sec-head">
+    <span class="sec-num">SEÇÃO 27</span>
+    <h2>O que NÃO estudar agora</h2>
+  </div>
+
+  <p>Nenhuma destas tecnologias é ruim. Todas resolvem problemas reais — problemas que você <strong>ainda não tem</strong>. Adotar solução sem problema é como tomar remédio sem doença: no melhor caso não faz nada, no pior atrapalha. Guarde esta seção: saber justificar uma ausência é tão valioso quanto justificar uma presença.</p>
+
+  <div class="scroll">
+  <table>
+    <thead><tr><th>Tecnologia</th><th>Que problema resolve</th><th>Por que não agora</th><th>Quando reconsiderar</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Kubernetes</strong></td><td>Orquestrar dezenas de containers com autoescala</td><td>Você tem três processos. K8s adiciona um sistema distribuído inteiro para gerenciar o que uma plataforma gerenciada resolve com um <code>git push</code></td><td>Vários times, dezenas de serviços, necessidade real de autoescala</td></tr>
+      <tr><td><strong>Microserviços</strong></td><td>Times independentes fazendo deploy sem se coordenar</td><td>Você é um time. Microserviço troca complexidade de código por complexidade de rede — e rede falha de formas muito mais criativas</td><td>Quando o deploy de uma parte for bloqueado pela outra por motivo organizacional</td></tr>
+      <tr><td><strong>Kafka</strong></td><td>Fluxo de eventos de altíssimo volume, com replay</td><td>Você não tem eventos assíncronos. Quando tiver, uma fila simples resolve com 1% do esforço operacional</td><td>Milhares de eventos por segundo, múltiplos consumidores independentes</td></tr>
+      <tr><td><strong>GraphQL</strong></td><td>Muitos clientes heterogêneos precisando de formas diferentes do mesmo dado</td><td>Você tem dois clientes que querem quase a mesma coisa. Traz N+1, cache difícil e complexidade de autorização por campo</td><td>Cinco ou mais clientes com necessidades divergentes de dados</td></tr>
+      <tr><td><strong>Redis</strong></td><td>Cache compartilhado e rate limit distribuído entre instâncias</td><td>Com uma instância, cache em memória do processo resolve. Redis vira mais um serviço para operar e mais um ponto de falha</td><td>Duas ou mais instâncias da API — nível 3 da <a href="#s16">Seção 16</a></td></tr>
+      <tr><td><strong>Terraform</strong></td><td>Infraestrutura versionada e reproduzível em múltiplos ambientes</td><td>Sua infraestrutura são quatro serviços gerenciados configurados por interface. O código para descrevê-los seria maior que a infraestrutura</td><td>Mais de dez recursos, ou necessidade de recriar tudo de forma idêntica</td></tr>
+      <tr><td><strong>CQRS / Event Sourcing</strong></td><td>Auditoria completa e leitura/escrita com cargas muito distintas</td><td>Complexidade enorme de raciocínio para um CRUD com dashboard. Consistência eventual é difícil de explicar ao usuário</td><td>Requisito legal de auditoria imutável, ou leitura 100× a escrita</td></tr>
+      <tr><td><strong>Service mesh</strong></td><td>mTLS e observabilidade entre muitos serviços</td><td>Dois serviços. Um header com segredo compartilhado resolve o mesmo problema</td><td>Dezenas de serviços numa malha interna</td></tr>
+      <tr><td><strong>Deep learning</strong></td><td>Padrões complexos em dados abundantes</td><td>Seu problema é texto curto com poucos milhares de exemplos. Regressão logística sobre TF-IDF empata ou vence, treina em segundos e você consegue explicar o resultado</td><td>Centenas de milhares de exemplos e ganho medido sobre a baseline</td></tr>
+      <tr><td><strong>Arquitetura hexagonal</strong></td><td>Isolar o domínio de detalhes de infraestrutura em sistemas grandes</td><td>Quatro camadas de abstração para trocar um ORM que você nunca vai trocar. Torna o código mais difícil de ler agora, em troca de flexibilidade futura hipotética</td><td>Domínio complexo de verdade, com múltiplas integrações externas</td></tr>
+      <tr><td><strong>gRPC</strong></td><td>Comunicação de baixa latência entre serviços internos</td><td>Uma chamada HTTP JSON entre Node e Python custa 5 ms. Não há problema a resolver</td><td>Chamadas internas em volume onde a serialização vira gargalo medido</td></tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<section id="s28">
+  <div class="sec-head">
+    <span class="sec-num">SEÇÃO 28</span>
+    <h2>Arquitetura evolutiva</h2>
+  </div>
+
+  <p>Cada estágio resolve o problema criado pelo anterior. É assim que sistemas reais crescem — e é a narrativa que torna o projeto explicável.</p>
+
+  <div class="grid2">
+    <div class="panel">
+      <h5>Estágio 1 · MVP — semana 9</h5>
+      <div class="diag" style="margin:.6rem 0;padding:1rem .6rem">
+        <div class="dnode sm">React</div><div class="dedge"></div>
+        <div class="dnode sm">Express</div><div class="dedge"></div>
+        <div class="dnode sm">PostgreSQL</div>
+      </div>
+      <p><strong>Problema que aparece:</strong> qualquer pessoa vê os dados de qualquer pessoa. Senha em texto puro. Só funciona em <code>localhost</code>.</p>
+    </div>
+    <div class="panel">
+      <h5>Estágio 2 · V1 — semana 16</h5>
+      <div class="diag" style="margin:.6rem 0;padding:1rem .6rem">
+        <div class="dnode sm">React + rotas protegidas</div><div class="dedge"></div>
+        <div class="dnode hi">Express + auth + escopo</div><div class="dedge"></div>
+        <div class="dnode sm">PostgreSQL + índices</div>
+      </div>
+      <p><strong>Problema que aparece:</strong> funciona só na sua máquina; duas requisições simultâneas podem duplicar dado; ninguém consegue rodar o projeto.</p>
+    </div>
+    <div class="panel">
+      <h5>Estágio 3 · Online — semana 20</h5>
+      <div class="diag" style="margin:.6rem 0;padding:1rem .6rem">
+        <div class="dnode sm">CDN · Vercel</div><div class="dedge"></div>
+        <div class="dnode hi">API · Render · HTTPS</div><div class="dedge"></div>
+        <div class="dnode sm">Neon · SSL · backup</div>
+      </div>
+      <p><strong>Problema que aparece:</strong> deploy manual e assustador; sem visibilidade quando quebra; o app hiberna.</p>
+    </div>
+    <div class="panel">
+      <h5>Estágio 4 · Mobile — semana 24</h5>
+      <div class="diag" style="margin:.6rem 0;padding:1rem .6rem">
+        <div class="drow"><div class="dnode sm">Web</div><div class="dnode sm">Mobile</div></div>
+        <div class="dedge"></div>
+        <div class="dnode hi">A mesma API</div>
+      </div>
+      <p><strong>Problema que aparece:</strong> dois clientes divergindo do contrato — resolvido por <code>packages/shared</code>. Rede instável exige idempotência.</p>
+    </div>
+    <div class="panel">
+      <h5>Estágio 5 · Com ML — semana 33</h5>
+      <div class="diag" style="margin:.6rem 0;padding:1rem .6rem">
+        <div class="dnode sm">Web + Mobile</div><div class="dedge"></div>
+        <div class="dnode hi">API</div><div class="dedge"></div>
+        <div class="drow"><div class="dnode sm">Postgres</div><div class="dnode ml">ml-service</div></div>
+      </div>
+      <p><strong>Problema que aparece:</strong> uma dependência a mais que pode cair — resolvido por timeout e degradação. Modelo envelhece — resolvido por realimentação.</p>
+    </div>
+    <div class="panel">
+      <h5>Estágio 6 · Produção — semana 42</h5>
+      <div class="diag" style="margin:.6rem 0;padding:1rem .6rem">
+        <div class="dnode sm">Usuários · HTTPS</div><div class="dedge"></div>
+        <div class="dnode hi">API · rate limit · pool</div><div class="dedge"></div>
+        <div class="drow"><div class="dnode sm">Postgres</div><div class="dnode ml">ml-service</div></div>
+        <div class="dedge"></div>
+        <div class="dnode sm">CI/CD · logs · alertas</div>
+      </div>
+      <p><strong>Próximo problema:</strong> escrita concentrada no primário e trabalho pesado no caminho da requisição. Respostas: réplica de leitura e fila — <em>quando</em> a medição justificar.</p>
+    </div>
+  </div>
+</section>
+
+<section id="s29">
+  <div class="sec-head">
+    <span class="sec-num">SEÇÃO 29</span>
+    <h2>Critérios de conclusão</h2>
+  </div>
+
+  <p>Código funcionando não é critério — é pré-requisito. Uma fase termina quando você consegue <strong>demonstrar</strong> a propriedade que ela deveria ter criado.</p>
+
+  <div class="scroll">
+  <table>
+    <thead><tr><th>Fase</th><th>Concluída quando</th></tr></thead>
+    <tbody>
+      <tr><td><strong>0</strong> Fundamentos</td><td>Você faz branch/merge/conflito sem consulta; explica <code>401</code>×<code>403</code>; escreve <code>JOIN</code> com <code>GROUP BY</code>; explica <code>async/await</code>.</td></tr>
+      <tr><td><strong>1</strong> MVP</td><td>Cadastro, login, CRUD completo e dashboard funcionam; dados persistem após reiniciar tudo; o front trata carregando e erro; o README permite outra pessoa rodar o projeto.</td></tr>
+      <tr><td><strong>2</strong> V1</td><td>Dois usuários usam ao mesmo tempo sem ver nada um do outro; <strong>existe teste de autorização para cada endpoint</strong>; toda entrada é validada; listagem pagina, filtra e busca; dashboard com dois gráficos.</td></tr>
+      <tr><td><strong>3</strong> Qualidade e deploy</td><td>URL pública com HTTPS; alguém de fora criou conta e usou; <code>docker compose up</code> funciona em máquina limpa; teste de concorrência passa; <code>docs/deploy.md</code> existe.</td></tr>
+      <tr><td><strong>4</strong> Mobile</td><td>App no celular físico contra a API de produção; sessão persiste; offline tratado; <strong>a API não mudou por causa do mobile</strong>.</td></tr>
+      <tr><td><strong>5</strong> Data Science</td><td>Notebook de EDA com cinco descobertas escritas, uma delas tendo mudado uma decisão; gerador sintético defensável; limpeza como função testada.</td></tr>
+      <tr><td><strong>6</strong> ML</td><td><code>train.py</code> reprodutível; tabela comparativa com baseline; matriz de confusão interpretada; limiar escolhido com dados; você explica por que o vencedor venceu.</td></tr>
+      <tr><td><strong>7</strong> Integração ML</td><td>Sugestão aparece na UI; derrubar o <code>ml-service</code> não afeta nada essencial; correções alimentam o próximo treino; ADR de privacidade escrito.</td></tr>
+      <tr><td><strong>8</strong> Cloud e CI/CD</td><td>Merge na <code>main</code> publica sozinho; migrations rodam sem downtime; segredos fora do Git; <strong>backup restaurado de verdade pelo menos uma vez</strong>; alertas chegando.</td></tr>
+      <tr><td><strong>9</strong> Produção</td><td>Relatório de carga com antes/depois; toda query crítica usando índice comprovado por <code>EXPLAIN</code>; rate limit testado; cinco pessoas usaram simultaneamente; os 14 checkpoints respondidos sem consulta.</td></tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<section id="s30">
+  <div class="sec-head">
+    <span class="sec-num">SEÇÃO 30</span>
+    <h2>Estado final esperado</h2>
+  </div>
+
+  <h3>O que existe no fim</h3>
+  <div class="grid2">
+    <div class="panel">
+      <h5>Produto</h5>
+      <p>Aplicação financeira em domínio próprio, com HTTPS, onde qualquer pessoa cria conta, lança receitas e despesas, categoriza, filtra, vê dashboards, recebe sugestão automática de categoria e uma previsão de fechamento do mês. App mobile consumindo a mesma API. Vários usuários ao mesmo tempo, com dados isolados e comprovadamente separados.</p>
+    </div>
+    <div class="panel">
+      <h5>Engenharia</h5>
+      <p>Monorepo com CI verde, deploy automático, migrations seguras, testes em quatro camadas, logs estruturados, rastreio de erro, alertas, backup testado, rate limit e relatório de carga com números reais.</p>
+    </div>
+    <div class="panel">
+      <h5>Machine Learning</h5>
+      <p>Classificador de transações comparado a uma baseline explícita, servido por um serviço próprio, com abstenção calibrada, versionamento de modelo, métrica medida em produção e laço de realimentação. Previsão de fechamento entregue com faixa de incerteza.</p>
+    </div>
+    <div class="panel">
+      <h5>Documentação</h5>
+      <p>README que argumenta em vez de listar; 20 ADRs; OpenAPI publicado; diagramas de arquitetura por estágio; runbook de restore; e uma retrospectiva honesta do que você faria diferente.</p>
+    </div>
+  </div>
+
+  <h3>Mapa completo do sistema</h3>
+  <div class="scroll">
+  <table>
+    <thead><tr><th></th><th>Artefato</th><th>Onde está</th></tr></thead>
+    <tbody>
+      <tr><td>A</td><td>Arquitetura final</td><td><a href="#s2">Seção 2</a> — diagrama de estado final</td></tr>
+      <tr><td>B</td><td>Arquitetura do MVP</td><td><a href="#s28">Seção 28</a> — estágio 1</td></tr>
+      <tr><td>C</td><td>Arquitetura da V1</td><td><a href="#s28">Seção 28</a> — estágios 2 e 3</td></tr>
+      <tr><td>D</td><td>Arquitetura do ML</td><td><a href="#s13">Seção 13</a> — cascata de categorização</td></tr>
+      <tr><td>E</td><td>Arquitetura de produção</td><td><a href="#s28">Seção 28</a> — estágio 6</td></tr>
+      <tr><td>F</td><td>Estrutura do repositório</td><td><a href="#s2">Seção 2</a>, decisão D6</td></tr>
+      <tr><td>G</td><td>Estrutura do banco</td><td><a href="#s3">Seção 3</a> — modelo nuclear</td></tr>
+      <tr><td>H</td><td>Endpoints</td><td><code>docs/api-contract.md</code>, escrito na semana 2; OpenAPI na semana 41</td></tr>
+      <tr><td>I</td><td>Telas principais</td><td>Login, cadastro, listagem, criar/editar, dashboard, categorias, perfil</td></tr>
+      <tr><td>J</td><td>Fluxo de autenticação</td><td><a href="#s3">Seção 3</a>, fluxo A · <a href="#s23">CP-1</a></td></tr>
+      <tr><td>K</td><td>Fluxo de uma transação</td><td><a href="#s3">Seção 3</a>, fluxo B</td></tr>
+      <tr><td>L</td><td>Fluxo de categorização ML</td><td><a href="#s13">Seção 13</a> — diagrama da cascata</td></tr>
+      <tr><td>M</td><td>Fluxo de previsão</td><td><a href="#s12">Seção 12</a> — recorrentes + projeção com faixa</td></tr>
+      <tr><td>N</td><td>Pipeline de treinamento</td><td><code>generate.py</code> → <code>clean.py</code> → <code>train.py</code> → artefato versionado + métricas</td></tr>
+      <tr><td>O</td><td>Pipeline de deploy</td><td><a href="#s19">Seção 19</a></td></tr>
+      <tr><td>P</td><td>Infraestrutura</td><td><a href="#s2">Seção 2</a>, decisão D9</td></tr>
+      <tr><td>Q</td><td>Monitoramento</td><td><a href="#s20">Seção 20</a></td></tr>
+      <tr><td>R</td><td>Estratégia de escalabilidade</td><td><a href="#s16">Seção 16</a> — quatro níveis</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h3>O que você vai saber explicar</h3>
+  <p>No fim, a pergunta que importa não é "o que você construiu?", e sim <strong>"por que você construiu assim?"</strong>. Você terá resposta para: por que monólito e não microserviços; por que cursor e não <code>OFFSET</code>; por que 404 e não 403; por que centavos e não <code>Float</code>; por que refresh rotativo; por que o ML nunca bloqueia a criação de transação; por que a regra determinística vem antes do modelo; por que não usou Lambda; por que F1 macro e não acurácia; por que não usou Redis; e o que você faria diferente se recomeçasse.</p>
+
+  <div class="note why">
+    <span class="lbl">O princípio que governa o plano inteiro</span>
+    <p>Uma arquitetura simples que você compreende por inteiro vale mais que uma sofisticada que você não consegue explicar. Toda tecnologia deste plano entra depois do problema que a justifica, e toda tecnologia ausente tem um motivo escrito. Se em algum momento você se pegar adicionando algo porque "fica bonito no currículo", volte à <a href="#s27">Seção 27</a> e faça a única pergunta que importa: <em>qual problema meu isso resolve hoje?</em></p>
+  </div>
+</section>
+</main>
+</div>

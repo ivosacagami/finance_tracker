@@ -1,0 +1,1791 @@
+Quero que você atue como um ARQUITETO DE SOFTWARE SÊNIOR, ENGENHEIRO DE SOFTWARE FULL STACK, ENGENHEIRO DE DADOS, ENGENHEIRO DE MACHINE LEARNING, ENGENHEIRO CLOUD/DEVOPS e MENTOR TÉCNICO.
+
+Sua missão é criar um PLANO DE ESTUDOS E DESENVOLVIMENTO COMPLETO, do absoluto zero até a conclusão e publicação de uma aplicação Full Stack + Mobile + Machine Learning na internet.
+
+O projeto deverá evoluir de um simples MVP local para uma aplicação real, hospedada na internet, capaz de atender MÚLTIPLOS USUÁRIOS SIMULTANEAMENTE.
+
+============================================================
+1. OBJETIVOS DO PROJETO
+============================================================
+
+Este projeto possui três objetivos, em ordem de prioridade:
+
+1. APRENDIZADO
+2. CONSTRUÇÃO DE UM PORTFÓLIO PROFISSIONAL
+3. CRIAÇÃO DE UMA APLICAÇÃO REAL ONLINE E MULTIUSUÁRIO
+
+O objetivo PRINCIPAL é aprendizado.
+
+Não quero simplesmente terminar uma aplicação bonita.
+
+Quero terminar o projeto sabendo explicar:
+
+- como ele funciona;
+- por que cada tecnologia foi utilizada;
+- como as partes se comunicam;
+- quais problemas foram encontrados;
+- quais decisões arquiteturais foram tomadas;
+- quais alternativas existiam;
+- como o sistema funciona em produção;
+- como vários usuários podem utilizá-lo simultaneamente;
+- como os dados de um usuário são isolados dos dados dos outros;
+- como o sistema pode crescer futuramente.
+
+O portfólio deve ser uma consequência desse processo.
+
+============================================================
+2. CONCEITO DO PRODUTO
+============================================================
+
+O projeto será uma aplicação de gerenciamento financeiro pessoal.
+
+A aplicação deverá permitir que usuários:
+
+- criem uma conta;
+- façam login;
+- gerenciem seu perfil;
+- cadastrem receitas;
+- cadastrem despesas;
+- editem transações;
+- excluam transações;
+- criem categorias;
+- categorizem transações;
+- visualizem histórico financeiro;
+- filtrem transações;
+- visualizem dashboards;
+- acompanhem receitas e despesas;
+- visualizem gráficos;
+- acompanhem evolução financeira;
+- recebam categorização automática através de Machine Learning;
+- futuramente recebam previsões e análises.
+
+A aplicação deverá ser desenvolvida pensando desde o início que:
+
+USUÁRIO A
+
+não pode:
+
+- visualizar;
+- editar;
+- excluir;
+- inferir;
+- acessar
+
+os dados do:
+
+USUÁRIO B.
+
+O sistema deve ser verdadeiramente MULTIUSUÁRIO.
+
+============================================================
+3. VISÃO DE PRODUTO
+============================================================
+
+Não quero que você trate o projeto apenas como:
+
+"um CRUD financeiro".
+
+Quero que você trate a aplicação como um pequeno produto SaaS.
+
+A aplicação inicialmente será destinada a usuários individuais, mas deverá possuir arquitetura que permita crescimento futuro.
+
+Considere:
+
+- cadastro de usuários;
+- autenticação;
+- autorização;
+- isolamento de dados;
+- sessões/token;
+- banco compartilhado com dados logicamente separados por usuário;
+- controle de acesso;
+- concorrência;
+- validação;
+- segurança;
+- limites de uso;
+- observabilidade;
+- disponibilidade;
+- deploy;
+- atualização da aplicação sem derrubar o sistema quando possível.
+
+============================================================
+4. STACK INICIAL
+============================================================
+
+A stack conceitual é:
+
+WEB:
+
+- React
+- TypeScript
+
+MOBILE:
+
+- React Native
+- Expo
+
+BACKEND:
+
+- Node.js
+- Express
+- TypeScript
+- Prisma
+
+BANCO:
+
+- PostgreSQL
+
+DATA SCIENCE / MACHINE LEARNING:
+
+- Python
+- Jupyter Notebook
+- NumPy
+- Pandas
+- Matplotlib
+- scikit-learn
+
+INFRAESTRUTURA:
+
+- Docker
+- Git
+- GitHub
+- GitHub Actions
+- AWS ou outra infraestrutura adequada
+
+Possíveis serviços:
+
+- AWS Lambda
+- AWS RDS
+- AWS S3
+- AWS API Gateway
+- AWS CloudWatch
+- AWS IAM
+
+Mas NÃO assuma que todos esses serviços precisam ser utilizados.
+
+Você deve avaliar criticamente a necessidade de cada um.
+
+============================================================
+5. ARQUITETURA ORIGINAL
+============================================================
+
+A arquitetura conceitual inicial é:
+
+                    ┌─────────────────────┐
+                    │      APP WEB        │
+                    │ React + TypeScript  │
+                    └──────────┬──────────┘
+                               │
+                    ┌──────────▼──────────┐
+                    │      API CORE       │
+                    │ Node + Express      │
+                    │ TypeScript + Prisma │
+                    └──────┬───────┬──────┘
+                           │       │
+              ┌────────────▼──┐   ┌▼──────────────────┐
+              │  PostgreSQL   │   │ Machine Learning  │
+              └───────────────┘   │ scikit-learn      │
+                                  │ AWS Lambda        │
+                                  └────────▲───────────┘
+                                           │
+                                  ┌────────┴─────────┐
+                                  │ Python Notebooks │
+                                  │ Dados reais      │
+                                  └──────────────────┘
+
+                    ┌─────────────────────┐
+                    │    APP MOBILE      │
+                    │ React Native/Expo  │
+                    └──────────┬──────────┘
+                               │
+                               ▼
+                           API CORE
+
+NÃO considere essa arquitetura definitiva.
+
+Sua primeira tarefa será avaliá-la.
+
+Identifique:
+
+- problemas;
+- possíveis gargalos;
+- complexidades desnecessárias;
+- riscos de segurança;
+- riscos de escalabilidade;
+- problemas de manutenção;
+- problemas de deploy;
+- problemas relacionados ao Machine Learning;
+- problemas relacionados ao uso simultâneo por vários usuários.
+
+Depois proponha uma arquitetura melhor.
+
+============================================================
+6. PRINCÍPIO FUNDAMENTAL — ARQUITETURA EVOLUTIVA
+============================================================
+
+NÃO quero começar com a arquitetura final.
+
+O sistema deverá evoluir.
+
+FASE INICIAL:
+
+React
+↓
+Node + Express
+↓
+PostgreSQL
+
+Depois:
+
+React
+       \
+        → Node + Express → PostgreSQL
+       /
+React Native
+
+Depois:
+
+React / Mobile
+       ↓
+Node + Express
+       ↓
+PostgreSQL
+       ↓
+ML Service
+
+Depois:
+
+Aplicações
+↓
+Backend
+↓
+Database
++
+Machine Learning
++
+Cloud
++
+CI/CD
++
+Monitoring
+
+A complexidade deve ser introduzida somente quando houver uma razão.
+
+Sempre pergunte:
+
+"Qual problema esta nova tecnologia está resolvendo?"
+
+============================================================
+7. REGRA MAIS IMPORTANTE DO APRENDIZADO
+============================================================
+
+NÃO quero estudar todas as tecnologias isoladamente antes de começar o projeto.
+
+Utilize:
+
+APRENDER
+↓
+APLICAR
+↓
+REFLETIR
+↓
+REVISAR
+↓
+EXPANDIR
+
+Cada tecnologia deverá aparecer quando se tornar necessária.
+
+Exemplo:
+
+Antes de construir uma API:
+
+- explique cliente/servidor;
+- explique HTTP;
+- explique REST;
+- explique endpoints;
+- explique métodos HTTP;
+- explique status codes;
+- explique JSON;
+- faça um pequeno exercício;
+- então implemente a API.
+
+Não quero simplesmente:
+
+"Instale X."
+
+"Crie este arquivo."
+
+"Copie este código."
+
+Quero entender:
+
+O QUE estou fazendo?
+
+POR QUE estou fazendo?
+
+QUE PROBLEMA ISSO RESOLVE?
+
+O QUE ACONTECERIA SE EU NÃO FIZESSE?
+
+============================================================
+8. MEU NÍVEL
+============================================================
+
+Considere que sou um desenvolvedor em início de carreira.
+
+Tenho contato prévio com programação e Python, mas não quero que você presuma conhecimento profundo de:
+
+- arquitetura;
+- Node.js;
+- TypeScript;
+- React;
+- React Native;
+- PostgreSQL;
+- SQL;
+- Prisma;
+- Docker;
+- AWS;
+- Machine Learning;
+- DevOps;
+- CI/CD;
+- sistemas distribuídos;
+- aplicações multiusuário.
+
+Explique os conceitos necessários.
+
+Porém, NÃO transforme tudo em teoria.
+
+O aprendizado deve acontecer principalmente através da construção do sistema.
+
+============================================================
+9. FASES DO PROJETO
+============================================================
+
+Divida o projeto nas seguintes etapas:
+
+FASE 0 — Fundamentos e preparação
+
+FASE 1 — MVP LOCAL
+
+FASE 2 — V1 WEB MULTIUSUÁRIO
+
+FASE 3 — V1.5 QUALIDADE E PRODUÇÃO
+
+FASE 4 — MOBILE
+
+FASE 5 — MACHINE LEARNING
+
+FASE 6 — INTEGRAÇÃO ML + SISTEMA
+
+FASE 7 — CLOUD / DEPLOY / CI/CD
+
+FASE 8 — PRODUÇÃO MULTIUSUÁRIO
+
+FASE 9 — OTIMIZAÇÃO E ESCALABILIDADE
+
+Caso considere uma divisão melhor, altere-a e explique.
+
+============================================================
+10. FASE 0 — FUNDAMENTOS
+============================================================
+
+Determine o conhecimento mínimo necessário.
+
+Inclua apenas o que será utilizado.
+
+Considere:
+
+- lógica;
+- Git;
+- GitHub;
+- terminal;
+- HTTP;
+- APIs;
+- JSON;
+- JavaScript moderno;
+- TypeScript;
+- SQL;
+- banco relacional;
+- arquitetura básica;
+- conceitos básicos de frontend/backend.
+
+Para cada assunto:
+
+- o que aprender;
+- por que aprender;
+- profundidade necessária;
+- exercício;
+- aplicação futura no projeto.
+
+============================================================
+11. MVP — PRIMEIRO SISTEMA FUNCIONAL
+============================================================
+
+O MVP deve ser propositalmente simples.
+
+Objetivo:
+
+CONSTRUIR UMA APLICAÇÃO COMPLETA DO INÍCIO AO FIM.
+
+O MVP deve possuir:
+
+- frontend;
+- backend;
+- banco;
+- CRUD;
+- usuários;
+- autenticação básica;
+- transações;
+- categorias;
+- dashboard simples;
+- integração frontend/backend.
+
+Não adicionar:
+
+- Machine Learning;
+- Mobile;
+- AWS complexa;
+- microservices;
+- Kubernetes;
+- CI/CD avançado;
+- arquitetura excessiva.
+
+O objetivo é aprender:
+
+Frontend
+↓
+HTTP
+↓
+Backend
+↓
+Database
+
+============================================================
+12. MULTIUSUÁRIO — CONCEITO FUNDAMENTAL
+============================================================
+
+A partir da V1, o sistema deve ser tratado como uma aplicação MULTIUSUÁRIO REAL.
+
+Explique profundamente:
+
+- autenticação;
+- autorização;
+- identidade;
+- usuário autenticado;
+- ownership;
+- isolamento de dados;
+- controle de acesso;
+- sessões;
+- JWT ou alternativa;
+- refresh tokens quando apropriado;
+- expiração;
+- logout;
+- recuperação de senha quando apropriado.
+
+O banco deverá ser projetado para garantir que:
+
+USER A
+→ suas transações
+
+USER B
+→ suas transações
+
+USER C
+→ suas transações
+
+não sejam misturadas.
+
+Explique conceitos como:
+
+user_id
+ownership
+foreign keys
+authorization checks
+query scoping
+
+E demonstre como uma falha de autorização poderia causar vazamento de dados.
+
+============================================================
+13. CONCORRÊNCIA
+============================================================
+
+Como o sistema será utilizado por vários usuários simultaneamente, inclua uma trilha específica sobre concorrência.
+
+Ensine:
+
+- múltiplas requisições simultâneas;
+- stateless backend;
+- concorrência no banco;
+- transactions;
+- race conditions;
+- integridade dos dados;
+- índices;
+- connection pooling;
+- locks quando realmente necessários;
+- idempotência;
+- operações simultâneas;
+- limites de recursos.
+
+Mostre exemplos práticos.
+
+Exemplo:
+
+Usuário faz duas requisições simultaneamente.
+
+O que acontece?
+
+Como o backend processa?
+
+Como o PostgreSQL lida com isso?
+
+Como evitar inconsistências?
+
+============================================================
+14. V1 — APLICAÇÃO WEB COMPLETA
+============================================================
+
+Depois do MVP, transformar o sistema em uma aplicação significativamente mais completa.
+
+Adicionar:
+
+- autenticação robusta;
+- autorização;
+- validação;
+- tratamento de erros;
+- categorias;
+- filtros;
+- paginação;
+- dashboards;
+- gráficos;
+- melhor UX;
+- responsividade;
+- testes;
+- documentação;
+- Docker.
+
+Para cada recurso:
+
+Explique:
+
+- qual conceito novo está sendo aprendido;
+- qual problema resolve;
+- como implementá-lo;
+- como testar.
+
+============================================================
+15. BACKEND PROFISSIONAL
+============================================================
+
+Ensine progressivamente:
+
+- Node.js;
+- npm;
+- TypeScript;
+- Express;
+- routing;
+- controllers;
+- services;
+- repositories;
+- middleware;
+- validation;
+- authentication;
+- authorization;
+- error handling;
+- logging;
+- environment variables;
+- configuration;
+- database access;
+- testing;
+- API documentation;
+- security;
+- performance.
+
+Não utilize padrões arquiteturais apenas porque são considerados "boas práticas".
+
+Para cada padrão:
+
+QUAL PROBLEMA ELE RESOLVE?
+
+QUAL É O CUSTO DE COMPLEXIDADE?
+
+QUANDO NÃO USÁ-LO?
+
+============================================================
+16. POSTGRESQL
+============================================================
+
+Ensine PostgreSQL progressivamente:
+
+- tabelas;
+- primary keys;
+- foreign keys;
+- constraints;
+- relacionamentos;
+- normalização;
+- queries;
+- joins;
+- agregações;
+- índices;
+- transactions;
+- migrations;
+- performance;
+- connection pooling.
+
+Depois introduza Prisma.
+
+Mostre a evolução do banco:
+
+MVP
+→ V1
+→ V2
+→ produção.
+
+============================================================
+17. FRONTEND WEB
+============================================================
+
+Ensine:
+
+- React;
+- TypeScript;
+- componentes;
+- props;
+- state;
+- hooks;
+- forms;
+- API calls;
+- gerenciamento de estado;
+- autenticação;
+- rotas;
+- loading;
+- erros;
+- dashboards;
+- gráficos;
+- responsividade.
+
+Quero entender claramente:
+
+React
+↓
+HTTP
+↓
+Node
+↓
+Prisma
+↓
+PostgreSQL
+
+============================================================
+18. TESTES
+============================================================
+
+Inclua testes progressivamente.
+
+Ensine:
+
+- unit tests;
+- integration tests;
+- API tests;
+- frontend tests;
+- end-to-end.
+
+Não quero buscar 100% de coverage artificialmente.
+
+Ensine:
+
+O que testar?
+
+Por que testar?
+
+Em qual camada testar?
+
+============================================================
+19. DOCKER
+============================================================
+
+Introduza Docker somente quando fizer sentido.
+
+Ensine:
+
+- imagem;
+- container;
+- Dockerfile;
+- volumes;
+- networks;
+- Docker Compose;
+- PostgreSQL;
+- environment variables.
+
+Depois:
+
+Docker
+↓
+Deploy
+
+============================================================
+20. MOBILE
+============================================================
+
+Introduza React Native + Expo depois que a API estiver estável.
+
+O Mobile deverá consumir a MESMA API do Web.
+
+Explique:
+
+- Web vs Mobile;
+- componentes;
+- navegação;
+- autenticação;
+- armazenamento local;
+- estado;
+- consumo de API;
+- conectividade;
+- UX específica.
+
+Não quero simplesmente copiar o frontend Web.
+
+Explique o que deve ser compartilhado e o que deve ser específico.
+
+============================================================
+21. DATA SCIENCE
+============================================================
+
+Antes de Machine Learning, criar uma trilha de Data Science.
+
+Ensinar:
+
+Python
+↓
+NumPy
+↓
+Pandas
+↓
+limpeza
+↓
+EDA
+↓
+visualização
+↓
+estatística necessária
+↓
+feature engineering
+
+Tudo utilizando dados relacionados ao próprio projeto.
+
+============================================================
+22. MACHINE LEARNING — PRIMEIRO PROBLEMA
+============================================================
+
+O primeiro problema será:
+
+CLASSIFICAÇÃO AUTOMÁTICA DE TRANSAÇÕES.
+
+Exemplos:
+
+"UBER"
+→ Transporte
+
+"IFOOD"
+→ Alimentação
+
+"NETFLIX"
+→ Entretenimento
+
+"POSTO IPIRANGA"
+→ Transporte/Combustível
+
+Etc.
+
+Não quero simplesmente importar um modelo pronto.
+
+Quero aprender:
+
+- problema supervisionado;
+- features;
+- target;
+- dataset;
+- limpeza;
+- treino;
+- validação;
+- teste;
+- métricas;
+- overfitting;
+- underfitting;
+- feature engineering;
+- escolha de algoritmo;
+- comparação de modelos;
+- pipeline;
+- serialização;
+- inferência.
+
+============================================================
+23. MACHINE LEARNING — SEGUNDO PROBLEMA
+============================================================
+
+Depois da classificação automática, desenvolver um segundo problema.
+
+Analise possibilidades:
+
+- previsão de gastos;
+- previsão de fluxo financeiro;
+- detecção de anomalias;
+- previsão de categoria;
+- identificação de comportamento financeiro.
+
+Escolha o problema que apresentar melhor combinação de:
+
+- valor educacional;
+- utilidade;
+- viabilidade;
+- qualidade para portfólio.
+
+Justifique.
+
+============================================================
+24. DADOS REAIS
+============================================================
+
+Quero utilizar dados realistas.
+
+Explique:
+
+- datasets públicos;
+- dados sintéticos;
+- anonimização;
+- limpeza;
+- estrutura;
+- treinamento;
+- validação;
+- teste;
+- data leakage.
+
+Também quero que o sistema evolua:
+
+Dataset inicial
+↓
+dados sintéticos
+↓
+dados gerados pela aplicação
+↓
+dados reais dos usuários, quando houver consentimento
+↓
+pipeline de treinamento
+↓
+modelo atualizado.
+
+Explique como lidar com privacidade.
+
+NUNCA utilizar dados financeiros pessoais reais sem considerar anonimização, segurança e consentimento.
+
+============================================================
+25. INTEGRAÇÃO MACHINE LEARNING
+============================================================
+
+Compare:
+
+A) Node chamando serviço Python
+
+B) Node chamando AWS Lambda
+
+C) modelo integrado ao backend
+
+D) microserviço Python
+
+E) outra alternativa.
+
+Compare:
+
+- complexidade;
+- custo;
+- latência;
+- manutenção;
+- deploy;
+- escalabilidade;
+- aprendizado;
+- portfólio.
+
+Escolha UMA arquitetura principal.
+
+Explique por quê.
+
+============================================================
+26. CLOUD
+============================================================
+
+Quero que a aplicação seja colocada online.
+
+Não quero terminar com:
+
+"funciona apenas na minha máquina."
+
+Crie uma estratégia realista de deploy.
+
+Considere:
+
+- frontend;
+- backend;
+- PostgreSQL;
+- ML;
+- domínio;
+- HTTPS;
+- secrets;
+- logs;
+- monitoramento.
+
+Analise AWS e alternativas mais simples/baratas.
+
+Não quero usar AWS apenas para dizer que usei AWS.
+
+Quero entender por que cada serviço existe.
+
+============================================================
+27. PRODUÇÃO MULTIUSUÁRIO
+============================================================
+
+Esta é uma etapa OBRIGATÓRIA.
+
+A aplicação final deverá permitir:
+
+Usuário 1
+┐
+Usuário 2
+├──► Backend
+Usuário 3
+┤
+Usuário 4
+┘
+       ↓
+   PostgreSQL
+
+Todos acessando simultaneamente.
+
+Ensine:
+
+- stateless architecture;
+- load;
+- requests simultâneos;
+- connection pooling;
+- database limits;
+- rate limiting;
+- caching quando necessário;
+- paginação;
+- índices;
+- queries eficientes;
+- proteção contra abuso;
+- limites por usuário;
+- logs;
+- monitoramento.
+
+Não quero assumir milhões de usuários.
+
+Quero uma arquitetura proporcional a um pequeno SaaS real.
+
+Explique:
+
+"Quantos usuários simultâneos esta arquitetura consegue suportar aproximadamente?"
+
+E:
+
+"Qual seria o próximo gargalo?"
+
+============================================================
+28. SEGURANÇA
+============================================================
+
+Inclua:
+
+- hashing de senha;
+- autenticação;
+- autorização;
+- JWT/sessões;
+- refresh tokens;
+- secrets;
+- environment variables;
+- CORS;
+- rate limiting;
+- SQL injection;
+- XSS;
+- CSRF quando aplicável;
+- validação;
+- sanitização;
+- menor privilégio;
+- segurança de APIs;
+- segurança do banco;
+- HTTPS;
+- proteção de endpoints.
+
+Sempre explique o ataque/problema antes da solução.
+
+============================================================
+29. OBSERVABILIDADE
+============================================================
+
+Na fase de produção incluir:
+
+- logs;
+- health checks;
+- métricas;
+- monitoramento;
+- tratamento de erros;
+- alertas quando apropriado;
+- monitoramento de performance.
+
+Para ML:
+
+- model performance;
+- drift;
+- métricas;
+- versão do modelo;
+- histórico de modelos.
+
+Introduzir conceito de:
+
+MLOps.
+
+============================================================
+30. CI/CD
+============================================================
+
+Criar pipeline:
+
+GitHub
+↓
+Push
+↓
+CI
+↓
+Lint
+↓
+Tests
+↓
+Build
+↓
+Deploy
+↓
+Production
+
+Explique cada etapa.
+
+============================================================
+31. ESTRATÉGIA DE GITHUB
+============================================================
+
+Compare:
+
+MONOREPO
+
+vs
+
+MULTIPLE REPOSITORIES.
+
+Escolha uma estratégia.
+
+Defina:
+
+- branches;
+- commits;
+- pull requests;
+- issues;
+- milestones;
+- releases;
+- tags;
+- README;
+- documentação.
+
+O GitHub deverá parecer um projeto profissional.
+
+============================================================
+32. MINI-PROJETOS
+============================================================
+
+Antes de implementar partes complexas, criar pequenos exercícios.
+
+Exemplos:
+
+Antes do Backend:
+
+CRUD simples.
+
+Antes do PostgreSQL:
+
+sistema simples de produtos.
+
+Antes de autenticação:
+
+API de usuários.
+
+Antes de React:
+
+dashboard simples consumindo API.
+
+Antes de ML:
+
+classificação com dataset pequeno.
+
+Antes de Docker:
+
+containerizar aplicação simples.
+
+Antes de AWS:
+
+deploy de aplicação pequena.
+
+O objetivo é criar conhecimento incremental.
+
+============================================================
+33. MÉTODO ANTI-CÓPIA
+============================================================
+
+Como utilizarei IA durante o projeto, crie mecanismos para evitar dependência.
+
+Quando houver uma implementação complexa:
+
+NÃO entregue imediatamente a solução.
+
+Primeiro:
+
+1. explique o problema;
+2. explique os conceitos;
+3. forneça um pequeno exercício;
+4. peça uma tentativa;
+5. forneça pistas;
+6. revele a solução posteriormente.
+
+Quando eu pedir código:
+
+explique:
+
+- por que funciona;
+- decisões;
+- alternativas;
+- erros comuns;
+- como testar;
+- como modificar.
+
+Quero aprender a PROGRAMAR, não apenas gerar código.
+
+============================================================
+34. ROADMAP SEMANAL
+============================================================
+
+Crie um roadmap de aproximadamente:
+
+6–12 meses.
+
+Considere:
+
+10–15 horas semanais.
+
+Não divida artificialmente.
+
+Baseie a duração na quantidade de conhecimento.
+
+Para cada semana:
+
+SEMANA X
+
+Objetivos:
+
+Estudo:
+
+Conceitos:
+
+Exercícios:
+
+Implementação:
+
+Entrega:
+
+Checkpoint:
+
+Critério para avançar:
+
+============================================================
+35. CHECKPOINTS
+============================================================
+
+Ao final de cada módulo:
+
+CHECKPOINT
+
+Crie perguntas que eu deveria conseguir responder.
+
+Exemplo:
+
+"Explique o caminho de uma requisição de login."
+
+Resposta esperada:
+
+React
+→ HTTP
+→ Express
+→ Middleware
+→ Controller
+→ Service
+→ Database
+→ Authentication
+→ Response
+→ React.
+
+Outro exemplo:
+
+"Como você garante que User A não consiga acessar uma transação de User B?"
+
+Quero perguntas conceituais e práticas.
+
+============================================================
+36. PORTFÓLIO
+============================================================
+
+O projeto deverá terminar com:
+
+- README profissional;
+- arquitetura;
+- diagramas;
+- screenshots;
+- documentação da API;
+- testes;
+- CI/CD;
+- deploy;
+- domínio;
+- demonstração do ML;
+- métricas;
+- decisões arquiteturais;
+- trade-offs;
+- problemas encontrados;
+- soluções;
+- documentação de infraestrutura.
+
+Não adicione tecnologia apenas para impressionar recrutadores.
+
+Cada tecnologia precisa ter uma justificativa.
+
+============================================================
+37. PROJETO ONLINE
+============================================================
+
+A etapa final deve resultar em:
+
+UMA APLICAÇÃO FUNCIONANDO NA INTERNET.
+
+O usuário deverá conseguir:
+
+1. acessar o site;
+2. criar uma conta;
+3. fazer login;
+4. cadastrar transações;
+5. visualizar seus dados;
+6. utilizar o dashboard;
+7. receber categorização automática;
+8. utilizar funcionalidades de ML;
+9. acessar pelo celular quando o Mobile estiver concluído.
+
+O sistema deverá suportar múltiplos usuários simultaneamente.
+
+Defina uma arquitetura adequada para uma primeira versão de produção.
+
+============================================================
+38. ESCALABILIDADE
+============================================================
+
+Não quero construir algo preparado para milhões de usuários sem necessidade.
+
+Quero aprender escalabilidade de maneira progressiva.
+
+Defina níveis:
+
+NÍVEL 1
+1–10 usuários
+
+NÍVEL 2
+10–100 usuários
+
+NÍVEL 3
+100–1.000 usuários
+
+NÍVEL 4
+1.000+ usuários
+
+Para cada nível explique:
+
+- possíveis gargalos;
+- banco;
+- backend;
+- frontend;
+- ML;
+- infraestrutura;
+- custos;
+- quando mudar a arquitetura.
+
+Mostre que ESCALABILIDADE NÃO significa adicionar microservices imediatamente.
+
+============================================================
+39. PERFORMANCE
+============================================================
+
+Ensine performance somente quando necessário.
+
+Inclua:
+
+- queries;
+- índices;
+- paginação;
+- payload;
+- caching;
+- frontend;
+- backend;
+- database;
+- ML;
+- latência.
+
+Ensine a medir antes de otimizar.
+
+============================================================
+40. O QUE NÃO ESTUDAR AGORA
+============================================================
+
+Crie uma seção:
+
+"ASSUNTOS QUE NÃO DEVEM SER ESTUDADOS AGORA"
+
+Analise se devo evitar inicialmente:
+
+- Kubernetes;
+- microservices;
+- Kafka;
+- GraphQL;
+- Redis;
+- Terraform;
+- arquitetura distribuída;
+- event sourcing;
+- CQRS;
+- service mesh;
+- outras tecnologias avançadas.
+
+Não diga simplesmente que são ruins.
+
+Explique:
+
+"Não são necessárias AGORA porque..."
+
+E informe em que circunstância poderiam se tornar relevantes no futuro.
+
+============================================================
+41. MATRIZ DE COMPETÊNCIAS
+============================================================
+
+Crie:
+
+TECNOLOGIA
+|
+NÍVEL INICIAL
+|
+NÍVEL NECESSÁRIO
+|
+ONDE APRENDER
+|
+ONDE APLICAR
+|
+CRITÉRIO DE DOMÍNIO
+
+Inclua:
+
+- Python;
+- JavaScript;
+- TypeScript;
+- React;
+- React Native;
+- Node;
+- Express;
+- PostgreSQL;
+- SQL;
+- Prisma;
+- Git;
+- Docker;
+- AWS;
+- Pandas;
+- NumPy;
+- scikit-learn;
+- Machine Learning;
+- CI/CD;
+- testes;
+- arquitetura;
+- segurança;
+- MLOps.
+
+============================================================
+42. MAPA COMPLETO DO SISTEMA
+============================================================
+
+No final apresente:
+
+A) arquitetura final;
+
+B) arquitetura MVP;
+
+C) arquitetura V1;
+
+D) arquitetura ML;
+
+E) arquitetura de produção;
+
+F) estrutura dos repositórios;
+
+G) estrutura do banco;
+
+H) endpoints;
+
+I) principais telas;
+
+J) fluxo de autenticação;
+
+K) fluxo de uma transação;
+
+L) fluxo de categorização ML;
+
+M) fluxo de previsão;
+
+N) pipeline de treinamento;
+
+O) pipeline de deploy;
+
+P) infraestrutura;
+
+Q) monitoramento;
+
+R) estratégia de escalabilidade.
+
+============================================================
+43. EVOLUÇÃO DA ARQUITETURA
+============================================================
+
+Mostre visualmente:
+
+MVP
+
+React
+↓
+Node
+↓
+PostgreSQL
+
+
+V1
+
+React Web
+     \
+      → Node → PostgreSQL
+     /
+React Native
+
+
+V2
+
+Web + Mobile
+      ↓
+Node API
+      ↓
+PostgreSQL
+      +
+ML
+
+
+V3
+
+Web + Mobile
+      ↓
+Backend
+      ↓
+Database
+      +
+ML Service
+      +
+Cloud
+      +
+CI/CD
+      +
+Monitoring
+
+
+PRODUÇÃO
+
+Users
+ ↓
+HTTPS
+ ↓
+Frontend
+ ↓
+API
+ ↓
+Authentication
+ ↓
+Business Logic
+ ↓
+PostgreSQL
+ ↓
+ML
+ ↓
+Monitoring
+
+Mostre quais problemas surgem em cada etapa.
+
+============================================================
+44. CRITÉRIO DE "PRONTO"
+============================================================
+
+O projeto NÃO estará pronto apenas porque:
+
+- o código funciona;
+- o frontend está bonito;
+- o backend responde.
+
+Defina critérios objetivos para considerar cada fase concluída.
+
+Exemplo:
+
+MVP concluído quando:
+
+- usuário consegue criar conta;
+- fazer login;
+- criar transação;
+- editar;
+- excluir;
+- visualizar;
+- dados persistem;
+- frontend consome API;
+- testes mínimos passam.
+
+Produção concluída quando:
+
+- aplicação está online;
+- HTTPS;
+- autenticação;
+- isolamento de dados;
+- banco remoto;
+- backups quando aplicável;
+- logs;
+- monitoramento;
+- CI/CD;
+- tratamento de erros;
+- múltiplos usuários conseguem utilizar simultaneamente.
+
+============================================================
+45. RESULTADO FINAL DE APRENDIZADO
+============================================================
+
+Ao concluir o projeto, quero ser capaz de explicar e construir sozinho:
+
+FULL STACK
+
+- React;
+- TypeScript;
+- Node;
+- Express;
+- PostgreSQL;
+- Prisma;
+- REST API;
+- autenticação;
+- autorização;
+- testes.
+
+MOBILE
+
+- React Native;
+- Expo;
+- consumo de API;
+- autenticação;
+- armazenamento local.
+
+DATA SCIENCE
+
+- Python;
+- NumPy;
+- Pandas;
+- EDA;
+- estatística aplicada.
+
+MACHINE LEARNING
+
+- classificação;
+- regressão/previsão;
+- treinamento;
+- validação;
+- métricas;
+- feature engineering;
+- inferência;
+- serialização;
+- integração.
+
+DEVOPS / CLOUD
+
+- Docker;
+- CI/CD;
+- deploy;
+- cloud;
+- logs;
+- monitoramento.
+
+ARQUITETURA
+
+- frontend/backend;
+- APIs;
+- banco;
+- autenticação;
+- multiusuário;
+- concorrência;
+- escalabilidade;
+- segurança;
+- ML integration.
+
+Mais importante:
+
+QUERO ENTENDER O SISTEMA.
+
+============================================================
+46. FORMATO DA RESPOSTA
+============================================================
+
+Organize sua resposta exatamente em:
+
+# 1. Análise crítica da arquitetura inicial
+
+# 2. Arquitetura recomendada
+
+# 3. Visão geral do produto
+
+# 4. Objetivos de aprendizagem
+
+# 5. Pré-requisitos
+
+# 6. Fase 0 — Fundamentos
+
+# 7. Fase 1 — MVP
+
+# 8. Fase 2 — V1 Multiusuário
+
+# 9. Fase 3 — Qualidade e produção
+
+# 10. Fase 4 — Mobile
+
+# 11. Fase 5 — Data Science
+
+# 12. Fase 6 — Machine Learning
+
+# 13. Fase 7 — Integração ML
+
+# 14. Fase 8 — Cloud e Deploy
+
+# 15. Fase 9 — Produção Multiusuário
+
+# 16. Escalabilidade
+
+# 17. Segurança
+
+# 18. Testes
+
+# 19. CI/CD
+
+# 20. Observabilidade
+
+# 21. Roadmap semanal
+
+# 22. Mini-projetos
+
+# 23. Checkpoints
+
+# 24. Estratégia anti-dependência de IA
+
+# 25. Estratégia de GitHub
+
+# 26. Matriz de competências
+
+# 27. O que NÃO estudar agora
+
+# 28. Arquitetura evolutiva
+
+# 29. Critérios de conclusão
+
+# 30. Estado final esperado
+
+============================================================
+47. REGRA FINAL — DECISÕES TÉCNICAS
+============================================================
+
+Antes de apresentar o roadmap:
+
+ANALISE criticamente todas as tecnologias propostas.
+
+Você TEM PERMISSÃO para discordar da arquitetura.
+
+Se uma tecnologia não for necessária:
+
+não utilize.
+
+Se uma tecnologia puder ser substituída por algo mais simples:
+
+explique.
+
+Se uma tecnologia for importante para aprendizado mesmo não sendo estritamente necessária:
+
+explique o valor educacional.
+
+Sempre diferencie:
+
+NECESSÁRIO PARA O PRODUTO
+
+vs
+
+INTERESSANTE PARA APRENDIZADO
+
+vs
+
+INTERESSANTE PARA PORTFÓLIO
+
+vs
+
+OVERENGINEERING.
+
+============================================================
+48. PRINCÍPIO FINAL
+============================================================
+
+Prioridades:
+
+APRENDIZADO
+>
+FUNDAMENTOS
+>
+PRÁTICA
+>
+ENTENDIMENTO
+>
+PRODUTO REAL
+>
+PORTFÓLIO
+>
+TECNOLOGIAS EXTRAS
+
+Nunca adicionar complexidade apenas para tornar o projeto "mais profissional".
+
+Uma arquitetura simples que eu compreenda completamente é melhor do que uma arquitetura sofisticada que eu não consiga explicar.
+
+O projeto deve começar simples e terminar profissional.
+
+O resultado final deverá ser:
+
+UMA APLICAÇÃO FINANCEIRA REAL,
+ONLINE,
+MULTIUSUÁRIO,
+COM WEB,
+MOBILE,
+BACKEND,
+POSTGRESQL,
+MACHINE LEARNING,
+CLOUD,
+CI/CD,
+SEGURANÇA,
+MONITORAMENTO
+E POSSIBILIDADE DE CRESCIMENTO.
+
+Mas o mais importante:
+
+EU DEVO TERMINAR O PROJETO ENTENDENDO COMO TUDO FUNCIONA.
