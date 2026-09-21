@@ -1,3 +1,17 @@
+ATUALIZAÇÃO DE REFERÊNCIA — 2026-09-20
+
+A API deste projeto usa NestJS com TypeScript e Prisma. Começar diretamente em NestJS.
+Organização por domínio: Module, Controller, Service e DTO; dependências injetadas pelo construtor.
+Validação: classes DTO com class-validator/class-transformer e ValidationPipe global.
+Autenticação: @nestjs/jwt e AuthGuard; ownership no service com userId explícito.
+Erros: HttpException e exception filters. Configuração: @nestjs/config.
+Testes: @nestjs/testing + Vitest + Supertest; PostgreSQL real nos testes de integração.
+packages/shared contém tipos de contrato e funções puras, sem dependências do NestJS.
+Decisão registrada em docs/adr/0001-nestjs.md. O roadmap vigente está em claude/plano.html.
+Perfil atualizado: JS/TS intermediário, 10–15 horas por semana. Priorizar quatro semanas
+(40–60 horas) de API NestJS, com prazo de referência em 15/10/2026; revisar a carga ao iniciar.
+A aplicação ainda não foi implementada. Não confundir revisão do plano com domínio comprovado.
+
 Quero adicionar um segundo nível ao planejamento que você acabou de criar.
 
 O roadmap anterior define O QUE devo aprender e O QUE devo construir.
@@ -394,7 +408,7 @@ minha aplicação.
 
 O mesmo princípio deve valer para:
 
-- Express;
+- NestJS;
 - React;
 - Expo;
 - Docker;
@@ -504,7 +518,8 @@ Eu devo conseguir explicar:
 Cliente
 → HTTP
 → API
-→ middleware
+→ guard
+→ pipe
 → controller
 → service
 → Prisma

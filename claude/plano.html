@@ -227,8 +227,16 @@ pre.code i{color:var(--muted);font-style:normal}
     <span class="tag">≈ 500 h de trabalho</span>
     <span class="tag">Custo alvo: US$ 0–12/mês</span>
     <span class="tag">Prioridade: aprendizado</span>
+    <span class="tag">Revisão NestJS · 20/09/2026</span>
   </div>
 </header>
+
+  <div class="note dec">
+    <span class="lbl">Rota vigente · NestJS nas primeiras quatro semanas</span>
+    <p>Perfil: JS/TS intermediário, 10–15 h por semana. Reservar 40–60 h para uma API NestJS com módulos, DI, DTOs, PostgreSQL/Prisma, autenticação básica segura e testes. Prazo de referência: 15/10/2026. A partir de 20/09, há cerca de 25 dias: ajustar os blocos à disponibilidade real; o prazo não comprova domínio. As semanas são blocos de trabalho, não datas fixas.</p>
+    <p>Semana 1: ambiente, revisão de HTTP e CRUD em memória. Semana 2: DTOs, configuração, SQL e Prisma. Semana 3: hash de senha, JWT, guards e ownership. Semana 4: testes, filtros, interceptors e Swagger. Semanas 5–9 consolidam a API e fecham o MVP web. Semanas 10–13 aprofundam segurança e sessão. Os demais blocos permanecem até a semana 42.</p>
+    <p>Referência da decisão: <a href="../docs/adr/0001-nestjs.md">ADR-0001</a>. Documentação oficial: <a href="https://docs.nestjs.com/modules">módulos</a>, <a href="https://docs.nestjs.com/providers">providers</a>, <a href="https://docs.nestjs.com/faq/request-lifecycle">ciclo HTTP</a>, <a href="https://docs.nestjs.com/techniques/validation">validação</a>, <a href="https://docs.nestjs.com/fundamentals/testing">testes</a>.</p>
+  </div>
 
 <section id="s1">
   <div class="sec-head">
@@ -288,9 +296,9 @@ pre.code i{color:var(--muted);font-style:normal}
     <thead><tr><th>Tecnologia</th><th>Veredito</th><th>Justificativa</th><th>Quando entra</th></tr></thead>
     <tbody>
       <tr><td>React + TypeScript</td><td><span class="verdict v-keep">mantém</span></td><td>Necessário ao produto e ao mercado.</td><td>Semana 8</td></tr>
-      <tr><td>Node + Express + TS</td><td><span class="verdict v-keep">mantém</span></td><td>Menor curva para entender HTTP sem mágica de framework.</td><td>Semana 4</td></tr>
-      <tr><td>PostgreSQL</td><td><span class="verdict v-keep">mantém</span></td><td>Transações e integridade referencial são requisito, não luxo.</td><td>Semana 6</td></tr>
-      <tr><td>Prisma</td><td><span class="verdict v-keep">mantém</span></td><td>Migrations e tipos gerados. Mas só <em>depois</em> de escrever SQL na mão.</td><td>Semana 7</td></tr>
+      <tr><td>Node + NestJS + TS</td><td><span class="verdict v-keep">mantém</span></td><td>Aprender módulos, DI e o ciclo HTTP diretamente no framework exigido pelo próximo projeto.</td><td>Semana 1</td></tr>
+      <tr><td>PostgreSQL</td><td><span class="verdict v-keep">mantém</span></td><td>Transações e integridade referencial são requisito, não luxo.</td><td>Semana 2</td></tr>
+      <tr><td>Prisma</td><td><span class="verdict v-keep">mantém</span></td><td>Migrations e tipos gerados. Mas só <em>depois</em> de escrever SQL na mão.</td><td>Semana 2</td></tr>
       <tr><td>React Native + Expo</td><td><span class="verdict v-keep">mantém</span></td><td>Alto valor de portfólio, custo baixo com a API já estável.</td><td>Semana 21</td></tr>
       <tr><td>Pandas / NumPy / sklearn</td><td><span class="verdict v-keep">mantém</span></td><td>Núcleo da trilha de dados.</td><td>Semana 25</td></tr>
       <tr><td>Docker</td><td><span class="verdict v-keep">mantém</span></td><td>Resolve o Postgres local e o deploy do serviço Python.</td><td>Semana 17</td></tr>
@@ -300,7 +308,7 @@ pre.code i{color:var(--muted);font-style:normal}
       <tr><td>AWS RDS</td><td><span class="verdict v-cut">corta</span></td><td>Neon entrega o mesmo Postgres, com branch de banco, por US$ 0.</td><td>—</td></tr>
       <tr><td>AWS S3</td><td><span class="verdict v-late">opcional</span></td><td>Só se você adicionar upload de comprovante ou exportação de CSV.</td><td>Semana 36+</td></tr>
       <tr><td>AWS IAM / CloudWatch</td><td><span class="verdict v-cut">corta</span></td><td>Existem porque a AWS existe. Sem AWS, o problema desaparece.</td><td>—</td></tr>
-      <tr><td>Serviço Python (FastAPI)</td><td><span class="verdict v-keep">adiciona</span></td><td>Substitui o Lambda: mesma separação, um décimo da complexidade.</td><td>Semana 32</td></tr>
+      <tr><td>Serviço Python (FastAPI)</td><td><span class="verdict v-keep">adiciona</span></td><td>Substitui o Lambda: mesma separação, um décimo da complexidade.</td><td>Semana 30; integração na 32</td></tr>
     </tbody>
   </table>
   </div>
@@ -328,7 +336,7 @@ pre.code i{color:var(--muted);font-style:normal}
     <div class="dedge"></div>
     <div class="dnode sm">HTTPS · TLS gerenciado pela plataforma</div>
     <div class="dedge"></div>
-    <div class="dnode hi">API · Node + Express + TS<br><span class="dlabel">auth · rate limit · validação · regra de negócio</span></div>
+    <div class="dnode hi">API · Node + NestJS + TS<br><span class="dlabel">módulos · guards · pipes · services</span></div>
     <div class="dedge"></div>
     <div class="drow">
       <div class="dnode">PostgreSQL gerenciado<br><span class="dlabel">pooler + backup diário</span></div>
@@ -344,19 +352,19 @@ pre.code i{color:var(--muted);font-style:normal}
   <p>Organize por domínio, não por função técnica. <code>src/modules/transactions/</code> contém rota, handler, validação e query da mesma feature. A pasta <code>controllers/</code> com 40 arquivos ao lado de <code>services/</code> com 40 arquivos obriga você a abrir seis arquivos para entender uma requisição.</p>
   <pre class="code"><i>src/</i>
   <b>modules/</b>
-    auth/        <i>register, login, refresh, logout</i>
+    auth/        <i>AuthModule, AuthController, AuthService, AuthGuard</i>
     users/
     categories/
-    transactions/
+    transactions/ <i>module, controller, service e dto/ por domínio</i>
     dashboard/
   <b>shared/</b>
-    db.ts        <i>instância única do Prisma</i>
-    env.ts       <i>validação de env na inicialização</i>
-    errors.ts    <i>AppError + handler central</i>
-    auth.ts      <i>middleware requireUser</i>
-  <b>app.ts</b>     <i>monta middlewares e rotas</i>
-  <b>server.ts</b>  <i>só sobe o listener — permite testar app.ts sem porta</i></pre>
-  <p>Camada de <em>service</em> só quando uma regra tiver dois consumidores. Camada de <em>repository</em> só se um dia você trocar o Prisma — o que provavelmente nunca vai acontecer. Padrão adotado sem problema para resolver é código morto com aparência de qualidade.</p>
+    prisma/      <i>PrismaModule exporta PrismaService</i>
+    filters/     <i>formato de erro HTTP</i>
+    interceptors/ <i>medição e resposta</i>
+  <b>app.module.ts</b> <i>importa módulos e ConfigModule</i>
+  <b>configure-app.ts</b> <i>pipes, filtros e CORS reutilizados nos testes HTTP</i>
+  <b>main.ts</b>       <i>NestFactory.create, configuração e listen</i></pre>
+  <p>Cada domínio começa com <code>Module</code>, <code>Controller</code>, <code>Service</code> e DTOs. O controller traduz HTTP; o service concentra regras e recebe dependências pelo construtor. O módulo declara providers e controla imports/exports. <code>PrismaModule</code> exporta um <code>PrismaService</code> compartilhado. Não adicionar repository enquanto ele apenas repetir chamadas do Prisma. A decisão vigente está em <a href="../docs/adr/0001-nestjs.md">ADR-0001</a>.</p>
 
   <h4>D2 · Dinheiro em centavos inteiros</h4>
   <p><code>amountCents Int</code>. R$ 1 234,56 é <code>123456</code>. Formatação só na borda da UI, com <code>Intl.NumberFormat('pt-BR')</code>. Um <code>Int</code> de 32 bits guarda até R$ 21 milhões — folgado. A alternativa é <code>Decimal(14,2)</code> do Postgres, que também é correta, mas o Prisma devolve um objeto <code>Decimal</code> que você precisa serializar com cuidado em toda resposta JSON. Centavos inteiros são mais simples e igualmente exatos.</p>
@@ -370,7 +378,8 @@ pre.code i{color:var(--muted);font-style:normal}
 prisma.transaction.findUnique({ where: { id } })
 
 <i>// correto — o id só resolve dentro do escopo do dono</i>
-prisma.transaction.findFirst({ where: { <b>id, userId: req.user.id</b> } })
+prisma.transaction.findFirst({ where: { <b>id, userId</b> } })
+<i>// Controller recebe @CurrentUser() e passa userId ao service; não passa req.</i>
 
 <i>// correto em update/delete: o userId entra no WHERE, não só no SELECT</i>
 prisma.transaction.updateMany({ where: { <b>id, userId</b> }, data })
@@ -395,13 +404,13 @@ prisma.transaction.updateMany({ where: { <b>id, userId</b> }, data })
   <p><strong>Por que não sessão em cookie pura:</strong> funcionaria muito bem só para web e é mais simples. Perde para o híbrido porque o mobile na Fase 4 teria que usar outro caminho, e você acabaria com dois sistemas de autenticação. <strong>Por que não JWT sem refresh:</strong> ou o token dura tanto que o logout é ficção, ou dura pouco e o usuário é deslogado a cada 15 minutos.</p>
 
   <h4>D6 · Um repositório, com pnpm workspaces</h4>
-  <p>Monorepo. O motivo não é ideológico: você tem um pacote <code>packages/shared</code> com os tipos da API e os esquemas Zod, e web, mobile e API importam dele. Mudou o contrato do endpoint, o TypeScript acusa nos três clientes no mesmo commit. Em repositórios separados isso vira publicação de pacote npm — burocracia real para uma pessoa.</p>
+  <p>Monorepo. O motivo não é ideológico: você tem um pacote <code>packages/shared</code> com os tipos de contrato da API, e web, mobile e API importam dele. DTOs com decorators ficam na API. Alterações de tipos podem ser verificadas no mesmo commit; testes de contrato cobrem o comportamento em execução. Em repositórios separados isso vira publicação de pacote npm — burocracia real para uma pessoa.</p>
   <pre class="code">expense-tracker/
-  apps/api/        <i>Node + Express + Prisma</i>
+  apps/api/        <i>Node + NestJS + Prisma</i>
   apps/web/        <i>React + Vite</i>
   apps/mobile/     <i>Expo</i>
   services/ml/     <i>Python + FastAPI + treino</i>
-  packages/shared/ <i>tipos e schemas Zod compartilhados</i>
+  packages/shared/ <i>tipos de contrato e funções puras</i>
   docs/adr/        <i>registros de decisão arquitetural</i>
   docker-compose.yml</pre>
 
@@ -495,11 +504,11 @@ prisma.transaction.updateMany({ where: { <b>id, userId</b> }, data })
   <div class="grid2">
     <div class="panel">
       <h5>Fluxo A · Login</h5>
-      <p><code>POST /auth/login</code> → valida corpo com Zod → busca usuário por e-mail → <code>bcrypt.compare</code> → gera access JWT (15 min) → gera refresh, grava o hash → devolve access no corpo e refresh no cookie <code>httpOnly</code> → front guarda o access em memória e agenda renovação.</p>
+      <p><code>POST /auth/login</code> → valida o DTO com ValidationPipe → busca usuário por e-mail → <code>bcrypt.compare</code> → gera access JWT (15 min) → gera refresh, grava o hash → devolve access no corpo e refresh no cookie <code>httpOnly</code> → front guarda o access em memória e agenda renovação.</p>
     </div>
     <div class="panel">
       <h5>Fluxo B · Criar transação</h5>
-      <p><code>POST /transactions</code> → <code>requireUser</code> valida o JWT e injeta <code>req.user</code> → Zod valida corpo → verifica que a <code>categoryId</code> pertence ao usuário → grava com <code>userId</code> do token, <strong>nunca</strong> do corpo → dispara sugestão de categoria sem bloquear a resposta → 201.</p>
+      <p><code>POST /transactions</code> → <code>AuthGuard</code> valida o JWT e define a identidade, lida por <code>@CurrentUser()</code> → ValidationPipe valida o DTO → verifica que a <code>categoryId</code> pertence ao usuário → grava com <code>userId</code> do token, <strong>nunca</strong> do corpo → dispara sugestão de categoria sem bloquear a resposta → 201.</p>
     </div>
     <div class="panel">
       <h5>Fluxo C · Dashboard</h5>
@@ -520,7 +529,7 @@ prisma.transaction.updateMany({ where: { <b>id, userId</b> }, data })
     <thead><tr><th>Domínio</th><th>Você deve conseguir…</th><th>Verificado em</th></tr></thead>
     <tbody>
       <tr><td>HTTP e APIs</td><td>Desenhar o caminho completo de um login, do clique ao <code>200</code>, nomeando cada peça e o que ela faz</td><td>Checkpoint 1</td></tr>
-      <tr><td>Backend</td><td>Explicar o que um middleware é, por que a ordem deles importa, e o que quebra se você inverter dois</td><td>Checkpoint 2</td></tr>
+      <tr><td>Backend</td><td>Explicar módulos, DI e a ordem middleware → guard → interceptor de entrada → pipe → controller/service; descrever resposta e exceções</td><td>Checkpoint 2</td></tr>
       <tr><td>SQL</td><td>Escrever à mão o <code>GROUP BY</code> do dashboard e explicar por que ele é mais rápido que somar em JS</td><td>Checkpoint 3</td></tr>
       <tr><td>Autorização</td><td>Mostrar duas linhas de código que causam vazamento entre usuários, e a correção de cada uma</td><td>Checkpoint 4</td></tr>
       <tr><td>Concorrência</td><td>Descrever um <em>lost update</em> com dois clientes simultâneos e três formas de evitá-lo</td><td>Checkpoint 6</td></tr>
@@ -566,7 +575,7 @@ prisma.transaction.updateMany({ where: { <b>id, userId</b> }, data })
       <tr><td>pnpm</td><td>9+</td><td><code>corepack enable</code> já resolve</td></tr>
       <tr><td>Git</td><td>2.4x</td><td>Configure <code>core.autocrlf=input</code> para não sujar diffs com CRLF</td></tr>
       <tr><td>VS Code</td><td>atual</td><td>Extensões: ESLint, Prettier, Prisma, Error Lens, REST Client</td></tr>
-      <tr><td>Docker Desktop</td><td>atual</td><td>Requer WSL2. Instale já, mesmo sem usar até a semana 6</td></tr>
+      <tr><td>Docker Desktop</td><td>atual</td><td>Requer WSL2. Usado para PostgreSQL local na semana 2</td></tr>
       <tr><td>Python</td><td>3.12</td><td>Marque "Add to PATH". Use <code>uv</code> ou <code>venv</code> — nunca instale pacote global</td></tr>
       <tr><td>Conta GitHub</td><td>—</td><td>Configure chave SSH agora e nunca mais digite senha</td></tr>
     </tbody>
@@ -590,13 +599,13 @@ prisma.transaction.updateMany({ where: { <b>id, userId</b> }, data })
   <div class="phase">
     <div class="phase-top">
       <span class="phase-n">00</span>
-      <span class="chip on">Semanas 1–3</span>
-      <span class="chip">~36 h</span>
-      <span class="chip">Sem app ainda</span>
+      <span class="chip on">Semana 1 + revisão aplicada</span>
+      <span class="chip">Carga incluída nas semanas correspondentes</span>
+      <span class="chip">Fundamentos junto da primeira API</span>
     </div>
   </div>
 
-  <p>Três semanas, e nem um minuto a mais. O objetivo da Fase 0 não é dominar nada — é eliminar a fricção que faria você travar por motivo errado nas primeiras semanas de construção. Tudo aqui é <em>apenas o suficiente</em>.</p>
+  <p>Os fundamentos agora acompanham a implementação. Na semana 1, diagnostique Git, HTTP e TypeScript; revise apenas as lacunas. SQL entra na semana 2, antes do Prisma. O perfil intermediário em JS/TS permite começar diretamente no NestJS, estudando classes, decorators e DI com um módulo pequeno.</p>
 
   <div class="scroll">
   <table>
@@ -612,13 +621,13 @@ prisma.transaction.updateMany({ where: { <b>id, userId</b> }, data })
         <td><strong>Git</strong></td>
         <td><code>add · commit · push · branch · checkout · merge · log · diff</code>. Entender o que é <em>staging area</em>. Resolver um conflito.</td>
         <td>Criar conflito de propósito em duas branches e resolver na mão.</td>
-        <td>Branch por feature a partir da semana 4.</td>
+        <td>Branch por feature a partir da semana 1.</td>
       </tr>
       <tr>
         <td><strong>HTTP</strong></td>
         <td>Requisição/resposta, métodos, status, headers, corpo. O que é <em>stateless</em>. Ler a aba Network do navegador.</td>
         <td>Abrir a Network num site conhecido e narrar em voz alta o que cada requisição faz.</td>
-        <td>É o alicerce de tudo. Semana 4 em diante.</td>
+        <td>É o alicerce de tudo. Semana 1 em diante.</td>
       </tr>
       <tr>
         <td><strong>JSON</strong></td>
@@ -630,7 +639,7 @@ prisma.transaction.updateMany({ where: { <b>id, userId</b> }, data })
         <td><strong>REST</strong></td>
         <td>Recurso, coleção, URL como substantivo, método como verbo. Quando <code>200 · 201 · 204 · 400 · 401 · 403 · 404 · 409 · 422 · 500</code>.</td>
         <td>Projetar no papel os 12 endpoints do MVP, com método, caminho, corpo e status de sucesso e erro.</td>
-        <td>Contrato da API, semana 4.</td>
+        <td>Contrato inicial na semana 1; Swagger na semana 4.</td>
       </tr>
       <tr>
         <td><strong>JS moderno</strong></td>
@@ -640,7 +649,7 @@ prisma.transaction.updateMany({ where: { <b>id, userId</b> }, data })
       </tr>
       <tr>
         <td><strong>TypeScript</strong></td>
-        <td>Tipos primitivos, <code>interface</code>/<code>type</code>, união, opcional, genérico só como consumidor. <strong>Nada de decorators, nada de tipos condicionais.</strong></td>
+        <td>Tipos primitivos, <code>interface</code>/<code>type</code>, união, opcional, genérico só como consumidor. Classes, construtores e decorators usados pelo NestJS; tipos condicionais ficam para depois.</td>
         <td>Tipar as funções JS do exercício anterior. Provocar três erros de compilação de propósito e entender cada mensagem.</td>
         <td>API e web, o projeto inteiro.</td>
       </tr>
@@ -648,13 +657,13 @@ prisma.transaction.updateMany({ where: { <b>id, userId</b> }, data })
         <td><strong>Modelo relacional</strong></td>
         <td>Tabela, linha, coluna, tipo, chave primária, chave estrangeira, <code>NOT NULL</code>, <code>UNIQUE</code>. 1:N e N:N.</td>
         <td>Modelar no papel: usuário, categoria, transação. Marcar as chaves e justificar cada <code>NOT NULL</code>.</td>
-        <td>Schema, semana 6.</td>
+        <td>Schema inicial na semana 2; revisão na semana 6.</td>
       </tr>
       <tr>
         <td><strong>SQL</strong></td>
         <td><code>SELECT · WHERE · ORDER BY · LIMIT · INSERT · UPDATE · DELETE · JOIN · GROUP BY</code> com agregações.</td>
         <td>Trinta consultas sobre uma base de exemplo, escritas à mão, sem ORM.</td>
-        <td>Semana 6, e para entender o que o Prisma gera.</td>
+        <td>Semana 2 antes do Prisma; aprofundamento na semana 6.</td>
       </tr>
       <tr>
         <td><strong>Cliente/servidor</strong></td>
@@ -667,11 +676,11 @@ prisma.transaction.updateMany({ where: { <b>id, userId</b> }, data })
   </div>
 
   <h3>Por que <em>esta</em> lista, e não outra</h3>
-  <p>Não há CSS avançado, algoritmos, estruturas de dados, padrões de projeto ou POO nesta fase. Não porque não importem, mas porque nenhum deles é o motivo pelo qual alguém trava na semana 5. O que trava é: não saber o que significa <code>401</code>, não entender por que <code>await</code> devolve o valor e não a Promise, e não saber o que é uma chave estrangeira.</p>
+  <p>A revisão prioriza HTTP, async/await, classes, construtores, decorators e DI. SQL é praticado antes do ORM. CSS avançado e padrões arquiteturais adicionais ficam para quando houver um problema concreto.</p>
 
   <div class="note dec">
     <span class="lbl">Critério para sair da Fase 0</span>
-    <p>Você consegue, sem consultar: criar um repositório, fazer três commits em uma branch e mergear; explicar a diferença entre <code>401</code> e <code>403</code>; escrever um <code>SELECT</code> com <code>JOIN</code> e <code>GROUP BY</code>; e explicar por que <code>async/await</code> existe. Se sim, comece a Fase 1 <strong>hoje</strong> — não estenda a Fase 0 por conforto.</p>
+    <p>Você consegue, sem consultar: criar um repositório, fazer três commits em uma branch e mergear; explicar a diferença entre <code>401</code> e <code>403</code>; escrever um <code>SELECT</code> com <code>JOIN</code> e <code>GROUP BY</code>; e explicar por que <code>async/await</code> existe. Se sim, avance no CRUD NestJS; retome lacunas com exercícios curtos. CP-0 é verificado ao fim da semana 2.</p>
   </div>
 </section>
 <section id="s7">
@@ -682,8 +691,8 @@ prisma.transaction.updateMany({ where: { <b>id, userId</b> }, data })
   <div class="phase">
     <div class="phase-top">
       <span class="phase-n">01</span>
-      <span class="chip on">Semanas 4–9</span>
-      <span class="chip">~72 h</span>
+      <span class="chip on">Semanas 1–9</span>
+      <span class="chip">Primeiras 4 semanas: 40–60 h de API</span>
       <span class="chip">Roda em <code>localhost</code></span>
     </div>
   </div>
@@ -699,21 +708,22 @@ prisma.transaction.updateMany({ where: { <b>id, userId</b> }, data })
     <div class="dedge"></div>
     <div class="dnode sm">3 · Prisma substitui o SQL manual</div>
     <div class="dedge"></div>
-    <div class="dnode sm">4 · React consome a API</div>
+    <div class="dnode sm">4 · AuthGuard, ownership e testes da API</div>
     <div class="dedge"></div>
-    <div class="dnode hi">5 · Login ingênuo · uma volta completa fechada</div>
+    <div class="dnode hi">5 · React consome a API e fecha o MVP</div>
   </div>
-  <p><strong>Começar com array na memória não é perda de tempo</strong>: separa "aprender Express" de "aprender banco". Quando o array sumir a cada reinício do servidor, você terá sentido na pele por que persistência existe — e a lição gruda. Escrever SQL à mão antes do Prisma tem o mesmo propósito: você precisa saber o que o ORM está escondendo antes de deixá-lo esconder.</p>
+  <p>O ciclo inicial usa <code>pnpm</code> como gerenciador; o pacote em <code>apps/api/package.json</code> se chamará <code>api</code>. Scripts previstos: <code>start:dev</code>, <code>build</code>, <code>test</code> e <code>test:e2e</code>. O monorepo é organizado por pnpm workspaces; não exige o modo monorepo do Nest CLI.</p>
+  <p><strong>Começar com array na memória não é perda de tempo</strong>: separa "aprender NestJS" de "aprender banco". Quando o array sumir a cada reinício do servidor, você terá sentido na pele por que persistência existe — e a lição gruda. Escrever SQL à mão antes do Prisma tem o mesmo propósito: você precisa saber o que o ORM está escondendo antes de deixá-lo esconder.</p>
 
   <h3>Conceitos novos, na ordem em que aparecem</h3>
   <div class="grid2">
     <div class="panel">
       <h5>Backend</h5>
       <ul>
-        <li><code>npm init</code>, <code>package.json</code>, dependência vs. devDependency</li>
+        <li>Nest CLI com pnpm, <code>package.json</code>, dependência vs. devDependency</li>
         <li><code>tsconfig.json</code> e o que <code>strict: true</code> muda</li>
-        <li>Roteamento, <code>req</code>/<code>res</code>, <code>express.json()</code></li>
-        <li>Middleware e por que a ordem é sequencial</li>
+        <li><code>@Controller()</code>, <code>@Get()</code>, <code>@Post()</code>, <code>@Body()</code> e DTOs</li>
+        <li>Providers com <code>@Injectable()</code>, módulos, imports/exports e DI pelo construtor</li>
         <li>Status codes escolhidos de propósito</li>
         <li><code>.env</code> e por que ele nunca vai para o Git</li>
       </ul>
@@ -743,9 +753,9 @@ prisma.transaction.updateMany({ where: { <b>id, userId</b> }, data })
   <div class="note trap">
     <span class="lbl">O que vai dar errado — e é para dar</span>
     <ul>
-      <li><strong>CORS bloqueando o front.</strong> Não instale <code>cors</code> às cegas: leia o erro, entenda o que é origem, e configure <code>origin</code> explicitamente em vez de <code>*</code>.</li>
+      <li><strong>CORS bloqueando o front.</strong> Não instale uma solução de CORS às cegas: leia o erro, entenda o que é origem, e configure <code>app.enableCors({ origin })</code> com as origens permitidas.</li>
       <li><strong><code>useEffect</code> em laço infinito.</strong> Vai acontecer. É o rito de passagem do React.</li>
-      <li><strong>Senha em texto puro.</strong> No MVP você vai fazer isso de propósito. Na semana 10, a primeira coisa da Fase 2 é consertar — e você nunca mais esquece por quê.</li>
+      <li><strong>Autenticação mínima segura.</strong> Hash de senha e escopo por usuário entram na semana 3. Nas semanas 10–13, aprofunde ameaças, refresh rotativo e testes. Falhas intencionais ficam em exercícios locais descartáveis, com dados fictícios.</li>
       <li><strong>Dinheiro em <code>Float</code>.</strong> <em>Não faça.</em> Esta é a única ingenuidade que não vale a pena cometer: migrar dados monetários depois dá muito mais trabalho do que acertar agora.</li>
     </ul>
   </div>
@@ -772,8 +782,8 @@ prisma.transaction.updateMany({ where: { <b>id, userId</b> }, data })
 
   <p>Se você só puder fazer uma fase bem feita, faça esta. É aqui que o projeto deixa de ser exercício e vira software. Multiusuário não é uma funcionalidade que se adiciona — é uma propriedade que todo código precisa respeitar.</p>
 
-  <h3>2.1 · Autenticação de verdade</h3>
-  <p>Substitui o login ingênuo. Antes de escrever qualquer linha, entenda os ataques:</p>
+  <h3>2.1 · Autenticação e sessão completa</h3>
+  <p>Aprofunda o login básico seguro da semana 3. Antes de estender a sessão, entenda os ataques:</p>
   <div class="scroll">
   <table>
     <thead><tr><th>Ataque</th><th>O que acontece</th><th>Defesa nesta fase</th></tr></thead>
@@ -792,13 +802,13 @@ prisma.transaction.updateMany({ where: { <b>id, userId</b> }, data })
   <h3>2.2 · Isolamento de dados — o coração da fase</h3>
   <p>Três camadas, cada uma cobrindo a falha da anterior:</p>
   <pre class="code"><b>Camada 1 · Identidade</b>
-  requireUser lê o JWT do header, valida assinatura e expiração,
-  injeta req.user = { id }. <i>A partir daqui, req.user.id é a única</i>
-  <i>fonte de verdade sobre quem está falando.</i>
+  AuthGuard lê o JWT do header, valida assinatura e expiração,
+  atribui request.user = { id }. @CurrentUser() lê essa identidade.
+  <i>O controller passa userId ao service; o body nunca define identidade.</i>
 
 <b>Camada 2 · Escopo em toda query</b>
   userId entra no WHERE de TODO acesso — inclusive update e delete.
-  <i>O corpo da requisição nunca pode carregar userId. Se carregar, ignore.</i>
+  <i>O DTO não aceita userId; ValidationPipe rejeita o campo extra.</i>
 
 <b>Camada 3 · Testes de autorização</b>
   Para cada endpoint, um teste que cria dois usuários, faz A tentar
@@ -810,7 +820,7 @@ prisma.transaction.updateMany({ where: { <b>id, userId</b> }, data })
   </div>
 
   <h3>2.3 · Validação e erros</h3>
-  <p>Zod na fronteira: todo corpo, query e parâmetro passa por um schema antes de tocar a regra de negócio. Uma classe <code>AppError</code> com <code>status</code> e <code>code</code>, um único <em>error handler</em> no fim da cadeia, e um formato de erro estável:</p>
+  <p>DTOs como classes com <code>class-validator</code>/<code>class-transformer</code> validam corpo e query com <code>ValidationPipe</code>. Parâmetros usam pipes apropriados, como <code>ParseUUIDPipe</code>. Configuração global: <code>whitelist: true, forbidNonWhitelisted: true, transform: true</code>; conversões de entrada são explícitas e testadas. Exceções HTTP e um exception filter global produzem um formato estável:</p>
   <pre class="code">{ "error": { "code": "VALIDATION_ERROR", "message": "Dados inválidos",
              "fields": { "amountCents": "deve ser maior que zero" } } }</pre>
   <p>Nunca vaze <em>stack trace</em> para o cliente em produção — ela entrega estrutura de pastas, versões de biblioteca e às vezes trechos de query. Log completo no servidor, mensagem genérica na resposta.</p>
@@ -858,7 +868,7 @@ LIMIT 21;                             <i>← 21 para saber se há próxima pági
   <p>Esta fase foi antecipada em relação ao seu plano original. O motivo está na <a href="#s1">Seção 1, P10</a>: colocar no ar cedo, com o sistema ainda simples, é o que torna deploy uma rotina em vez de um evento.</p>
 
   <h3>3.1 · Docker — introduzido pelo problema que resolve</h3>
-  <p>Você já usa o Postgres em container desde a semana 6. Agora o <code>docker-compose.yml</code> passa a subir banco + API + web com um comando, e o <code>Dockerfile</code> multi-estágio da API vira o artefato de deploy. Conceitos: imagem vs. container vs. volume, camadas e cache de build, rede entre containers (por que a API chama <code>db:5432</code> e não <code>localhost</code>), e por que <code>node_modules</code> nunca é copiado de dentro do host.</p>
+  <p>Você já usa o Postgres em container desde a semana 2. Agora o <code>docker-compose.yml</code> passa a subir banco + API + web com um comando, e o <code>Dockerfile</code> multi-estágio da API vira o artefato de deploy. Conceitos: imagem vs. container vs. volume, camadas e cache de build, rede entre containers (por que a API chama <code>db:5432</code> e não <code>localhost</code>), e por que <code>node_modules</code> nunca é copiado de dentro do host.</p>
 
   <h3>3.2 · Concorrência — a trilha que quase todo curso pula</h3>
   <p>Seu backend é <em>single-threaded</em> mas <em>não</em> sequencial: o event loop intercala centenas de requisições enquanto cada uma espera o banco. Isso significa que duas requisições do mesmo usuário podem estar no meio da mesma operação ao mesmo tempo.</p>
@@ -915,7 +925,7 @@ a API responde 200 com a transação já criada, em vez de 500.
   </div>
 
   <h3>3.3 · Primeiro deploy</h3>
-  <p>Sem CI ainda — deploy manual, de propósito, para você sentir cada passo. Postgres no Neon, API no Render, web na Vercel. As descobertas previsíveis: o banco gerenciado exige <code>sslmode=require</code>; <code>NODE_ENV=production</code> muda o comportamento do Express; a URL da API no front precisa vir de variável de ambiente de build; o CORS agora tem duas origens; e <code>prisma migrate deploy</code> — não <code>dev</code> — é o comando de produção.</p>
+  <p>Sem CI ainda — deploy manual, de propósito, para você sentir cada passo. Postgres no Neon, API no Render, web na Vercel. As descobertas previsíveis: o banco gerenciado exige <code>sslmode=require</code>; a configuração do NestJS lê <code>NODE_ENV</code> para escolher níveis de log e políticas de erro; a URL da API no front precisa vir de variável de ambiente de build; o CORS agora tem duas origens; e <code>prisma migrate deploy</code> — não <code>dev</code> — é o comando de produção.</p>
 
   <div class="note dec">
     <span class="lbl">Fase 3 concluída quando</span>
@@ -944,7 +954,7 @@ a API responde 200 com a transação já criada, em vez de 500.
   <table>
     <thead><tr><th>Camada</th><th>Compartilhar?</th><th>Motivo</th></tr></thead>
     <tbody>
-      <tr><td>Tipos e schemas Zod</td><td>Sim — <code>packages/shared</code></td><td>É o contrato. Duplicar é garantir divergência.</td></tr>
+      <tr><td>Tipos de contrato e funções puras</td><td>Sim — <code>packages/shared</code></td><td>Sem dependências NestJS; DTOs ficam na API e testes verificam a compatibilidade do contrato.</td></tr>
       <tr><td>Funções de formatação (moeda, data)</td><td>Sim</td><td>Lógica pura, sem DOM.</td></tr>
       <tr><td>Cliente HTTP</td><td>Parcial</td><td>A lógica de refresh é a mesma; o armazenamento do token é diferente.</td></tr>
       <tr><td>Componentes de UI</td><td><strong>Não</strong></td><td><code>&lt;div&gt;</code> não existe em React Native. Tentar unificar com React Native Web custa mais do que reescrever cinco telas.</td></tr>
@@ -976,7 +986,7 @@ a API responde 200 com a transação já criada, em vez de 500.
     <div class="phase-top">
       <span class="phase-n">05</span>
       <span class="chip on">Semanas 25–27</span>
-      <span class="chip">~36 h</span>
+      <span class="chip">Carga incluída nas semanas correspondentes</span>
       <span class="chip">Ainda sem modelo</span>
     </div>
   </div>
@@ -1180,7 +1190,7 @@ a API responde 200 com a transação já criada, em vez de 500.
     <li><strong>Pipeline de CI</strong> em GitHub Actions: lint → typecheck → testes com Postgres de serviço → build. Roda em todo pull request.</li>
     <li><strong>Deploy automático</strong> ao mergear na <code>main</code>, com <code>prisma migrate deploy</code> como passo explícito e <em>health check</em> antes de considerar o deploy bem-sucedido.</li>
     <li><strong>Ambientes.</strong> Produção e <em>staging</em>, com bancos separados. O branch de banco do Neon torna isso barato: staging pode ser um branch do banco de produção com dados anonimizados.</li>
-    <li><strong>Gestão de segredos.</strong> Nada de <code>.env</code> commitado; variáveis na plataforma e no GitHub Secrets; <code>env.ts</code> que valida na inicialização e derruba o processo se faltar uma variável — falhar cedo e alto é melhor do que descobrir em produção às 3 h.</li>
+    <li><strong>Gestão de segredos.</strong> Nada de <code>.env</code> commitado; variáveis na plataforma e no GitHub Secrets; <code>ConfigModule</code> que valida o ambiente na inicialização e derruba o processo se faltar uma variável — falhar cedo e alto é melhor do que descobrir em produção às 3 h.</li>
     <li><strong>Backup.</strong> Confirme a retenção do provedor e <strong>execute um restore de teste</strong>. Backup nunca testado não é backup.</li>
     <li><strong>Domínio e HTTPS</strong>, com redirecionamento de <code>www</code> e cabeçalhos de segurança via <code>helmet</code>.</li>
     <li><strong>Módulo AWS opcional (semana 36).</strong> Escopo fechado: bucket S3 privado para artefatos de modelo e exportações CSV, usuário IAM com política de menor privilégio, URL pré-assinada com expiração. Você aprende IAM, política de bucket e assinatura resolvendo um problema real — sem NAT Gateway, sem VPC, sem surpresa na fatura.</li>
@@ -1229,7 +1239,7 @@ a API responde 200 com a transação já criada, em vez de 500.
   <h3>15.3 · Proteção contra abuso</h3>
   <ul>
     <li>Rate limit global por IP e limites mais apertados em <code>/auth/login</code> e <code>/auth/register</code>.</li>
-    <li>Limites por usuário: teto de transações por dia, tamanho máximo de importação, tamanho máximo de corpo (<code>express.json({ limit: '100kb' })</code>).</li>
+    <li>Limites por usuário: teto de transações por dia, tamanho máximo de importação, tamanho máximo de corpo (parser JSON limitado a 100 KB no bootstrap, conforme o adaptador HTTP escolhido).</li>
     <li><code>limit</code> da paginação com teto rígido — sem isso, <code>?limit=999999</code> é um ataque de negação de serviço de uma linha.</li>
     <li>Timeout em toda chamada externa. Sem timeout, uma dependência lenta esgota seu pool e derruba o app inteiro.</li>
   </ul>
@@ -1315,17 +1325,17 @@ a API responde 200 com a transação já criada, em vez de 500.
     <tbody>
       <tr><td><strong>SQL injection</strong></td><td>Entrada do usuário concatenada na query muda a estrutura do SQL: <code>' OR 1=1 --</code></td><td>Query parametrizada sempre. O Prisma já faz; se usar <code>$queryRaw</code>, use a versão com template tag, nunca concatenação</td><td>1</td></tr>
       <tr><td><strong>Vazamento por falta de escopo</strong></td><td>Trocar o id na URL e acessar dado alheio (IDOR)</td><td><code>userId</code> no <code>WHERE</code> de toda query; teste automatizado por endpoint; 404 em vez de 403</td><td>2</td></tr>
-      <tr><td><strong>Senha em texto puro</strong></td><td>Vazamento do banco expõe a senha, que a pessoa reusa em outros sites</td><td>bcrypt custo 12; nunca logar senha; nunca devolver o hash na API</td><td>2</td></tr>
+      <tr><td><strong>Senha em texto puro</strong></td><td>Vazamento do banco expõe a senha, que a pessoa reusa em outros sites</td><td>bcrypt custo 12; nunca logar senha; nunca devolver o hash na API</td><td>1; revisão na 2</td></tr>
       <tr><td><strong>XSS</strong></td><td>Script injetado num campo executa no navegador de outro usuário e rouba o que estiver no <code>localStorage</code></td><td>React escapa por padrão — nunca use <code>dangerouslySetInnerHTML</code>; access token em memória; refresh em cookie <code>httpOnly</code>; CSP</td><td>2</td></tr>
       <tr><td><strong>CSRF</strong></td><td>Site malicioso dispara requisição autenticada usando o cookie da vítima</td><td>Cookie <code>SameSite=Strict</code> no refresh; o access vai por header <code>Authorization</code>, que não é enviado automaticamente</td><td>2</td></tr>
       <tr><td><strong>Força bruta</strong></td><td>Milhares de tentativas de senha por minuto</td><td>Rate limit por IP e por e-mail; atraso progressivo; bcrypt custo 12 já torna caro</td><td>2</td></tr>
       <tr><td><strong>Enumeração de contas</strong></td><td>Mensagens diferentes revelam quais e-mails existem</td><td>Resposta e tempo idênticos nos dois casos</td><td>2</td></tr>
       <tr><td><strong>Roubo de token</strong></td><td>Refresh interceptado é usado indefinidamente</td><td>Rotação com detecção de reuso: token repetido revoga a família inteira</td><td>2</td></tr>
-      <tr><td><strong>Escalada por corpo de requisição</strong></td><td>Enviar <code>{"userId": "outro"}</code> ou <code>{"role": "admin"}</code> e o ORM aceitar</td><td>Zod com <code>.strict()</code>; nunca passar <code>req.body</code> direto para o Prisma; montar o objeto campo a campo</td><td>2</td></tr>
+      <tr><td><strong>Escalada por corpo de requisição</strong></td><td>Enviar <code>{"userId": "outro"}</code> ou <code>{"role": "admin"}</code> e o ORM aceitar</td><td><code>ValidationPipe</code> com <code>whitelist</code> e <code>forbidNonWhitelisted</code>; nunca passar <code>req.body</code> direto para o Prisma; montar o objeto campo a campo</td><td>2</td></tr>
       <tr><td><strong>Segredo vazado no Git</strong></td><td><code>.env</code> commitado; a chave fica no histórico para sempre</td><td><code>.gitignore</code> desde o commit 1; <em>secret scanning</em> do GitHub ligado; rotacionar imediatamente se acontecer</td><td>1</td></tr>
       <tr><td><strong>Origem indevida</strong></td><td>Qualquer site chama sua API com credenciais do usuário</td><td>CORS com lista explícita de origens. <code>origin: '*'</code> com credenciais é proibido pelo próprio navegador — e por bom senso</td><td>1</td></tr>
       <tr><td><strong>DoS por payload</strong></td><td>Corpo de 500 MB ou <code>?limit=999999</code></td><td>Limite de corpo; teto rígido de paginação; timeout de requisição</td><td>9</td></tr>
-      <tr><td><strong>Vazamento por erro</strong></td><td><em>Stack trace</em> em produção revela caminhos, versões e queries</td><td>Handler central: log completo no servidor, mensagem genérica na resposta</td><td>2</td></tr>
+      <tr><td><strong>Vazamento por erro</strong></td><td><em>Stack trace</em> em produção revela caminhos, versões e queries</td><td>Exception filter global: log completo no servidor, mensagem genérica na resposta</td><td>2</td></tr>
       <tr><td><strong>Dependência comprometida</strong></td><td>Pacote malicioso ou vulnerável entra pelo <code>npm install</code></td><td><code>pnpm audit</code> no CI; Dependabot; travar versões; desconfiar de pacote novo com poucos downloads</td><td>8</td></tr>
       <tr><td><strong>Serviço interno exposto</strong></td><td>O <code>ml-service</code> acessível pela internet vira porta dos fundos</td><td>Rede interna da plataforma + header com segredo compartilhado; nunca publicar a porta</td><td>7</td></tr>
       <tr><td><strong>Dado pessoal no log</strong></td><td>Log com e-mail e descrição de transação vira um segundo banco de dados sem proteção</td><td>Redigir campos sensíveis no logger; logar <code>userId</code>, nunca e-mail</td><td>8</td></tr>
@@ -1355,13 +1365,13 @@ a API responde 200 com a transação já criada, em vez de 500.
         <td><strong>Unitário</strong></td><td>Poucos, cirúrgicos</td>
         <td>Lógica pura com muitos casos de borda: cálculo de saldo, formatação de moeda, normalização de descrição, decodificação de cursor, detecção de recorrência</td>
         <td>Funções que só repassam chamada. Testar <em>mock</em> não prova nada</td>
-        <td>Vitest</td>
+        <td>API: Vitest + @nestjs/testing; overrideProvider quando necessário. Funções puras: Vitest.</td>
       </tr>
       <tr>
         <td><strong>Integração de API</strong></td><td><em>A maior parte do esforço</em></td>
         <td>Requisição HTTP real contra banco de teste real: fluxo de auth, CRUD completo, validação, paginação, <strong>e um teste de autorização por endpoint</strong></td>
         <td>Banco mockado. Metade dos bugs mora exatamente na fronteira com o banco</td>
-        <td>Vitest + Supertest + Postgres em Docker</td>
+        <td>@nestjs/testing + Vitest + Supertest + Postgres em Docker</td>
       </tr>
       <tr>
         <td><strong>Frontend</strong></td><td>Seletivo</td>
@@ -1380,13 +1390,15 @@ a API responde 200 com a transação já criada, em vez de 500.
   </div>
 
   <h3>A regra do teste de autorização</h3>
-  <pre class="code"><i>// Este teste, repetido para cada endpoint, é o mais valioso do projeto.</i>
+  <pre class="code"><i>// App criada com Test.createTestingModule e createNestApplication.
+// Aplicar configureApp(app), await app.init() e fechar app/banco no teardown.
+// Usar PostgreSQL de teste, usuários fictícios e autenticação real.</i>
 it('não deixa o usuário A ler a transação do usuário B', async () =&gt; {
   const a = await criarUsuario('a@teste.com')
   const b = await criarUsuario('b@teste.com')
   const t = await criarTransacao(b, { amountCents: 5000 })
 
-  const res = await request(app)
+  const res = await request(app.getHttpServer())
     .get(`/transactions/${t.id}`)
     .set('Authorization', `Bearer ${a.accessToken}`)
 
@@ -1492,101 +1504,101 @@ it('não deixa o usuário A ler a transação do usuário B', async () =&gt; {
   <p>Quarenta e duas semanas, a 12 h/semana em média — cerca de <strong>500 horas</strong>. A duração de cada bloco vem da quantidade de conceito novo, não de uma divisão uniforme: a semana 12 tem quatro dias de conteúdo denso, a semana 24 tem uma tarde. Semanas mais leves são de propósito; use a folga para revisar, escrever ADR ou descansar. Perder uma semana não invalida o plano — só empurra o resto.</p>
 
   <div class="phase">
-    <div class="phase-top"><span class="phase-n">00</span><h3 style="margin:0">Fundamentos</h3><span class="chip on">Semanas 1–3</span></div>
+    <div class="phase-top"><span class="phase-n">00</span><h3 style="margin:0">Primeiro ciclo NestJS</h3><span class="chip on">Semanas 1–4 · API</span></div>
   </div>
 
   <div class="week">
-    <div class="week-head"><span class="week-id">SEMANA 01</span><p class="week-title">Ambiente, terminal e Git</p></div>
+    <div class="week-head"><span class="week-id">SEMANA 01</span><p class="week-title">Ambiente e primeiro módulo NestJS</p></div>
     <dl>
-      <dt>Objetivo</dt><dd>Eliminar toda fricção de ferramenta antes de escrever a primeira linha do projeto.</dd>
-      <dt>Estudo</dt><dd>Terminal; Git: staging, commit, branch, merge, conflito; chave SSH no GitHub.</dd>
-      <dt>Conceitos</dt><dd>Repositório, área de staging, histórico, branch como ponteiro, resolução de conflito.</dd>
-      <dt>Exercício</dt><dd>Criar um repositório, provocar um conflito entre duas branches e resolvê-lo à mão, sem ferramenta gráfica.</dd>
-      <dt>Implementação</dt><dd>Repositório <code>expense-tracker</code> com <code>README</code>, <code>.gitignore</code> e <code>.gitattributes</code>.</dd>
-      <dt>Entrega</dt><dd>Repositório público com dez commits de mensagem clara.</dd>
-      <dt>Critério</dt><dd>Você faz branch, commit, merge e resolve conflito sem consultar nada.</dd>
+      <dt>Objetivo</dt><dd>Começar diretamente no NestJS e explicar um CRUD em memória. Carga: 10–15 h.</dd>
+      <dt>Estudo</dt><dd>Revisão de HTTP e Git; classes, decorators, Nest CLI; @Module, @Controller e @Injectable.</dd>
+      <dt>Conceitos</dt><dd>DI pelo construtor, providers, imports/exports, status HTTP e ciclo da requisição.</dd>
+      <dt>Exercício</dt><dd>CRUD de tarefas em memória; remover um provider e diagnosticar a falha de resolução de dependência.</dd>
+      <dt>Implementação</dt><dd>Monorepo pnpm com pacote api em apps/api; AppModule e TransactionsModule; main.ts com bootstrap. Criar .gitignore, .gitattributes e exemplo de ambiente.</dd>
+      <dt>Entrega</dt><dd>GET/POST/PATCH/DELETE /transactions; docs/api.http; registro do contrato inicial; leitura do ADR-0001.</dd>
+      <dt>Critério</dt><dd>Explicar controller → service e substituir uma dependência sem editar o controller. Dados são fictícios; API ainda local e sem autenticação.</dd>
     </dl>
   </div>
 
   <div class="week">
-    <div class="week-head"><span class="week-id">SEMANA 02</span><p class="week-title">HTTP, REST e JavaScript moderno</p></div>
+    <div class="week-head"><span class="week-id">SEMANA 02</span><p class="week-title">DTOs, configuração e persistência</p></div>
     <dl>
-      <dt>Objetivo</dt><dd>Entender o que trafega entre cliente e servidor, e escrever JS com fluência.</dd>
-      <dt>Estudo</dt><dd>Requisição/resposta, métodos, status, headers; JSON; REST; sintaxe moderna do JS; <code>async/await</code>.</dd>
-      <dt>Conceitos</dt><dd>Stateless, idempotência dos métodos, recurso vs. ação, Promise, event loop.</dd>
-      <dt>Exercício</dt><dd>Abrir a aba Network num site que você usa e narrar em voz alta o que cada requisição faz. Reescrever três funções suas de Python em JS.</dd>
-      <dt>Implementação</dt><dd><code>docs/api-contract.md</code> com os 12 endpoints do MVP: método, caminho, corpo, status de sucesso e de erro.</dd>
-      <dt>Entrega</dt><dd>O contrato da API, escrito antes de existir API.</dd>
-      <dt>Critério</dt><dd>Você explica <code>401</code> × <code>403</code> × <code>404</code> e por que <code>PUT</code> é idempotente e <code>POST</code> não.</dd>
+      <dt>Objetivo</dt><dd>Validar entradas e persistir transações com SQL compreendido. Carga: 10–15 h.</dd>
+      <dt>Estudo</dt><dd>ValidationPipe, class-validator/class-transformer, ConfigModule/ConfigService; PostgreSQL no Docker, SQL parametrizado e Prisma.</dd>
+      <dt>Conceitos</dt><dd>Tipos não validam em runtime; whitelisting; PK/FK; migration; PrismaService injetável e ciclo de vida da conexão.</dd>
+      <dt>Exercício</dt><dd>Escrever SELECT com JOIN e GROUP BY antes do ORM; enviar campos extras e valores inválidos e verificar 400.</dd>
+      <dt>Implementação</dt><dd>PrismaModule exportando PrismaService; schema User/Category/Transaction; amountCents inteiro, occurredOn DATE; migration e seed fictício; DTOs e configuração validada.</dd>
+      <dt>Entrega</dt><dd>CRUD persistente com configuração global reutilizável; contrato OpenAPI inicial ou docs/api-contract.md.</dd>
+      <dt>Checkpoint</dt><dd>CP-0. Explicar a query gerada pelo Prisma e provar que os dados sobrevivem ao reinício.</dd>
     </dl>
   </div>
 
   <div class="week">
-    <div class="week-head"><span class="week-id">SEMANA 03</span><p class="week-title">TypeScript e modelo relacional</p></div>
+    <div class="week-head"><span class="week-id">SEMANA 03</span><p class="week-title">Autenticação básica e ownership</p></div>
     <dl>
-      <dt>Objetivo</dt><dd>Tipar código com intenção e modelar dados em tabelas.</dd>
-      <dt>Estudo</dt><dd>TS: tipos, <code>interface</code>, união, opcional, inferência, <code>strict</code>. SQL: <code>SELECT</code>, <code>WHERE</code>, <code>JOIN</code>, <code>GROUP BY</code>.</dd>
-      <dt>Conceitos</dt><dd>Tipo em tempo de compilação vs. valor em execução; chave primária, estrangeira, <code>NOT NULL</code>, <code>UNIQUE</code>; cardinalidade.</dd>
-      <dt>Exercício</dt><dd>Trinta consultas SQL à mão numa base de exemplo. Provocar três erros de compilação do TS e explicar cada mensagem.</dd>
-      <dt>Implementação</dt><dd>Diagrama do modelo: usuário, categoria, transação, com chaves e justificativa de cada <code>NOT NULL</code>.</dd>
-      <dt>Entrega</dt><dd><code>docs/data-model.md</code>.</dd>
-      <dt>Checkpoint</dt><dd><strong>CP-0</strong> — ver <a href="#s23">Seção 23</a>.</dd>
+      <dt>Objetivo</dt><dd>Proteger a API e separar os dados de dois usuários. Carga: 10–15 h.</dd>
+      <dt>Estudo</dt><dd>AuthModule, UsersModule, hash de senha, @nestjs/jwt, CanActivate, ExecutionContext e decorator @CurrentUser.</dd>
+      <dt>Conceitos</dt><dd>Autenticação versus autorização; access token de curta duração; identidade confiável; escopo de query.</dd>
+      <dt>Exercício</dt><dd>Com dois usuários fictícios, tentar ler, alterar e apagar uma transação do outro e receber 404.</dd>
+      <dt>Implementação</dt><dd>Cadastro e login com hash desde o início; AuthGuard nas rotas privadas; userId passado ao service; validar ownership da categoria; teste HTTP de isolamento.</dd>
+      <dt>Entrega</dt><dd>API autenticada. Access token expira; logout local descarta o token, sem prometer revogação imediata no servidor. Refresh rotativo entra na semana 11.</dd>
+      <dt>Critério</dt><dd>Explicar o caminho token → guard → controller → service → Prisma e demonstrar que userId do corpo é rejeitado.</dd>
     </dl>
   </div>
+
+  <div class="week">
+    <div class="week-head"><span class="week-id">SEMANA 04</span><p class="week-title">Testes, erros e revisão de NestJS</p></div>
+    <dl>
+      <dt>Objetivo</dt><dd>Fechar o ciclo inicial de quatro semanas com API explicável e testada. Carga: 10–15 h.</dd>
+      <dt>Estudo</dt><dd>@nestjs/testing, Vitest, Supertest; Test.createTestingModule, overrideProvider; HttpException, exception filters, interceptors e @nestjs/swagger.</dd>
+      <dt>Conceitos</dt><dd>Teste de service versus integração HTTP; mesma configuração global em teste e produção; ordem de execução e retorno.</dd>
+      <dt>Exercício</dt><dd>Substituir um provider no teste; provocar erro de validação, credencial e banco; rastrear cada resposta sem expor detalhes internos.</dd>
+      <dt>Implementação</dt><dd>Exception filter para formato estável; interceptor simples de duração; Swagger; integração com PostgreSQL isolado e teardown das conexões.</dd>
+      <dt>Entrega</dt><dd>CRUD, validação, autenticação e ownership testados; /docs e comandos de execução documentados.</dd>
+      <dt>Checkpoint</dt><dd>CP-2 e CP-NEST: criar um módulo pequeno sem copiar, explicar DI e ciclo HTTP, corrigir provider ausente e demonstrar um teste de autorização. Não equivale a concluir o MVP web.</dd>
+    </dl>
+  </div>
+
 
   <div class="phase">
-    <div class="phase-top"><span class="phase-n">01</span><h3 style="margin:0">MVP local</h3><span class="chip on">Semanas 4–9</span></div>
+    <div class="phase-top"><span class="phase-n">01</span><h3 style="margin:0">MVP local</h3><span class="chip on">Semanas 5–9 · consolidação e web</span></div>
   </div>
-
   <div class="week">
-    <div class="week-head"><span class="week-id">SEMANA 04</span><p class="week-title">Primeira API, com dados na memória</p></div>
+    <div class="week-head"><span class="week-id">SEMANA 05</span><p class="week-title">Consolidar módulos e contratos</p></div>
     <dl>
-      <dt>Objetivo</dt><dd>Um servidor HTTP que responde JSON — sem banco, de propósito.</dd>
-      <dt>Estudo</dt><dd>Node, npm, Express, roteamento, <code>express.json()</code>, <code>tsx</code> para rodar TS em desenvolvimento.</dd>
-      <dt>Conceitos</dt><dd><code>package.json</code>, dependência vs. devDependency, porta, <code>req</code>/<code>res</code>, roteador.</dd>
-      <dt>Exercício</dt><dd>Mini-projeto 1: API de tarefas com CRUD em array, testada só pelo REST Client.</dd>
-      <dt>Implementação</dt><dd><code>apps/api</code> com <code>GET/POST/PATCH/DELETE /transactions</code> sobre um array.</dd>
-      <dt>Entrega</dt><dd>Coleção de requisições em <code>docs/api.http</code>.</dd>
-      <dt>Critério</dt><dd>Os quatro verbos funcionam e devolvem os status corretos.</dd>
+      <dt>Objetivo</dt><dd>Revisar o primeiro ciclo e cobrir lacunas antes do frontend.</dd>
+      <dt>Estudo</dt><dd>Encapsulamento de módulos, contratos TypeScript e testes HTTP.</dd>
+      <dt>Conceitos</dt><dd>Exports mínimos, dependências entre domínios e DTO versus contrato compartilhado.</dd>
+      <dt>Exercício</dt><dd>Explicar por que um tipo compartilhado não valida JSON em runtime.</dd>
+      <dt>Implementação</dt><dd>Consolidar CategoriesModule e UsersModule; packages/shared com tipos e funções puras; testes de compatibilidade com DTOs.</dd>
+      <dt>Entrega</dt><dd>API organizada por domínio, sem dependência NestJS nos clientes.</dd>
+      <dt>Critério</dt><dd>Alterar uma regra do service e verificar o efeito no contrato e nos testes.</dd>
     </dl>
   </div>
 
   <div class="week">
-    <div class="week-head"><span class="week-id">SEMANA 05</span><p class="week-title">Middleware, erros e estrutura</p></div>
+    <div class="week-head"><span class="week-id">SEMANA 06</span><p class="week-title">SQL e integridade em profundidade</p></div>
     <dl>
-      <dt>Objetivo</dt><dd>Sair do arquivo único sem cair em arquitetura prematura.</dd>
-      <dt>Estudo</dt><dd>Cadeia de middlewares, tratamento centralizado de erro, variáveis de ambiente.</dd>
-      <dt>Conceitos</dt><dd>Ordem de execução, <code>next()</code>, middleware de erro com quatro argumentos, <code>.env</code> fora do Git.</dd>
-      <dt>Exercício</dt><dd>Inverter a ordem de dois middlewares de propósito e explicar exatamente o que quebrou.</dd>
-      <dt>Implementação</dt><dd>Organização por módulo; middleware de log; <code>AppError</code>; handler central; <code>env.ts</code> validado.</dd>
-      <dt>Entrega</dt><dd>Erros com formato consistente em toda a API.</dd>
-      <dt>Critério</dt><dd>Você explica o que acontece se o handler de erro for registrado antes das rotas.</dd>
+      <dt>Objetivo</dt><dd>Aprofundar a persistência introduzida na semana 2.</dd>
+      <dt>Estudo</dt><dd>JOIN, GROUP BY, constraints, transações e comportamento de exclusão.</dd>
+      <dt>Conceitos</dt><dd>Integridade referencial versus ownership; dados financeiros em centavos e DATE.</dd>
+      <dt>Exercício</dt><dd>Escrever consultas de listagem e dashboard à mão e comparar com o SQL gerado.</dd>
+      <dt>Implementação</dt><dd>Revisar vínculos usuário/categoria/transação; testar categoria alheia e exclusão de categoria em uso.</dd>
+      <dt>Entrega</dt><dd>Modelo explicado em docs/data-model.md e testes de integridade.</dd>
+      <dt>Critério</dt><dd>Justificar cada constraint e mostrar onde o isolamento é garantido.</dd>
     </dl>
   </div>
 
   <div class="week">
-    <div class="week-head"><span class="week-id">SEMANA 06</span><p class="week-title">PostgreSQL de verdade, com SQL na mão</p></div>
+    <div class="week-head"><span class="week-id">SEMANA 07</span><p class="week-title">Migrations e consultas do dashboard</p></div>
     <dl>
-      <dt>Objetivo</dt><dd>Persistir dados e sentir por que persistência importa.</dd>
-      <dt>Estudo</dt><dd>Postgres no Docker; <code>psql</code>; DDL; <code>pg</code> com query parametrizada.</dd>
-      <dt>Conceitos</dt><dd>Container e volume; tipos do Postgres; PK, FK, constraint; <strong>por que parametrizar</strong>.</dd>
-      <dt>Exercício</dt><dd>Tentar SQL injection na sua própria API com concatenação e ver funcionar. Depois parametrizar e ver falhar.</dd>
-      <dt>Implementação</dt><dd>Tabelas <code>users</code>, <code>categories</code>, <code>transactions</code>; a API troca o array por SQL escrito à mão.</dd>
-      <dt>Entrega</dt><dd><code>docker-compose.yml</code> com o banco; dados sobrevivem ao reinício.</dd>
-      <dt>Critério</dt><dd>Você escreve o <code>JOIN</code> da listagem sem consultar documentação.</dd>
-    </dl>
-  </div>
-
-  <div class="week">
-    <div class="week-head"><span class="week-id">SEMANA 07</span><p class="week-title">Prisma, migrations e schema definitivo</p></div>
-    <dl>
-      <dt>Objetivo</dt><dd>Trocar SQL manual por ORM — agora sabendo o que está sendo escondido.</dd>
-      <dt>Estudo</dt><dd><code>schema.prisma</code>, <code>migrate dev</code>, cliente gerado, <code>include</code>, <code>select</code>.</dd>
-      <dt>Conceitos</dt><dd>Migration versionada, drift de schema, tipos gerados, log de query.</dd>
-      <dt>Exercício</dt><dd>Ligar o log de query do Prisma e comparar o SQL gerado com o que você escreveu na semana 6.</dd>
-      <dt>Implementação</dt><dd>Schema completo com <code>amountCents Int</code>, <code>occurredOn Date</code> e os índices. Seed de categorias.</dd>
-      <dt>Entrega</dt><dd>Primeira migration versionada no repositório.</dd>
-      <dt>Critério</dt><dd>Você explica o que <code>migrate dev</code> faz e por que ele nunca roda em produção.</dd>
+      <dt>Objetivo</dt><dd>Preparar a API para o cliente web com evolução de schema controlada.</dd>
+      <dt>Estudo</dt><dd>Prisma migrations, select, agregações e índices; module/provider no acesso a dados.</dd>
+      <dt>Conceitos</dt><dd>Drift, seed reprodutível, custo das consultas e contrato de resposta.</dd>
+      <dt>Exercício</dt><dd>Aplicar uma migration em banco descartável e verificar os dados anteriores.</dd>
+      <dt>Implementação</dt><dd>DashboardModule com agregações filtradas por usuário; migrations e seed revisados.</dd>
+      <dt>Entrega</dt><dd>API pronta para consumo pelo React, com testes de dashboard.</dd>
+      <dt>Critério</dt><dd>Explicar migrate dev versus migrate deploy e ler o SQL de uma agregação.</dd>
     </dl>
   </div>
 
@@ -1604,13 +1616,13 @@ it('não deixa o usuário A ler a transação do usuário B', async () =&gt; {
   </div>
 
   <div class="week">
-    <div class="week-head"><span class="week-id">SEMANA 09</span><p class="week-title">Login ingênuo, dashboard e fechamento do MVP</p></div>
+    <div class="week-head"><span class="week-id">SEMANA 09</span><p class="week-title">Integração do login, dashboard e fechamento do MVP</p></div>
     <dl>
       <dt>Objetivo</dt><dd>Ter um sistema completo — imperfeito, mas inteiro.</dd>
       <dt>Estudo</dt><dd>Agregação em SQL; noção de sessão.</dd>
       <dt>Conceitos</dt><dd><code>GROUP BY</code> com <code>SUM</code>; por que agregar no banco e não em JS.</dd>
       <dt>Exercício</dt><dd>Escrever a query do dashboard à mão antes de traduzi-la para Prisma.</dd>
-      <dt>Implementação</dt><dd>Cadastro e login (ainda simples), dashboard com saldo, entradas e saídas.</dd>
+      <dt>Implementação</dt><dd>Integrar no React o cadastro e login já existentes na API; dashboard com saldo, entradas e saídas; logout local e tratamento da expiração.</dd>
       <dt>Entrega</dt><dd><strong>MVP funcionando ponta a ponta.</strong> Tag <code>v0.1.0</code>.</dd>
       <dt>Checkpoint</dt><dd><strong>CP-1 · CP-2 · CP-3</strong></dd>
     </dl>
@@ -1627,20 +1639,20 @@ it('não deixa o usuário A ler a transação do usuário B', async () =&gt; {
       <dt>Estudo</dt><dd>Hash × criptografia; sal; custo de trabalho; bcrypt.</dd>
       <dt>Conceitos</dt><dd>Rainbow table, força bruta, enumeração de usuário, timing attack.</dd>
       <dt>Exercício</dt><dd>Rodar bcrypt com custo 4, 10 e 14 e medir o tempo. Entender por que "lento" é uma feature.</dd>
-      <dt>Implementação</dt><dd>Hash no cadastro; comparação no login; mensagem idêntica para os dois erros; migration que zera as senhas antigas.</dd>
+      <dt>Implementação</dt><dd>Revisar o hash e a comparação implantados na semana 3; uniformizar erros; testar timing, custo e proteção contra força bruta. Não há senhas em texto puro a migrar.</dd>
       <dt>Entrega</dt><dd>Nenhuma senha legível no banco.</dd>
       <dt>Critério</dt><dd>Você explica por que aumentar o custo é a defesa que envelhece bem.</dd>
     </dl>
   </div>
 
   <div class="week">
-    <div class="week-head"><span class="week-id">SEMANA 11</span><p class="week-title">JWT, refresh rotativo e o middleware de identidade</p></div>
+    <div class="week-head"><span class="week-id">SEMANA 11</span><p class="week-title">JWT, refresh rotativo e o guard de identidade</p></div>
     <dl>
       <dt>Objetivo</dt><dd>Sessão que funciona em web e mobile, com logout de verdade.</dd>
       <dt>Estudo</dt><dd>Estrutura do JWT; assinatura; expiração; cookie <code>httpOnly</code>/<code>SameSite</code>; rotação de refresh.</dd>
       <dt>Conceitos</dt><dd>Stateless × stateful; por que o JWT não é criptografado; revogação; detecção de reuso.</dd>
       <dt>Exercício</dt><dd>Colar seu JWT em <code>jwt.io</code> e ler o payload. Entender que qualquer pessoa faria o mesmo.</dd>
-      <dt>Implementação</dt><dd><code>/auth/register · login · refresh · logout</code>; tabela <code>RefreshToken</code>; middleware <code>requireUser</code>.</dd>
+      <dt>Implementação</dt><dd><code>/auth/register · login · refresh · logout</code>; tabela <code>RefreshToken</code>; guard <code>AuthGuard</code>.</dd>
       <dt>Entrega</dt><dd>Sessão que sobrevive a recarregar a página e morre no logout.</dd>
       <dt>Critério</dt><dd>Você explica por que o access token vive em memória e o refresh em cookie.</dd>
     </dl>
@@ -1649,11 +1661,11 @@ it('não deixa o usuário A ler a transação do usuário B', async () =&gt; {
   <div class="week">
     <div class="week-head"><span class="week-id">SEMANA 12</span><p class="week-title">Isolamento de dados — a semana mais importante</p></div>
     <dl>
-      <dt>Objetivo</dt><dd>Garantir, com prova, que um usuário não alcança o dado de outro.</dd>
+      <dt>Objetivo</dt><dd>Aprofundar as garantias da semana 3 e ampliar a prova de isolamento a todas as rotas.</dd>
       <dt>Estudo</dt><dd>Autenticação × autorização; ownership; escopo de query; IDOR.</dd>
       <dt>Conceitos</dt><dd><code>findUnique</code> × <code>findFirst</code> com escopo; <code>updateMany</code>/<code>deleteMany</code> com <code>userId</code>; 404 em vez de 403.</dd>
       <dt>Exercício</dt><dd><strong>O vazamento provocado</strong> — criar o bug, explorá-lo, printar, corrigir. Ver a <a href="#s8">Seção 8</a>.</dd>
-      <dt>Implementação</dt><dd><code>userId</code> em toda query; validar que a <code>categoryId</code> pertence ao usuário; nunca aceitar <code>userId</code> no corpo.</dd>
+      <dt>Implementação</dt><dd>Revisar <code>userId</code> em toda query e ownership de <code>categoryId</code>; verificar que nenhum DTO aceita identidade enviada pelo cliente.</dd>
       <dt>Entrega</dt><dd>ADR sobre a estratégia de isolamento.</dd>
       <dt>Checkpoint</dt><dd><strong>CP-4</strong></dd>
     </dl>
@@ -1662,11 +1674,11 @@ it('não deixa o usuário A ler a transação do usuário B', async () =&gt; {
   <div class="week">
     <div class="week-head"><span class="week-id">SEMANA 13</span><p class="week-title">Validação, erros e testes de API</p></div>
     <dl>
-      <dt>Objetivo</dt><dd>Confiar em zero entrada externa e ter rede de segurança automatizada.</dd>
-      <dt>Estudo</dt><dd>Zod; Vitest; Supertest; banco de teste isolado.</dd>
-      <dt>Conceitos</dt><dd>Validação na fronteira; <code>.strict()</code> contra mass assignment; arrange-act-assert; isolamento entre testes.</dd>
+      <dt>Objetivo</dt><dd>Ampliar a validação e a suíte iniciadas nas semanas 2–4 para todos os endpoints e casos de borda.</dd>
+      <dt>Estudo</dt><dd>DTOs; ValidationPipe; @nestjs/testing; Vitest; Supertest; banco de teste isolado.</dd>
+      <dt>Conceitos</dt><dd>Validação na fronteira; <code>whitelist</code> + <code>forbidNonWhitelisted</code> contra mass assignment; arrange-act-assert; isolamento entre testes.</dd>
       <dt>Exercício</dt><dd>Enviar <code>{"userId":"outro","amountCents":"muito"}</code> e verificar que a API rejeita os dois campos.</dd>
-      <dt>Implementação</dt><dd>Schema Zod por endpoint; suíte de integração; <strong>um teste de autorização por rota</strong>.</dd>
+      <dt>Implementação</dt><dd>Ampliar DTOs e suíte de integração; <strong>um teste de autorização por rota</strong>; revisar configuração global e contratos.</dd>
       <dt>Entrega</dt><dd>Suíte verde, rodando contra Postgres real.</dd>
       <dt>Critério</dt><dd>O teste de autorização falha se você remover o <code>userId</code> de uma query.</dd>
     </dl>
@@ -2055,7 +2067,7 @@ it('não deixa o usuário A ler a transação do usuário B', async () =&gt; {
     <div class="week-head"><span class="week-id">SEMANA 41</span><p class="week-title">Documentação e portfólio</p></div>
     <dl>
       <dt>Objetivo</dt><dd>Tornar o trabalho legível para quem não acompanhou.</dd>
-      <dt>Estudo</dt><dd>OpenAPI; escrita técnica; diagramação.</dd>
+      <dt>Estudo</dt><dd>Revisão do OpenAPI existente; escrita técnica; diagramação.</dd>
       <dt>Conceitos</dt><dd>README como argumento, não como manual de instalação.</dd>
       <dt>Exercício</dt><dd>Dar o README para alguém de fora e pedir que explique o que o sistema faz. Reescrever o que não ficou claro.</dd>
       <dt>Implementação</dt><dd>README com arquitetura, decisões, métricas de ML e números de carga; OpenAPI publicado; capturas de tela e GIF.</dd>
@@ -2073,7 +2085,7 @@ it('não deixa o usuário A ler a transação do usuário B', async () =&gt; {
       <dt>Exercício</dt><dd>Convidar cinco pessoas para usar o app na mesma tarde. Observar os logs em tempo real.</dd>
       <dt>Implementação</dt><dd>Correção do que o uso real revelar — sempre revela algo.</dd>
       <dt>Entrega</dt><dd><strong>Tag <code>v2.0.0</code>.</strong> Retrospectiva escrita: o que foi difícil, o que você faria diferente, o que viria depois.</dd>
-      <dt>Critério</dt><dd>Todos os 14 checkpoints respondidos sem consulta.</dd>
+      <dt>Critério</dt><dd>Todos os checkpoints CP-0 a CP-14 e CP-NEST respondidos sem consulta.</dd>
     </dl>
   </div>
 
@@ -2094,9 +2106,9 @@ it('não deixa o usuário A ler a transação do usuário B', async () =&gt; {
   <table>
     <thead><tr><th>#</th><th>Antes de</th><th>Projeto</th><th>Isola</th><th>Tempo</th></tr></thead>
     <tbody>
-      <tr><td>1</td><td>Escrever a API (sem. 4)</td><td>CRUD de tarefas em memória, testado só por requisições HTTP</td><td>Express e ciclo requisição/resposta, sem banco no caminho</td><td class="num">3 h</td></tr>
-      <tr><td>2</td><td>Modelar o banco (sem. 6)</td><td>Catálogo de produtos e pedidos em SQL puro, com <code>JOIN</code> e <code>GROUP BY</code></td><td>Modelagem relacional, sem ORM escondendo nada</td><td class="num">4 h</td></tr>
-      <tr><td>3</td><td>Autenticação (sem. 10)</td><td>API só de usuários: cadastro, hash, login, rota protegida</td><td>Auth isolada da regra de negócio</td><td class="num">4 h</td></tr>
+      <tr><td>1</td><td>Escrever a API (sem. 1)</td><td>CRUD de tarefas em memória, testado só por requisições HTTP</td><td>NestJS: módulo, controller, provider e DI, sem banco no caminho</td><td class="num">3 h</td></tr>
+      <tr><td>2</td><td>Modelar o banco (sem. 2)</td><td>Catálogo de produtos e pedidos em SQL puro, com <code>JOIN</code> e <code>GROUP BY</code></td><td>Modelagem relacional, sem ORM escondendo nada</td><td class="num">4 h</td></tr>
+      <tr><td>3</td><td>Autenticação (sem. 3)</td><td>API só de usuários: cadastro, hash, login, rota protegida</td><td>Auth isolada da regra de negócio</td><td class="num">4 h</td></tr>
       <tr><td>4</td><td>React (sem. 8)</td><td>Página que lista dados de uma API pública com carregando/erro/vazio</td><td>Estado assíncrono no React</td><td class="num">3 h</td></tr>
       <tr><td>5</td><td>Mobile (sem. 21)</td><td>App Expo de uma tela que consome uma API pública</td><td>Diferenças de RN, sem sua API no meio</td><td class="num">3 h</td></tr>
       <tr><td>6</td><td>Docker (sem. 17)</td><td>Containerizar uma app trivial e reduzir a imagem em 80%</td><td>Camadas e cache de build</td><td class="num">3 h</td></tr>
@@ -2121,21 +2133,23 @@ it('não deixa o usuário A ler a transação do usuário B', async () =&gt; {
 
   <p>Responda em voz alta, para uma pessoa ou para uma câmera, sem consultar nada. Se travar, a lacuna está identificada — volte a ela antes de avançar. A resposta esperada está em cinza; ela é um esqueleto, não um gabarito literal.</p>
 
-  <h4>CP-0 · Fundamentos (semana 3)</h4>
+  <h4>CP-NEST · API NestJS (semana 4)</h4>
+  <div class="q"><p>Você consegue criar um módulo com controller, service e DTO, explicar a DI, proteger uma rota e provar o isolamento em teste?</p><p class="a">Demonstrar sem copiar. Diagnosticar provider ausente; explicar guard, pipe, interceptor e filter; aplicar configureApp na aplicação de teste e encerrar os recursos. Registrar lacunas no ESTADO.md.</p></div>
+  <h4>CP-0 · Fundamentos (semana 2)</h4>
   <div class="q"><p>Qual a diferença entre <code>401</code> e <code>403</code>, e por que a sua API vai responder <code>404</code> numa situação em que <code>403</code> pareceria natural?</p><p class="a">401 = não sei quem você é. 403 = sei quem você é e você não pode. 404 no lugar de 403 evita confirmar que o recurso existe, impedindo enumeração de ids.</p></div>
   <div class="q"><p>O que uma chave estrangeira garante que a aplicação sozinha não garantiria?</p><p class="a">Integridade referencial no nível do banco: nenhuma transação pode apontar para uma categoria inexistente, mesmo que um bug ou um script tente inserir. A regra vive onde os dados vivem.</p></div>
 
   <h4>CP-1 · O caminho de uma requisição (semana 9)</h4>
-  <div class="q"><p>Descreva o caminho completo de um login, do clique até a tela atualizada.</p><p class="a">Formulário React → <code>fetch POST /auth/login</code> → rede → Express → <code>cors</code> → <code>express.json()</code> → rate limit → rota → validação Zod → busca do usuário → <code>bcrypt.compare</code> → geração de access e refresh → gravação do hash do refresh → resposta 200 com cookie → cliente guarda o access em memória → redireciona → nova requisição já com o header <code>Authorization</code>.</p></div>
+  <div class="q"><p>Descreva o caminho completo de um login, do clique até a tela atualizada.</p><p class="a">Formulário React → HTTP → NestJS → middleware quando necessário → guards aplicáveis (login é público) → interceptors de entrada → ValidationPipe → AuthController → AuthService → PrismaService → comparação do hash → access token → resposta com @HttpCode(200) → interceptors de saída → cliente. No MVP o logout descarta o access token no cliente; ele expira no servidor. Refresh rotativo e revogação entram na semana 11.</p></div>
 
-  <h4>CP-2 · Middleware (semana 9)</h4>
-  <div class="q"><p>O que acontece se você registrar o handler de erro antes das rotas?</p><p class="a">Ele nunca é alcançado: o Express percorre a cadeia em ordem, e o erro lançado numa rota procura o próximo middleware de erro <em>depois</em> dela. Registrado antes, fica fora do caminho e o erro cai no handler padrão.</p></div>
+  <h4>CP-2 · NestJS e injeção de dependência (semanas 4 e 9)</h4>
+  <div class="q"><p>Como o Nest resolve o service de um controller, e como você o substitui em teste?</p><p class="a">O service é um provider registrado no módulo ou exportado por um módulo importado. O Nest o injeta pelo construtor. No teste, Test.createTestingModule permite overrideProvider com uma implementação controlada. Guard decide acesso; pipe valida entrada; interceptor envolve a execução; exception filter trata exceções não capturadas.</p></div>
 
   <h4>CP-3 · SQL (semana 9)</h4>
   <div class="q"><p>Escreva a query do gasto por categoria do mês. Por que ela não pode ser feita em JavaScript?</p><p class="a"><code>SELECT c.name, SUM(t.amount_cents) FROM transactions t JOIN categories c ON c.id = t.category_id WHERE t.user_id = $1 AND t.occurred_on BETWEEN $2 AND $3 GROUP BY c.name;</code> — em JS seria preciso trazer todas as linhas pela rede e somar em memória: mais tráfego, mais RAM, e sem uso do índice.</p></div>
 
   <h4>CP-4 · Isolamento (semana 12)</h4>
-  <div class="q"><p>Mostre duas linhas de código que causariam vazamento entre usuários.</p><p class="a"><code>findUnique({ where: { id } })</code> sem <code>userId</code>; e <code>prisma.transaction.create({ data: req.body })</code>, que aceitaria um <code>userId</code> vindo do cliente. As correções: <code>findFirst</code> com <code>{ id, userId }</code>, e montar o objeto campo a campo usando <code>req.user.id</code>.</p></div>
+  <div class="q"><p>Mostre duas linhas de código que causariam vazamento entre usuários.</p><p class="a"><code>findUnique({ where: { id } })</code> sem <code>userId</code>; e <code>prisma.transaction.create({ data: req.body })</code>, que aceitaria um <code>userId</code> vindo do cliente. As correções: <code>findFirst</code> com <code>{ id, userId }</code>, e montar o objeto campo a campo usando a identidade de <code>@CurrentUser()</code> passada ao service.</p></div>
   <div class="q"><p>Como você <em>prova</em> que o isolamento funciona?</p><p class="a">Com um teste automatizado por endpoint: dois usuários, A tenta acessar o recurso de B, espera-se 404. Se alguém remover o escopo numa refatoração, o teste falha.</p></div>
 
   <h4>CP-5 · React (semana 15)</h4>
@@ -2163,7 +2177,7 @@ it('não deixa o usuário A ler a transação do usuário B', async () =&gt; {
   <div class="q"><p>Seu modelo bateu a baseline? Em quanto?</p><p class="a">Se a resposta for "não sei", a Fase 6 não terminou.</p></div>
 
   <h4>CP-12 · Deploy (semana 20)</h4>
-  <div class="q"><p>O que muda entre o <code>.env</code> local e o de produção, e por quê?</p><p class="a"><code>DATABASE_URL</code> com <code>sslmode=require</code>; <code>JWT_SECRET</code> forte e diferente; <code>NODE_ENV=production</code> (muda cache de view, tratamento de erro e otimizações); <code>CORS_ORIGIN</code> com o domínio real; <code>LOG_LEVEL</code> mais alto; URL da API no build do front.</p></div>
+  <div class="q"><p>O que muda entre o <code>.env</code> local e o de produção, e por quê?</p><p class="a"><code>DATABASE_URL</code> com <code>sslmode=require</code>; <code>JWT_SECRET</code> forte e diferente; <code>NODE_ENV=production</code> (seleciona a configuração de produção definida pela aplicação); <code>CORS_ORIGIN</code> com o domínio real; <code>LOG_LEVEL</code> mais alto; URL da API no build do front.</p></div>
 
   <h4>CP-13 · CI/CD (semana 35)</h4>
   <div class="q"><p>O que a sua pipeline impede de chegar em produção?</p><p class="a">Código que não compila, que quebra teste existente, que introduz vazamento entre usuários (o teste de autorização), que não passa no lint, e dependência com vulnerabilidade conhecida. Não impede: bug de lógica que ninguém testou, e erro de configuração de ambiente.</p></div>
@@ -2230,7 +2244,7 @@ it('não deixa o usuário A ler a transação do usuário B', async () =&gt; {
   </div>
 
   <h3>Monorepo — e o motivo concreto</h3>
-  <p>Um repositório, <code>pnpm</code> workspaces. Não por moda: você tem <code>packages/shared</code> com os tipos e schemas Zod da API, importado por web, mobile e backend. Mudou o contrato de um endpoint, o TypeScript acusa nos três no mesmo commit, e o CI barra antes do merge. Em repositórios separados isso viraria publicação de pacote npm e sincronização manual de versão — burocracia real para uma pessoa. O custo do monorepo é um CI um pouco mais elaborado; o benefício é o contrato nunca divergir.</p>
+  <p>Um repositório, <code>pnpm</code> workspaces. Não por moda: você tem <code>packages/shared</code> com os tipos de contrato da API, importado por web, mobile e backend, sem dependências de framework. DTOs permanecem na API; verificação de tipos e testes de contrato detectam divergências antes do merge. Em repositórios separados isso viraria publicação de pacote npm e sincronização manual de versão — burocracia real para uma pessoa. O custo do monorepo é um CI um pouco mais elaborado; o benefício é mudanças de contrato ficarem visíveis no mesmo repositório; testes continuam necessários para validar comportamento em execução.</p>
 
   <h3>Fluxo de trabalho</h3>
   <div class="kv">
@@ -2265,21 +2279,21 @@ it('não deixa o usuário A ler a transação do usuário B', async () =&gt; {
     <tbody>
       <tr><td>Git / GitHub</td><td>Básico</td><td>Intermediário</td><td>Sem. 1</td><td>Todo dia</td><td>Resolve conflito e reverte commit errado sem pânico</td></tr>
       <tr><td>Terminal</td><td>Básico</td><td>Básico+</td><td>Sem. 1</td><td>Todo dia</td><td>Navega, encadeia e lê erro sem copiar para o navegador</td></tr>
-      <tr><td>HTTP / REST</td><td>Nenhum</td><td>Sólido</td><td>Sem. 2</td><td>Toda a API</td><td>Escolhe método e status corretos sem consultar tabela</td></tr>
-      <tr><td>JavaScript</td><td>Nenhum</td><td>Intermediário</td><td>Sem. 2</td><td>API + web + mobile</td><td>Escreve código assíncrono correto sem colar exemplo</td></tr>
-      <tr><td>TypeScript</td><td>Nenhum</td><td>Intermediário</td><td>Sem. 3</td><td>API + web + mobile</td><td>Modela um domínio com tipos e lê erro do compilador sem medo</td></tr>
-      <tr><td>Node.js</td><td>Nenhum</td><td>Intermediário</td><td>Sem. 4</td><td>API</td><td>Explica o event loop e por que o backend é stateless</td></tr>
-      <tr><td>Express</td><td>Nenhum</td><td>Sólido</td><td>Sem. 4–5</td><td>API</td><td>Escreve middleware do zero e sabe onde registrá-lo</td></tr>
-      <tr><td>SQL</td><td>Nenhum</td><td>Intermediário+</td><td>Sem. 3, 6</td><td>Banco inteiro</td><td>Escreve <code>JOIN</code> + <code>GROUP BY</code> à mão e lê <code>EXPLAIN</code></td></tr>
-      <tr><td>PostgreSQL</td><td>Nenhum</td><td>Intermediário</td><td>Sem. 6, 14, 18</td><td>Banco inteiro</td><td>Cria índice com justificativa e entende transação e bloqueio</td></tr>
-      <tr><td>Prisma</td><td>Nenhum</td><td>Intermediário</td><td>Sem. 7</td><td>API</td><td>Escreve migration segura e sabe o SQL que o ORM gera</td></tr>
+      <tr><td>HTTP / REST</td><td>Nenhum</td><td>Sólido</td><td>Sem. 1</td><td>Toda a API</td><td>Escolhe método e status corretos sem consultar tabela</td></tr>
+      <tr><td>JavaScript</td><td>Intermediário</td><td>Intermediário</td><td>Revisão na sem. 1</td><td>API + web + mobile</td><td>Escreve código assíncrono correto sem colar exemplo</td></tr>
+      <tr><td>TypeScript</td><td>Intermediário</td><td>Intermediário</td><td>Revisão nas sem. 1–2</td><td>API + web + mobile</td><td>Modela um domínio com tipos e lê erro do compilador sem medo</td></tr>
+      <tr><td>Node.js</td><td>Nenhum</td><td>Intermediário</td><td>Sem. 1</td><td>API</td><td>Explica o event loop e por que o backend é stateless</td></tr>
+      <tr><td>NestJS</td><td>Nenhum</td><td>Sólido</td><td>Sem. 1–4; aprofundamento 10–13</td><td>API</td><td>Constrói módulo com DI, DTO, guard e testes; explica pipes, interceptors e filtros</td></tr>
+      <tr><td>SQL</td><td>Nenhum</td><td>Intermediário+</td><td>Sem. 2, 6</td><td>Banco inteiro</td><td>Escreve <code>JOIN</code> + <code>GROUP BY</code> à mão e lê <code>EXPLAIN</code></td></tr>
+      <tr><td>PostgreSQL</td><td>Nenhum</td><td>Intermediário</td><td>Sem. 2, 6, 14, 18</td><td>Banco inteiro</td><td>Cria índice com justificativa e entende transação e bloqueio</td></tr>
+      <tr><td>Prisma</td><td>Nenhum</td><td>Intermediário</td><td>Sem. 2, 7</td><td>API</td><td>Escreve migration segura e sabe o SQL que o ORM gera</td></tr>
       <tr><td>React</td><td>Nenhum</td><td>Intermediário</td><td>Sem. 8, 15–16</td><td>Web</td><td>Gerencia estado de servidor e de UI sem confundir os dois</td></tr>
       <tr><td>React Native / Expo</td><td>Nenhum</td><td>Básico+</td><td>Sem. 21–24</td><td>Mobile</td><td>Constrói tela com navegação e sessão persistente</td></tr>
-      <tr><td>Autenticação</td><td>Nenhum</td><td>Sólido</td><td>Sem. 10–12</td><td>API + clientes</td><td>Implementa JWT + refresh rotativo e explica cada escolha</td></tr>
-      <tr><td>Autorização</td><td>Nenhum</td><td><strong>Sólido</strong></td><td>Sem. 12</td><td>Toda query</td><td>Prova o isolamento com teste automatizado</td></tr>
+      <tr><td>Autenticação</td><td>Nenhum</td><td>Sólido</td><td>Sem. 3; aprofundamento 10–12</td><td>API + clientes</td><td>Implementa JWT + refresh rotativo e explica cada escolha</td></tr>
+      <tr><td>Autorização</td><td>Nenhum</td><td><strong>Sólido</strong></td><td>Sem. 3, 12</td><td>Toda query</td><td>Prova o isolamento com teste automatizado</td></tr>
       <tr><td>Concorrência</td><td>Nenhum</td><td>Intermediário</td><td>Sem. 18</td><td>API + banco</td><td>Identifica race condition e escolhe a estratégia certa</td></tr>
-      <tr><td>Testes</td><td>Nenhum</td><td>Intermediário</td><td>Sem. 13</td><td>API + web</td><td>Sabe o que testar em cada camada e o que não testar</td></tr>
-      <tr><td>Docker</td><td>Nenhum</td><td>Básico+</td><td>Sem. 6, 17</td><td>Dev + deploy</td><td>Escreve Dockerfile multi-estágio e compõe serviços</td></tr>
+      <tr><td>Testes</td><td>Nenhum</td><td>Intermediário</td><td>Sem. 3–4, 13</td><td>API + web</td><td>Sabe o que testar em cada camada e o que não testar</td></tr>
+      <tr><td>Docker</td><td>Nenhum</td><td>Básico+</td><td>Sem. 2, 17</td><td>Dev + deploy</td><td>Escreve Dockerfile multi-estágio e compõe serviços</td></tr>
       <tr><td>CI/CD</td><td>Nenhum</td><td>Básico+</td><td>Sem. 34–35</td><td>Repositório</td><td>Cria pipeline do zero e explica o que ela impede</td></tr>
       <tr><td>Deploy / Cloud</td><td>Nenhum</td><td>Intermediário</td><td>Sem. 20, 35–37</td><td>Produção</td><td>Publica, monitora e restaura backup</td></tr>
       <tr><td>AWS (S3/IAM)</td><td>Nenhum</td><td>Básico</td><td>Sem. 36</td><td>Exportação e artefatos</td><td>Cria política de menor privilégio e URL pré-assinada</td></tr>
@@ -2336,16 +2350,16 @@ it('não deixa o usuário A ler a transação do usuário B', async () =&gt; {
       <h5>Estágio 1 · MVP — semana 9</h5>
       <div class="diag" style="margin:.6rem 0;padding:1rem .6rem">
         <div class="dnode sm">React</div><div class="dedge"></div>
-        <div class="dnode sm">Express</div><div class="dedge"></div>
+        <div class="dnode sm">NestJS</div><div class="dedge"></div>
         <div class="dnode sm">PostgreSQL</div>
       </div>
-      <p><strong>Problema que aparece:</strong> qualquer pessoa vê os dados de qualquer pessoa. Senha em texto puro. Só funciona em <code>localhost</code>.</p>
+      <p><strong>Problema que aparece:</strong> a sessão ainda não tem refresh rotativo nem recuperação de acesso. Hash de senha e ownership já existem. Só funciona em <code>localhost</code>.</p>
     </div>
     <div class="panel">
       <h5>Estágio 2 · V1 — semana 16</h5>
       <div class="diag" style="margin:.6rem 0;padding:1rem .6rem">
         <div class="dnode sm">React + rotas protegidas</div><div class="dedge"></div>
-        <div class="dnode hi">Express + auth + escopo</div><div class="dedge"></div>
+        <div class="dnode hi">NestJS + guards + escopo</div><div class="dedge"></div>
         <div class="dnode sm">PostgreSQL + índices</div>
       </div>
       <p><strong>Problema que aparece:</strong> funciona só na sua máquina; duas requisições simultâneas podem duplicar dado; ninguém consegue rodar o projeto.</p>
@@ -2412,7 +2426,7 @@ it('não deixa o usuário A ler a transação do usuário B', async () =&gt; {
       <tr><td><strong>6</strong> ML</td><td><code>train.py</code> reprodutível; tabela comparativa com baseline; matriz de confusão interpretada; limiar escolhido com dados; você explica por que o vencedor venceu.</td></tr>
       <tr><td><strong>7</strong> Integração ML</td><td>Sugestão aparece na UI; derrubar o <code>ml-service</code> não afeta nada essencial; correções alimentam o próximo treino; ADR de privacidade escrito.</td></tr>
       <tr><td><strong>8</strong> Cloud e CI/CD</td><td>Merge na <code>main</code> publica sozinho; migrations rodam sem downtime; segredos fora do Git; <strong>backup restaurado de verdade pelo menos uma vez</strong>; alertas chegando.</td></tr>
-      <tr><td><strong>9</strong> Produção</td><td>Relatório de carga com antes/depois; toda query crítica usando índice comprovado por <code>EXPLAIN</code>; rate limit testado; cinco pessoas usaram simultaneamente; os 14 checkpoints respondidos sem consulta.</td></tr>
+      <tr><td><strong>9</strong> Produção</td><td>Relatório de carga com antes/depois; toda query crítica usando índice comprovado por <code>EXPLAIN</code>; rate limit testado; cinco pessoas usaram simultaneamente; os checkpoints CP-0 a CP-14 e CP-NEST respondidos sem consulta.</td></tr>
     </tbody>
   </table>
   </div>
@@ -2456,7 +2470,7 @@ it('não deixa o usuário A ler a transação do usuário B', async () =&gt; {
       <tr><td>E</td><td>Arquitetura de produção</td><td><a href="#s28">Seção 28</a> — estágio 6</td></tr>
       <tr><td>F</td><td>Estrutura do repositório</td><td><a href="#s2">Seção 2</a>, decisão D6</td></tr>
       <tr><td>G</td><td>Estrutura do banco</td><td><a href="#s3">Seção 3</a> — modelo nuclear</td></tr>
-      <tr><td>H</td><td>Endpoints</td><td><code>docs/api-contract.md</code>, escrito na semana 2; OpenAPI na semana 41</td></tr>
+      <tr><td>H</td><td>Endpoints</td><td><code>docs/api-contract.md</code>, iniciado na semana 1; OpenAPI na semana 4, revisado na semana 41</td></tr>
       <tr><td>I</td><td>Telas principais</td><td>Login, cadastro, listagem, criar/editar, dashboard, categorias, perfil</td></tr>
       <tr><td>J</td><td>Fluxo de autenticação</td><td><a href="#s3">Seção 3</a>, fluxo A · <a href="#s23">CP-1</a></td></tr>
       <tr><td>K</td><td>Fluxo de uma transação</td><td><a href="#s3">Seção 3</a>, fluxo B</td></tr>

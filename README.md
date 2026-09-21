@@ -1,12 +1,16 @@
-# 🚀 [NOME DO PROJETO]
+# 🚀 Expense Tracker
 
-> Sistema web modular desenvolvido para oferecer uma aplicação escalável, segura e preparada para utilização simultânea por múltiplos usuários.
+> Gerenciador financeiro pessoal com API NestJS, web React, mobile Expo e serviço Python de ML.
+
+**Estado em 20/09/2026:** planejamento, sem aplicação implementada. A estrutura, os comandos e os endpoints abaixo são previstos e só poderão ser executados após o setup. O roteiro está em [claude/plano.html](claude/plano.html) e o progresso em [claude/ESTADO.md](claude/ESTADO.md).
+
+**Prioridade inicial:** quatro semanas de NestJS (40–60 horas), com módulos, DI, DTOs, Prisma, autenticação e testes. O prazo de referência é 15/10/2026; revise a disponibilidade semanal ao iniciar.
 
 ---
 
 ## 📌 Sobre o projeto
 
-**[NOME DO PROJETO]** é uma aplicação web desenvolvida com uma arquitetura de **monólito modular**, permitindo que diferentes funcionalidades do sistema sejam organizadas em módulos independentes dentro de uma única aplicação.
+**Expense Tracker** é uma aplicação web desenvolvida com uma arquitetura de **monólito modular**, permitindo que diferentes funcionalidades do sistema sejam organizadas em módulos independentes dentro de uma única aplicação.
 
 A proposta é manter o projeto simples de desenvolver, testar e manter inicialmente, sem abrir mão de uma arquitetura preparada para crescimento.
 
@@ -110,12 +114,25 @@ Cada requisição deverá ser tratada de forma independente, evitando que inform
 
 A stack inicial proposta para o projeto é:
 
-### Backend
+### Backend (API)
+
+- Node.js
+- TypeScript
+- NestJS (módulos, controllers, providers e injeção de dependência)
+- Prisma, encapsulado em `PrismaModule` / `PrismaService`
+- `@nestjs/config` para configuração validada
+- `class-validator` + `class-transformer` com `ValidationPipe`
+- `@nestjs/jwt` para tokens e guards para proteção de rotas
+- `@nestjs/swagger` para o contrato OpenAPI
+- `@nestjs/testing` + Vitest + Supertest para testes da API
+
+### Serviço de ML
 
 - Python
 - FastAPI
-- Pydantic
-- SQLAlchemy
+- pandas / scikit-learn
+
+> Serviço separado, acessível só pela rede interna. Nunca fica no caminho crítico: se falhar, a API responde "sem sugestão".
 
 ### Banco de dados
 
@@ -123,18 +140,17 @@ A stack inicial proposta para o projeto é:
 
 ### Frontend
 
-- HTML
-- CSS
-- JavaScript
-
-> O frontend poderá posteriormente ser substituído ou expandido por um framework moderno caso a complexidade da interface justifique.
+- React + TypeScript (web)
+- Expo / React Native (mobile)
 
 ### Infraestrutura
 
+- pnpm workspaces (monorepo)
 - Docker
 - Docker Compose
 - Git
 - GitHub
+- GitHub Actions
 
 ### Ambiente de produção
 
@@ -147,53 +163,38 @@ A aplicação deverá ser preparada para implantação em um servidor/cloud, uti
 A estrutura sugerida é:
 
 ```text
-project/
+expense-tracker/
 │
-├── app/
-│   │
-│   ├── main.py
-│   │
-│   ├── core/
-│   │   ├── config.py
-│   │   ├── security.py
-│   │   └── database.py
-│   │
-│   ├── auth/
-│   │   ├── router.py
-│   │   ├── service.py
-│   │   ├── schemas.py
-│   │   └── models.py
-│   │
-│   ├── users/
-│   │   ├── router.py
-│   │   ├── service.py
-│   │   ├── schemas.py
-│   │   └── models.py
-│   │
-│   ├── dashboard/
-│   │   ├── router.py
-│   │   ├── service.py
-│   │   └── schemas.py
-│   │
-│   ├── reports/
-│   │   ├── router.py
-│   │   ├── service.py
-│   │   └── schemas.py
-│   │
-│   └── admin/
-│       ├── router.py
-│       ├── service.py
-│       └── schemas.py
+├── apps/
+│   ├── api/                 # NestJS + Prisma
+│   │   ├── src/
+│   │   │   ├── main.ts
+│   │   │   ├── app.module.ts
+│   │   │   ├── modules/
+│   │   │   │   ├── auth/
+│   │   │   │   ├── users/
+│   │   │   │   ├── categories/
+│   │   │   │   ├── transactions/
+│   │   │   │   └── dashboard/
+│   │   │   └── shared/      # prisma, env, erros, guards
+│   │   ├── prisma/
+│   │   │   ├── schema.prisma
+│   │   │   └── migrations/
+│   │   └── test/
+│   ├── web/                 # React + Vite
+│   └── mobile/              # Expo
 │
-├── tests/
+├── services/
+│   └── ml/                  # Python + FastAPI
 │
-├── migrations/
+├── packages/
+│   └── shared/              # tipos de contratos e funções puras
 │
-├── frontend/
+├── docs/
+│   └── adr/                 # registros de decisão arquitetural
 │
-├── Dockerfile
 ├── docker-compose.yml
-├── requirements.txt
+├── pnpm-workspace.yaml
 ├── .env.example
 ├── .gitignore
 └── README.md
@@ -203,41 +204,50 @@ project/
 
 # 🧩 Organização dos módulos
 
-Cada módulo deve seguir uma separação clara de responsabilidades.
+O código é organizado por domínio, não por tipo de arquivo. Cada domínio é um módulo NestJS.
 
 Por exemplo:
 
 ```text
-users/
+transactions/
 │
-├── router.py
-├── service.py
-├── repository.py
-├── schemas.py
-└── models.py
+├── transactions.module.ts
+├── transactions.controller.ts
+├── transactions.service.ts
+└── dto/
 ```
 
-### Router
+### Module
+
+Declara o que o módulo fornece e do que depende.
+
+### Controller
 
 Responsável pelos endpoints HTTP.
 
 ### Service
 
-Responsável pelas regras de negócio.
+Responsável pelas regras de negócio e pelo acesso aos dados via Prisma.
 
-### Repository
+### DTO
 
-Responsável pelo acesso aos dados.
-
-### Schemas
-
-Responsável pela validação e estrutura dos dados.
-
-### Models
-
-Responsável pela representação das entidades no banco.
+Classe que descreve a entrada com decorators de `class-validator`. A validação em execução depende do `ValidationPipe`; tipos TypeScript sozinhos não validam requisições.
 
 Essa separação evita que regras de negócio sejam colocadas diretamente nos endpoints.
+
+### Providers e injeção de dependência
+
+Services recebem suas dependências pelo construtor. Cada módulo declara `providers`, importa os módulos necessários e exporta somente o que outros domínios usam. O `PrismaService` é compartilhado via `PrismaModule`, sem criar um cliente por requisição.
+
+### Validação, autenticação e erros
+
+- `ValidationPipe({ whitelist: true, forbidNonWhitelisted: true, transform: true })` na configuração global; conversões de números e datas devem ser explícitas e testadas.
+- `AuthGuard` valida o JWT; `@CurrentUser()` entrega a identidade ao controller. O service recebe `userId` explicitamente e aplica ownership em consultas, alterações e exclusões.
+- `HttpException` e subclasses representam erros HTTP; um exception filter padroniza respostas sem expor detalhes internos.
+- Interceptors envolvem a execução para medição e transformação de resposta. Middleware fica restrito a tarefas anteriores aos guards, como identificação da requisição.
+- DTOs ficam na API. `packages/shared` contém contratos TypeScript e funções puras, sem importar NestJS, Prisma ou decorators de validação. Testes de contrato verificam divergências em execução.
+
+As decisões estão em [ADR-0001](docs/adr/0001-nestjs.md).
 
 ---
 
@@ -255,25 +265,28 @@ Frontend
 API
    │
    ▼
-Router
+Middleware (quando necessário)
+   │
+   ▼
+Guard → Interceptor (entrada) → Pipe
+   │
+   ▼
+Controller
    │
    ▼
 Service
    │
    ▼
-Repository
+Prisma
    │
    ▼
 PostgreSQL
    │
    ▼
-Repository
-   │
-   ▼
 Service
    │
    ▼
-Router
+Controller
    │
    ▼
 Frontend
@@ -282,43 +295,36 @@ Frontend
 Usuário
 ```
 
-Isso mantém as responsabilidades separadas e facilita testes e manutenção.
+Na resposta, os interceptors retornam na ordem inversa. Exceções não tratadas seguem para os exception filters. A configuração global deve ser reutilizada nos testes HTTP.
 
 ---
 
-# ⚙️ Configuração
+# ⚙️ Configuração prevista
+
+Os comandos desta seção dependem da criação do monorepo e dos scripts de `apps/api/package.json`. O pacote da API deverá se chamar `api` para corresponder aos filtros abaixo.
 
 ## 1. Clonar o projeto
 
 ```bash
 git clone [URL_DO_REPOSITORIO]
-cd [NOME_DO_PROJETO]
+cd expense-tracker
 ```
 
 ---
 
-## 2. Criar ambiente virtual
+## 2. Pré-requisitos
 
-### Windows
-
-```bash
-python -m venv .venv
-.venv\Scripts\activate
-```
-
-### Linux/macOS
-
-```bash
-python3 -m venv .venv
-source .venv/bin/activate
-```
+- Node.js LTS
+- pnpm
+- Docker (para o PostgreSQL local)
+- Python 3 (só para o serviço de ML)
 
 ---
 
 ## 3. Instalar dependências
 
 ```bash
-pip install -r requirements.txt
+pnpm install
 ```
 
 ---
@@ -341,8 +347,8 @@ Exemplo:
 
 ```env
 DATABASE_URL=postgresql://usuario:senha@localhost:5432/database
-SECRET_KEY=change-me
-ENVIRONMENT=development
+JWT_SECRET=change-me
+NODE_ENV=development
 ```
 
 > O arquivo `.env` não deve ser enviado para o GitHub.
@@ -373,22 +379,20 @@ docker compose down
 
 # ▶️ Executando localmente
 
-Com o ambiente virtual ativado:
-
 ```bash
-uvicorn app.main:app --reload
+pnpm --filter api start:dev
 ```
 
 A API ficará disponível localmente em:
 
 ```text
-http://localhost:8000
+http://localhost:3000
 ```
 
-A documentação automática do FastAPI estará disponível em:
+A documentação da API (Swagger) estará disponível em:
 
 ```text
-http://localhost:8000/docs
+http://localhost:3000/docs
 ```
 
 ---
@@ -402,9 +406,9 @@ As alterações estruturais do banco devem ser controladas através de migration
 Exemplo:
 
 ```text
-models
+schema.prisma
    ↓
-migration
+prisma migrate
    ↓
 PostgreSQL
 ```
@@ -562,20 +566,22 @@ Dessa maneira, a arquitetura evita a complexidade prematura de microserviços.
 
 # 🧪 Testes
 
+Os testes da API usarão `@nestjs/testing`, Vitest e Supertest. Unitários podem substituir providers com `overrideProvider`; testes de integração de ownership devem usar PostgreSQL real e os mesmos pipes, guards e filtros da aplicação.
+
 Os testes devem ser organizados em diferentes níveis:
 
 ```text
-tests/
+apps/api/
 │
-├── unit/
-├── integration/
-└── api/
+├── src/**/*.spec.ts     # unitários, ao lado do código
+└── test/                # integração e e2e (HTTP + banco)
 ```
 
 Executar:
 
 ```bash
-pytest
+pnpm --filter api test
+pnpm --filter api test:e2e
 ```
 
 O objetivo é garantir que alterações em um módulo não introduzam regressões em outros.
@@ -603,12 +609,14 @@ Antes da publicação em produção, o sistema deverá considerar:
 
 # 🗺️ Roadmap
 
+O cronograma detalhado em `claude/plano.html` é a referência. Nas primeiras quatro semanas, entregar uma API NestJS com CRUD, persistência, autenticação básica segura e testes; as fases abaixo agrupam o escopo por tema.
+
 ## Fase 1 — Fundação
 
 - [ ] Criar estrutura do projeto.
-- [ ] Configurar FastAPI.
+- [ ] Configurar NestJS.
 - [ ] Configurar PostgreSQL.
-- [ ] Configurar SQLAlchemy.
+- [ ] Configurar Prisma.
 - [ ] Configurar migrations.
 - [ ] Configurar Docker.
 - [ ] Criar sistema de configuração.
@@ -718,7 +726,7 @@ O projeto começa como um **monólito modular**, mantendo simplicidade operacion
                             │
                             ▼
               ┌──────────────────────────┐
-              │     FASTAPI BACKEND      │
+              │     NESTJS BACKEND       │
               │                          │
               │  ┌──────┐ ┌──────────┐  │
               │  │ Auth │ │ Usuários │  │
@@ -737,9 +745,18 @@ O projeto começa como um **monólito modular**, mantendo simplicidade operacion
 ```
 
 **Arquitetura inicial:** Monólito Modular
-**Backend:** Python / FastAPI
+**Backend:** Node.js / NestJS / TypeScript
+**Serviço de ML:** Python / FastAPI
 **Banco:** PostgreSQL
 **Containerização:** Docker
 **Deployment:** Cloud / Servidor
 **Modelo:** Multiusuário
 **Objetivo:** Aplicação web escalável e preparada para produção
+
+## Referências NestJS
+
+- [Módulos](https://docs.nestjs.com/modules) e [providers](https://docs.nestjs.com/providers).
+- [Ciclo da requisição](https://docs.nestjs.com/faq/request-lifecycle).
+- [Validação](https://docs.nestjs.com/techniques/validation).
+- [Autenticação](https://docs.nestjs.com/security/authentication).
+- [Testes](https://docs.nestjs.com/fundamentals/testing).

@@ -1,3 +1,17 @@
+ATUALIZAÇÃO DE REFERÊNCIA — 2026-09-20
+
+A API deste projeto usa NestJS com TypeScript e Prisma. Começar diretamente em NestJS.
+Organização por domínio: Module, Controller, Service e DTO; dependências injetadas pelo construtor.
+Validação: classes DTO com class-validator/class-transformer e ValidationPipe global.
+Autenticação: @nestjs/jwt e AuthGuard; ownership no service com userId explícito.
+Erros: HttpException e exception filters. Configuração: @nestjs/config.
+Testes: @nestjs/testing + Vitest + Supertest; PostgreSQL real nos testes de integração.
+packages/shared contém tipos de contrato e funções puras, sem dependências do NestJS.
+Decisão registrada em docs/adr/0001-nestjs.md. O roadmap vigente está em claude/plano.html.
+Perfil atualizado: JS/TS intermediário, 10–15 horas por semana. Priorizar quatro semanas
+(40–60 horas) de API NestJS, com prazo de referência em 15/10/2026; revisar a carga ao iniciar.
+A aplicação ainda não foi implementada. Não confundir revisão do plano com domínio comprovado.
+
 Quero que você atue como um ARQUITETO DE SOFTWARE SÊNIOR, ENGENHEIRO DE SOFTWARE FULL STACK, ENGENHEIRO DE DADOS, ENGENHEIRO DE MACHINE LEARNING, ENGENHEIRO CLOUD/DEVOPS e MENTOR TÉCNICO.
 
 Sua missão é criar um PLANO DE ESTUDOS E DESENVOLVIMENTO COMPLETO, do absoluto zero até a conclusão e publicação de uma aplicação Full Stack + Mobile + Machine Learning na internet.
@@ -126,7 +140,7 @@ MOBILE:
 BACKEND:
 
 - Node.js
-- Express
+- NestJS
 - TypeScript
 - Prisma
 
@@ -177,7 +191,7 @@ A arquitetura conceitual inicial é:
                                │
                     ┌──────────▼──────────┐
                     │      API CORE       │
-                    │ Node + Express      │
+                    │ Node + NestJS      │
                     │ TypeScript + Prisma │
                     └──────┬───────┬──────┘
                            │       │
@@ -230,7 +244,7 @@ FASE INICIAL:
 
 React
 ↓
-Node + Express
+Node + NestJS
 ↓
 PostgreSQL
 
@@ -238,7 +252,7 @@ Depois:
 
 React
        \
-        → Node + Express → PostgreSQL
+        → Node + NestJS → PostgreSQL
        /
 React Native
 
@@ -246,7 +260,7 @@ Depois:
 
 React / Mobile
        ↓
-Node + Express
+Node + NestJS
        ↓
 PostgreSQL
        ↓
@@ -580,12 +594,18 @@ Ensine progressivamente:
 - Node.js;
 - npm;
 - TypeScript;
-- Express;
+- NestJS;
 - routing;
 - controllers;
 - services;
-- repositories;
-- middleware;
+- PrismaService e acesso a dados;
+- repositories somente se existir necessidade concreta;
+- módulos e providers;
+- injeção de dependência;
+- decorators;
+- guards e pipes;
+- interceptors e exception filters;
+- middleware quando necessário;
 - validation;
 - authentication;
 - authorization;
@@ -1103,7 +1123,7 @@ Exemplos:
 
 Antes do Backend:
 
-CRUD simples.
+CRUD simples em NestJS, com controller, service e módulo.
 
 Antes do PostgreSQL:
 
@@ -1217,8 +1237,9 @@ Resposta esperada:
 
 React
 → HTTP
-→ Express
-→ Middleware
+→ NestJS
+→ Guard
+→ Pipe
 → Controller
 → Service
 → Database
@@ -1395,7 +1416,7 @@ Inclua:
 - React;
 - React Native;
 - Node;
-- Express;
+- NestJS;
 - PostgreSQL;
 - SQL;
 - Prisma;
@@ -1579,7 +1600,7 @@ FULL STACK
 - React;
 - TypeScript;
 - Node;
-- Express;
+- NestJS;
 - PostgreSQL;
 - Prisma;
 - REST API;
