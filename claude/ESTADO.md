@@ -7,23 +7,25 @@
 
 ## PROJECT STATE
 
-**Atualizado em:** 2026-09-20
+**Atualizado em:** 2026-09-21
 **Fase:** 0 — Fundamentos
-**Módulo:** nenhum iniciado
+**Módulo:** T-001 em andamento — banco pronto, API ainda não
 **Semana do roadmap:** pré-semana 1
 
-**Objetivo atual:** iniciar T-001 e executar o primeiro ciclo NestJS de quatro semanas, com CRUD, DTOs, Prisma, autenticação básica segura e testes. Prazo de referência: 2026-10-15; ajustar a carga de 40–60 h à disponibilidade restante.
+**Objetivo atual:** concluir T-001 (falta o NestJS mínimo em `apps/api`) e executar o primeiro ciclo NestJS de quatro semanas, com CRUD, DTOs, Prisma, autenticação básica segura e testes. Prazo de referência: 2026-10-15; ajustar a carga de 40–60 h à disponibilidade restante.
 
 **Perfil informado (2026-09-15):** JS/TS intermediário; 10–15 h/semana. O ciclo completo estima 40–60 h; em 20/09 restam cerca de 25 dias até 15/10, portanto validar disponibilidade ao iniciar.
 
+**Horas registradas no ciclo:** 4h (2026-09-21, ambiente + banco). Total: 4h de 40–60h estimadas.
+
 **Mudança de rota (2026-09-15):** backend passa de Express para **NestJS**, direto, sem a etapa em Express puro (prazo não comporta). Python continua só no ml-service (FastAPI). Revisão de 20/09: README, plano e prompts alinhados ao NestJS; primeiras quatro semanas priorizam a API. A decisão anterior permanece aqui como histórico.
 
-**Conceitos estudados:** —
+**Conceitos estudados:** mapeamento de portas host/container, imagem x container, volume nomeado x anônimo x bind mount, isolamento de projetos no Docker (nome de projeto, `down` vs `prune`), leitura de log para diagnosticar container em restart loop, risco de imagem sem tag fixa (`latest`).
 **Conceitos dominados:** —
-**Conceitos a revisar:** —
+**Conceitos a revisar:** distinguir "porta de host ocupada" (erro imediato) de "mapeamento invertido" (sobe sem erro, falha só na conexão) — respondido corretamente após uma tentativa invertida; revisar de novo mais adiante.
 
-**Implementação:** nenhuma linha de código do projeto escrita.
-**Testes:** —
+**Implementação:** `docker-compose.yml` com Postgres 16 (`db`) e Adminer, ambos validados subindo e respondendo (`psql` conectou, Adminer HTTP 200). Ainda nenhuma linha de NestJS.
+**Testes:** verificação manual via `docker compose config`, `docker compose ps` e `psql`; nenhum teste automatizado ainda.
 **Débito técnico:** —
 **Problemas abertos:** —
 
@@ -73,6 +75,8 @@ Fase fecha com nível 4 no conceito central e nível 5 em pelo menos um.
 - —
 
 ### DONE
+- Ambiente Linux (WSL Ubuntu) pronto: Node 24 via nvm, pnpm 12 via corepack, Docker Desktop com integração WSL ativa (2026-09-21).
+- `docker-compose.yml` do Postgres + Adminer, isolado do projeto sistemaescola por nome de projeto e portas próprias (2026-09-21). Depurado um bug real (imagem `postgres` sem tag puxando a 18+, incompatível com o layout de volume usado); corrigido fixando `postgres:16-alpine`.
 - **T-003** Plano, README e prompts alinhados ao NestJS; ciclo de quatro semanas, CP-NEST e ADR-0001 registrados (2026-09-20). Documentação concluída, implementação e aprendizado ainda pendentes.
 - Plano de 42 semanas definido e publicado (2026-09-04)
 - Protocolo de mentoria acordado (2026-09-04)
@@ -92,6 +96,8 @@ _Lacunas identificadas que precisam de exercício dedicado._
 
 ## DIÁRIO DE APRENDIZADO
 
+> Registro por data. Registro por tópico técnico (pergunta/resposta/correção): [docs/aprendizado.md](../docs/aprendizado.md).
+
 ### Erros recorrentes
 _(três ocorrências do mesmo erro viram um item de LEARNING)_
 - —
@@ -100,8 +106,9 @@ _(três ocorrências do mesmo erro viram um item de LEARNING)_
 - —
 
 ### Sessões
+- **2026-09-21** — 4h. Ambiente configurado (Node/pnpm nativos no WSL, Docker com integração ativa). T-001 avançou: `docker-compose.yml` do Postgres+Adminer escrito, revisado e corrigido em várias rodadas (sintaxe YAML de listas, segredos fora do código, versão de imagem fixa). Um bug real diagnosticado e corrigido (container em restart loop por imagem `latest`/Postgres 18). Registro detalhado por tópico iniciado em [docs/aprendizado.md](../docs/aprendizado.md). Falta o NestJS mínimo em `apps/api` para fechar T-001.
 - **2026-09-20** — Revisão documental solicitada para NestJS. Definidos DTOs com class-validator/ValidationPipe, contratos puros em packages/shared, guards, filters e @nestjs/testing + Vitest + Supertest. Semanas 1–4 priorizam a API; 5–9 consolidam e integram web. Não houve implementação nem avaliação de domínio nesta sessão.
-- **2026-09-15** — Ivo não tinha feito nada da semana 1. Decidido: NestJS no lugar de Express (outro projeto exige Nest em ~30 dias), Python só no ML. README atualizado. Pergunta de DI respondida no nível 2. Próxima sessão: fazer T-003 (reordenar semanas para Nest cabendo em ~45–60 h) e iniciar T-001.
+- **2026-09-15** — Ivo não tinha feito nada da semana 1. Decidido: NestJS no lugar de Express (projeto da FIAP, em paralelo, exige Nest em ~30 dias), Python só no ML. README atualizado. Pergunta de DI respondida no nível 2. Próxima sessão: fazer T-003 (reordenar semanas para Nest cabendo em ~45–60 h) e iniciar T-001.
 
 ### Retrospectivas de fase
 - —

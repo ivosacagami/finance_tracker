@@ -6,7 +6,7 @@ Status: aceito para implementação. Projeto ainda sem aplicação; revisão e e
 
 ## Contexto
 
-O Expense Tracker prioriza aprendizado e precisa preparar Ivo para outro projeto com NestJS até aproximadamente 15/10/2026. O perfil informado é JS/TS intermediário, com 10–15 horas semanais. O roteiro anterior usava Express diretamente e adiava conceitos necessários de NestJS.
+O Expense Tracker prioriza aprendizado e precisa preparar Ivo para o projeto da FIAP, em paralelo, que exige NestJS até aproximadamente 15/10/2026. O perfil informado é JS/TS intermediário, com 10–15 horas semanais. O roteiro anterior usava Express diretamente e adiava conceitos necessários de NestJS.
 
 ## Decisão
 
