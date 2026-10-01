@@ -1,0 +1,23 @@
+
+name: expensive_tracker
+services:
+
+  db: 
+    image: postgres:16-alpine
+    restart: always
+    volumes: 
+      - etData:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}      
+    ports: 
+      - 5433:5432
+  
+  adminer:
+    image: adminer
+    restart: always
+    ports: 
+      - 8080:8080
+volumes: 
+  etData:
