@@ -71,6 +71,52 @@
 - Explicação: VSCode não tem relação com o Docker; é só editor, todos conversam com o mesmo Docker Desktop por trás. O isolamento vem do `name:` do compose e das portas de host diferentes — já garantidos nos dois projetos.
 - Conclusão: sem conflito, único limite real é CPU/RAM compartilhada entre tudo que roda ao mesmo tempo.
 
+## NestJS/TypeScript: constructor e dependency injection (DI)
+- P: o que é um constructor? O que é DI?
+- Explicação: constructor é o método especial que roda quando a classe é instanciada (`new`), onde as dependências recebidas por parâmetro são guardadas em propriedades. DI é o Nest resolver essas dependências sozinho a partir do que o constructor pede — a classe nunca faz `new` da própria dependência, só declara que precisa dela.
+- Dúvida levantada: no exemplo `private readonly prisma: PrismaService`, não ficou claro se `readonly` era sintaxe válida (escrito como "randoly" na pergunta) nem se `PrismaService` vinha pronto de alguma lib.
+- Correção/ajuste: `readonly` é palavra-chave real do TypeScript (impede reatribuição da propriedade fora do constructor). `PrismaService` não é built-in de NestJS nem do Prisma — é uma classe que o próprio projeto vai escrever, prevista só pra Semana 2; citá-la na Semana 1 (ainda sem Prisma) estava fora de lugar. Exemplo corrigido pra esta semana: `private readonly transactionsService: TransactionsService`.
+- Conclusão: ao mostrar uma linha de código nova, quebrar token por token (modificador, identificador, tipo) e indicar se é sintaxe da linguagem, classe do próprio projeto ou algo de uma lib — pedido explícito do Ivo (2026-10-01), vale daqui pra frente.
+
+## Domínio: Entidade x Value Object (checkpoint T-004)
+- P: por que `Money` é Value Object e `RecursoFinanceiro` é Entidade? Dê um exemplo de cada.
+- R1: "Money carrega informação usada por entities porém não precisa ser constante, não necessariamente tem regras." Exemplo dado foi de duas movimentações de R$200 serem distintas — respondeu ao lado de Entidade, não ao de Value Object.
+- Correção: o critério não é "ter ou não regras". É igualdade por valor: dois `Money(200, BRL)` são o mesmo Money, intercambiáveis. Uma Entidade (`RecursoFinanceiro`, `Movimentação`) precisa manter identidade e histórico ao longo do tempo, mesmo com atributos idênticos a outra.
+- R2 (retest): "ele lembra de onde veio, mas quem lembra não é o Money, e sim o sistema/Movimentação que registra a origem para manter o histórico." Correto — isolou que Value Object não carrega proveniência; isso é responsabilidade da Entidade que o referencia.
+- Conclusão: Entidade = preciso distinguir e acompanhar ESTE objeto específico ao longo do tempo. Value Object = só importa o valor que carrega agora. Mesmo critério fechou a pergunta sobre `Reserva` (DA-003): o sinal de precisar virar Entidade é precisar de histórico/identidade própria ao longo do tempo, não só "ter mais campos".
+
+## Domínio: saldo atual x disponível após compromissos (checkpoint T-004)
+- P: compra de R$200 no PIX e R$200 no crédito, mesmo dia, mesmo recurso, saldo inicial R$1000. O que muda em cada caso?
+- R: saldo atual cai para R$800 só com o PIX (débito imediato); o crédito não afeta o saldo atual, mas entra como compromisso do período, deixando o disponível após compromissos em R$600 (800 − 200).
+- Conclusão: correto de primeira — RN-012, RN-013 e RN-016 aplicadas corretamente sem confundir os dois números.
+
+## Domínio: dupla redução na liquidação (checkpoint T-004)
+- P: identificar o erro em "ao pagar a fatura, reduzo o saldo atual E reduzo de novo o disponível após compromissos".
+- R: identificado como errado de primeira, citando RN-014 e explicando que o compromisso já tinha sido descontado do disponível antes.
+- Conclusão: correto de primeira.
+
+## Domínio: transferência com taxa vinculada (checkpoint T-004)
+- P: transferência de R$500 Itaú → Nubank com taxa de R$10 no Itaú. O que é despesa? Quantas movimentações?
+- R1: "nada é considerado despesa, a taxa é taxa de funcionamento, tudo dentro da mesma transação." Invertido — RN-027 diz que a taxa É despesa (vinculada ao evento, mas com natureza própria); as movimentações da transferência em si (saída/entrada) é que não são despesa/receita (RN-026).
+- Correção: três movimentações distintas, mesmo evento `T-001` — saída R$500 (natureza: transferência), entrada R$500 (natureza: transferência), taxa R$10 (natureza: taxa/despesa).
+- R2 (retest): sem taxa seriam só 2 movimentações (saída/entrada); se a taxa fosse cobrada em outro dia, ainda ficaria vinculada ao mesmo `T-001` "por conta do evento, não do dia". Correto nos dois pontos.
+- Conclusão: o vínculo em RN-027 é por identidade do evento, não por proximidade temporal — ponto que não estava claro na primeira tentativa.
+
+## Domínio: recorrência x obrigação x valor esperado x valor efetivo (checkpoint T-004)
+- P: academia com recorrência de R$100 todo dia 10; em outubro saiu R$115. O que é a Recorrência, a Obrigação, o Valor Esperado e o Valor Efetivo? Como registrar um desconto de R$10 em novembro?
+- R1: confundiu Recorrência com "o pagamento em si" e Obrigação com a regra geral recorrente, em vez da ocorrência concreta de um mês; também inventou um valor esperado (R$110) sem base no enunciado. Acertou a parte do ajuste (preservar o valor anterior, registrar o desconto à parte, sem sobrescrever — RN-006).
+- Correção: Recorrência é a regra esperada ("todo dia 10, ~R$100"); Obrigação é a cobrança concreta de um mês específico (ex.: "outubro — R$115 — vencimento 10/10"); Valor Esperado vem da recorrência (R$100, não R$110); Valor Efetivo é o que de fato ocorreu (R$115).
+- R2 (retest): "recorrência é a regra de cobrança todo mês; isso se torna obrigação a partir do momento que vira cobrança real, quando ocorre de fato; valor esperado é o valor acordado/habitual; valor efetivo pode divergir naquele mês." Os quatro termos corretamente separados, sem sobreposição.
+- Conclusão: os quatro conceitos fecharam depois da segunda explicação com exemplo reaproveitado (mesmo cenário da academia).
+
+## Domínio: saldo livre (checkpoint T-004, nota menor)
+- P: R$3000 na poupança, R$1000 reservado para viagem. Saldo atual/livre/reservado? Depois de sacar R$200 fora da reserva?
+- R: números finais corretos (2800 atual / 1000 reservado / 1800 livre), mas rotulou o estado inicial como "saldo livre é 0" e tratou os R$2000 livres como uma categoria à parte ("investimento").
+- Correção: saldo livre = saldo atual − reservado; os R$2000 não alocados SÃO o saldo livre, não uma terceira categoria. "Investimento" é um módulo à parte (Patrimônio e Investimentos, fora do MVP) e não deve se misturar com os `RecursoFinanceiro` comuns do domínio atual.
+- Conclusão: ponto de vocabulário, não de cálculo — os números já estavam certos.
+
+**T-004 encerrada em 2026-10-05** — checkpoint de active recall com 7 perguntas, 3 gaps críticos identificados e corrigidos em retestes, registrado em [ADR-0002](adr/0002-dominio-financeiro.md).
+
 ---
 
 ## Como este arquivo é mantido
